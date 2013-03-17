@@ -1,0 +1,12 @@
+<a id="match_<%= match.id %>" href="<%= match_path(match) %>" class="match">
+  <div class="home_team">
+    <span class="team_badge"><%= image_tag match.home_team_badge_url %></span>
+    <span class="team_name"><%= match.home_team_name %></span>
+    <span class="team_score"><%= match.home_team_score %></span>
+  </div>
+  <div class="away_team">
+    <span class="team_score"><%= match.away_team_score %></span>
+    <span class="team_name"><%= match.away_team_name %></span>
+    <span class="team_badge"><%= image_tag match.away_team_badge_url %></span>
+  </div>
+</a>

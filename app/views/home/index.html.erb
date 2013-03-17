@@ -1,0 +1,7 @@
+<% @teams.each do |team| %>
+  <%= link_to team.name, team_path(team) %>
+<% end %>
+
+<% @matches.each do |match| %>
+  <%= render partial: "matches/match_score", locals: { match: match } %>
+<% end %>

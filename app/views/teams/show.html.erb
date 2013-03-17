@@ -1,0 +1,8 @@
+<%= render partial: "matches/match_score", locals: { match: @match } %>
+<div class="news">
+  <% @news.each do |news| %>
+    <div id="news_<%= news.id %>" class="news">
+
+    </div>
+  <% end %>
+</div>
