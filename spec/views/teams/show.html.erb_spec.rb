@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "teams/show.html.erb" do
   before(:each) do
     @match = FactoryGirl.create(:flamengo_vs_vasco)
-    @news = [FactoryGirl.create(:news)]
+    @news = [FactoryGirl.create(:news_flamengo_1), FactoryGirl.create(:news_flamengo_2)]
   end
 
   it "should show the match score" do

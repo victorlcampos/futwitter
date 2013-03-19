@@ -42,15 +42,13 @@ gem 'jquery-rails'
 
 gem "rspec-rails", :group => [:test, :development]
 group :test do
+  gem 'shoulda-matchers'
   gem "factory_girl_rails"
   gem "capybara"
+
   gem "guard-rspec"
   gem 'rb-fsevent', require: false if RUBY_PLATFORM =~ /darwin/i
-  gem 'simplecov'
-  gem 'shoulda-matchers'
-  gem 'metric_fu'
-end
 
-group :development do
-  gem 'rb-readline'
+  gem 'simplecov'
+  gem 'metric_fu'
 end

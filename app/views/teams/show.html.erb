@@ -2,7 +2,14 @@
 <div class="news">
   <% @news.each do |news| %>
     <div id="news_<%= news.id %>" class="news">
-
+      <div class="image">
+        <%= image_tag news.image_url %>
+      </div>
+      <div class="data">
+        <span class="title"><%= news.title %></span>
+        <a href="<%= news.url %>" class="url"><%= news.title %></a>
+        <span class="description"></span>
+      </div>
     </div>
   <% end %>
 </div>

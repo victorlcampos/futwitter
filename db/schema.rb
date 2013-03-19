@@ -28,8 +28,11 @@ ActiveRecord::Schema.define(:version => 20130317205204) do
   create_table "news", :force => true do |t|
     t.integer  "team_id"
     t.string   "image"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "title"
+    t.string   "url"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "news", ["team_id"], :name => "index_news_on_team_id"

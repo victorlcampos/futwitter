@@ -8,7 +8,7 @@ describe TeamsController do
       flamengo_vs_vasco = FactoryGirl.create(:flamengo_vs_vasco, home_team: @flamengo)
       botafogo_vs_vasco = FactoryGirl.create(:botafogo_vs_flamengo, away_team: @flamengo)
 
-      flamengo_news = FactoryGirl.create(:news, team: @flamengo)
+      flamengo_news = FactoryGirl.create(:news_flamengo_1, team: @flamengo)
 
       get :show, {:id => @flamengo.to_param}
     end

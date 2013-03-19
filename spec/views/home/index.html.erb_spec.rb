@@ -2,15 +2,7 @@ require 'spec_helper'
 
 describe "home/index.html.erb" do
   before(:each) do
-    @teams = assign(:teams, [FactoryGirl.create(:flamengo), FactoryGirl.create(:vasco)])
     @matches = assign(:matches, [FactoryGirl.create(:flamengo_vs_vasco), FactoryGirl.create(:fluminense_vs_botafogo)])
-  end
-
-  it "should show link to all team with names" do
-    render
-    @teams.each do |team|
-      assert_select "a[href='#{team_path(team)}']", text: team.name, count: 1
-    end
   end
 
   it "should show the matches score list" do

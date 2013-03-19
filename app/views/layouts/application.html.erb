@@ -13,6 +13,10 @@
     <h1 class="title">Futwitter | Plataforma social do futebol</h1>
   </div>
 
+  <% @teams.each do |team| %>
+    <%= link_to team.name, team_path(team) %>
+  <% end %>
+
   <%= yield %>
 
 </body>
