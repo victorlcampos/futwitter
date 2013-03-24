@@ -1,1 +1,13 @@
 <%= render partial: "matches/match_score", locals: { match: @match } %>
+
+<% @moves.each do |move| %>
+  <div class="move" id="move_<%= move.id %>">
+    <div class="time">
+      <span><%= move.minute %></span>
+    </div>
+    <div class="move_content">
+      <span class="team"><%= move.team_name %></span>
+      <span class="move"><%= move.text %></span>
+    </div>
+  </div>
+<% end %>

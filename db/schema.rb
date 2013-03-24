@@ -11,19 +11,31 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130317205204) do
+ActiveRecord::Schema.define(:version => 20130323130438) do
 
   create_table "matches", :force => true do |t|
     t.integer  "home_team_id"
     t.integer  "away_team_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
     t.integer  "home_team_score"
     t.integer  "away_team_score"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   add_index "matches", ["away_team_id"], :name => "index_matches_on_away_team_id"
+  add_index "matches", ["home_team_id", "away_team_id"], :name => "index_matches_on_home_team_id_and_away_team_id"
   add_index "matches", ["home_team_id"], :name => "index_matches_on_home_team_id"
+
+  create_table "moves", :force => true do |t|
+    t.integer  "match_id"
+    t.integer  "minute"
+    t.string   "team_name"
+    t.text     "text"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "moves", ["match_id"], :name => "index_moves_on_match_id"
 
   create_table "news", :force => true do |t|
     t.integer  "team_id"
@@ -38,10 +50,12 @@ ActiveRecord::Schema.define(:version => 20130317205204) do
   add_index "news", ["team_id"], :name => "index_news_on_team_id"
 
   create_table "teams", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
     t.string   "name"
     t.string   "badge"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
+
+  add_index "teams", ["name"], :name => "index_teams_on_name"
 
 end

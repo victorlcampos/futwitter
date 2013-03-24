@@ -9,8 +9,8 @@ describe ApplicationController do
   end
 
   context "filters" do
-    describe ".load_team" do
-      it "assigns all teams as @teams" do
+    describe "before_filter load_teams" do
+      it "should assigns all teams as @teams" do
         flamengo = FactoryGirl.create(:flamengo)
         vasco = FactoryGirl.create(:vasco)
         get :index

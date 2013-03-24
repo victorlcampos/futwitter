@@ -4,7 +4,7 @@ describe Team do
   context 'relationships' do
     it { should have_many(:home_matches).class_name('Match') }
     it { should have_many(:away_matches).class_name('Match') }
-    it { should have_many(:news)}
+    it { should have_many(:news) }
   end
 
   context "general methods" do

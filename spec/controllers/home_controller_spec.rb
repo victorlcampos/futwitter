@@ -3,12 +3,12 @@ require 'spec_helper'
 describe HomeController do
 
   describe "GET 'index'" do
-    it "returns http success" do
+    it "should returns http success" do
       get 'index'
       response.should be_success
     end
 
-    it "assigns all matches as @matches" do
+    it "should assigns all matches as @matches" do
       flamengo_vs_vasco = FactoryGirl.create(:flamengo_vs_vasco)
       fluminense_vs_botafogo = FactoryGirl.create(:fluminense_vs_botafogo)
 

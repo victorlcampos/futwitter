@@ -5,6 +5,8 @@ class Team < ActiveRecord::Base
   has_many :away_matches, class_name: "Match", foreign_key: "away_team_id"
   has_many :news
 
+  attr_accessible :name
+
   def matches
     my_id = self.id
     Match.where("home_team_id = ? OR away_team_id = ?", my_id, my_id)
@@ -12,5 +14,13 @@ class Team < ActiveRecord::Base
 
   def current_match
     matches.last
+  end
+
+  def name=(name)
+    write_attribute(:name, name.downcase)
+  end
+
+  def name
+    read_attribute(:name).humanize
   end
 end
