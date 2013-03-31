@@ -20,18 +20,21 @@ class Match < ActiveRecord::Base
       datas = match.css("td")
       home_team, away_team = create_teams(datas)
 
-      unless match = Match.where(home_team_id: home_team, away_team_id: away_team).first
-        match_data = {
+      match_data = {
+        home_team_score: datas[1].text,
+        away_team_score: datas[3].text
+      }
+
+      if match = Match.where(home_team_id: home_team, away_team_id: away_team).first
+        match.update_attributes!(match_data)
+      else
+        match_data.merge!({
           home_team: home_team,
-          away_team: away_team,
-          home_team_score: datas[1].text,
-          away_team_score: datas[3].text
-        }
+          away_team: away_team
+        })
 
-        match = Match.create!(match_data)
+        Match.create!(match_data)
       end
-
-      match
     end
   end
 

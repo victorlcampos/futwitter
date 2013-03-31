@@ -8,6 +8,9 @@ gem 'dimensions-rails'
 # PARSE
 gem 'nokogiri'
 
+# UTILITIES
+gem 'pry', group: :development
+
 # QUALITY
 gem "rspec-rails", :group => [:test, :development]
 group :test do
@@ -20,10 +23,11 @@ group :test do
 
   gem 'simplecov'
   gem 'metric_fu'
+  gem "brakeman", require: false
 end
 
 # CORE
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.13'
 gem 'sqlite3'
 
 group :assets do

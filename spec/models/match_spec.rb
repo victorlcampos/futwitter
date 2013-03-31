@@ -100,6 +100,23 @@ describe Match do
             Match.update_matches_from_internet
             Match.count.should  eq(28)
           end
+
+          it "should update scores" do
+            stub_const("Match::LANCENET_URL", File.join(Rails.root, 'spec', 'support', 'urls', 'temporeal_lancenet_score_changed.html'))
+            Match.update_matches_from_internet
+
+            first_match = Match.first
+            first_match.home_team_score.should eq(1)
+            first_match.away_team_score.should eq(2)
+
+            medium_match = Match.find(14)
+            medium_match.home_team_score.should eq(2)
+            medium_match.away_team_score.should eq(1)
+
+            last_match = Match.last
+            last_match.home_team_score.should eq(2)
+            last_match.away_team_score.should eq(2)
+          end
         end
       end
     end

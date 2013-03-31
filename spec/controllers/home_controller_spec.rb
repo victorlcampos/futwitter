@@ -8,9 +8,15 @@ describe HomeController do
       response.should be_success
     end
 
+    it "should update matches from internet" do
+      stub_const("Match::LANCENET_URL", File.join(Rails.root, 'spec', 'support', 'urls', 'temporeal_lancenet.html'))
+
+      get :index
+      Match.count.should eq(28)
+    end
+
     it "should assigns all matches as @matches" do
-      flamengo_vs_vasco = FactoryGirl.create(:flamengo_vs_vasco)
-      fluminense_vs_botafogo = FactoryGirl.create(:fluminense_vs_botafogo)
+      stub_const("Match::LANCENET_URL", File.join(Rails.root, 'spec', 'support', 'urls', 'temporeal_lancenet.html'))
 
       get :index
       assigns(:matches).should eq(Match.all)
