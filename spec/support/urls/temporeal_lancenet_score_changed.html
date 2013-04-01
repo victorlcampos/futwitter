@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>LANCENET! - Acompanhe os jogos ao vivo em tempo real</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="refresh" content="60" />
+    <link href="/include/comum.css" type="text/css" rel="Stylesheet" />
+	<script type="text/javascript"> // <![CDATA[
+	//	if ((navigator.userAgent.indexOf(/symbian|motorola|ericsson|nokia|mot-|motorola|windowsce|midp-|iemobile|symbian|ipaq|mobilephone|samsung|smartphone|wap|benq|panasonic|qtek|palm|philips|acs-|mitsu/|pantec|nec-|kwc|sharp|mobileexplorer|docomo|sagem|sch-|sec-|lg/|lge|alcatel|sendo|ericsson|palm|ppc|symbian|sie-|panasonic|wep|doris|opwv|owg|brew|jpluck|klondike|upg|sonyericsson|sec-|lg-|blackberry|samsung|opera-mini|mini|htc|Iphone|iPod|Android/) != -1)) {
+	if (navigator.userAgent.match(/(symbian|motorola|ericsson|nokia|mot-|motorola|windowsce|midp-|iemobile|symbian|ipaq|mobilephone|samsung|smartphone|wap|benq|panasonic|qtek|palm|philips|acs-|mitsu\/|pantec|nec-|kwc|sharp|mobileexplorer|docomo|sagem|sch-|sec-|lg\/|lge|alcatel|sendo|ericsson|palm|ppc|symbian|sie-|panasonic|wep|doris|opwv|owg|brew|jpluck|klondike|upg|sonyericsson|sec-|lg-|blackberry|samsung|opera-mini|mini|htc|Iphone|iPod|android)/i)) {
+		document.location = "http://m.lancenet.com.br/tempo-real/";
+	}
+	// ]]>
+	</script>
+    <script type="text/javascript" src="/comum/scripts/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript">
+        OAS_sitepage_jogo = '';
+        OAS_sitepage_campeonato = '';
+
+        function GetJogos() {
+            $.ajaxSetup({
+                cache: false,
+                async: false
+            });
+            var cbo = $('#cboCampeonato');
+            var valorSelecionado = cbo[0].value;
+
+            GerenciarOutrosLances($('#listaJogos > tbody '),valorSelecionado);
+            GerenciarOutrosLances($('#listaCorridas > tbody '),valorSelecionado);
+            GerenciarOutrosLances($('#listaEventos > tbody '), valorSelecionado);
+        }
+
+        function GerenciarOutrosLances(tabela, valorSelecionado) {
+            tabela.find("tr").each(function(i) {
+                $(this).css("display", "none");
+            });
+
+            tabela.find('tr').each(function(i) {
+                var item = $(this);
+
+                if (valorSelecionado == 'x') {
+                    $(this).css("display", "block");
+                } else {
+                    if (item[0].attributes.getNamedItem("rel").value == valorSelecionado) {
+                        $(this).css("display", "block");
+                    } else {
+                        $(this).css("display", "none");
+
+                    }
+                }
+            });
+        }
+
+    </script>
+<!--[if IE 6]>
+<script language="JavaScript" src="/comum/scripts/DD_belatedPNG.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+    DD_belatedPNG.fix('.png'); // argument is a CSS selector
+</script>
+<![endif]-->
+<style type="text/css">
+#hd h1 span { top:0px; left:0px; }
+</style>
+</head>
+<body>
+    <div id="conteudo">
+    <link href="http://www.lancenet.com.br/static/LANLance/css/lance.css" rel="stylesheet" type="text/css" />
+	<div id="doc8">
+		<div id="content">
+
+			<!-- HEADER -->
+				<div id="hd" style="margin-bottom:15px;">
+					<h1 class="logo" style="text-indent:-9999em;"><a href="http://www.lancenet.com.br/" title="Voltar para a home LANCENET!"><span>&nbsp;</span></a></h1>
+					<div class="date-login">
+						<h2 class="logo-text"><a href="http://www.lancenet.com.br/" title="Voltar para a home LANCENET!"><span class="bb-noshow">Lance.net</span></a></h2>
+						<div class="more">
+							<span class="more">&nbsp;</span>
+
+						</div>
+					</div>
+				</div>
+			<!-- HEADER -->
+        <div id="cabecalho">
+            <h1>
+                <a href="/" title="Lancenet Tempo Real">
+                    <img src="/images/logo_temporeal.gif" alt="Lancenet Tempo Real" border="0" />
+                </a>
+            </h1>
+            <div class="publicidade">
+                Publicidade<div>
+
+<!-- OAS SETUP begin -->
+<SCRIPT LANGUAGE=JavaScript>
+<!--
+
+var dominioparceiro;
+VerificaDominioParceiro();
+
+function VerificaDominioParceiro(){
+  var urlorigem,strorigem,idx01,idx02;
+
+  urlorigem = window.location;
+  strorigem = String(urlorigem)
+  idx01 = strorigem.indexOf("msn.")
+  idx02 = strorigem.indexOf(".msn.")
+  //idx03 = strorigem.indexOf("msn.desenv.lancenet")
+  //idx04 = strorigem.indexOf("msn.prod.lancenet")
+  if ((idx01 >= 0) || (idx02 >= 0)){
+    dominioparceiro = true;
+  }else{
+    dominioparceiro = false;
+  }
+}
+
+//configuration
+
+OAS_url ='http://ads.lancenet.com.br/RealMedia/ads/';
+OAS_listpos = 'Top,Right1,Bottom,Top2';
+OAS_query = '';
+OAS_sitepage = 'lnet/temporeal/default';
+
+if (OAS_sitepage_jogo != '')
+    OAS_sitepage = OAS_sitepage_jogo;
+else
+    if (OAS_sitepage_campeonato != '')
+    OAS_sitepage = OAS_sitepage_campeonato;
+
+//end of configuration
+OAS_version = 10;
+OAS_rn = '001234567890'; OAS_rns = '1234567890';
+OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11);
+
+function OAS_NORMAL(pos) {
+	document.write('<A HREF="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + OAS_query + '" TARGET=_top>');
+	document.write('<IMG SRC="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + OAS_query + '" BORDER=0></A>');
+}
+//-->
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+OAS_version = 11;
+if (navigator.userAgent.indexOf('Mozilla/3') != -1)
+OAS_version = 10;
+if (OAS_version >= 11)
+	document.write('<SCR'+ 'IPT LANGUAGE=JavaScript1.1 SRC="' + OAS_url + 'adstream_mjx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + OAS_query + '"><\/SCRIPT>');
+//-->
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+document.write('')
+
+function OAS_AD(pos){
+	if (OAS_version >= 11)
+	  OAS_RICH(pos);
+	else
+	  OAS_NORMAL(pos);
+}
+//-->
+</SCRIPT>
+<!-- OAS SETUP end -->
+
+<!-- OAS AD 'Top' begin -->
+<SCRIPT LANGUAGE=JavaScript>
+<!--
+  if (dominioparceiro){
+  	dap('&PG=BR9BS1&AP=1390',728,90);
+	}else{
+  	OAS_AD('Top');
+	}
+//-->
+</SCRIPT>
+<!-- OAS AD 'Top' end --></div>
+            </div>
+        </div>
+        <h2 class="destaque">
+            <span>Jogos em Destaque</span></h2>
+        <div id="interno" class="home">
+            <div class="jogos-destaques">
+                <div class="jogo-destaque jogo-encerrado"><div class="destaque-cabecalho"><p class="status-encerrado"><a href="2013/eliminatorias-sul-americanas/22-mar/argentina-venezuela/">Encerrado</a></p><p class="tipo-campeonato"><a href="2013/eliminatorias-sul-americanas/22-mar/argentina-venezuela/">Eliminatórias Sul-Americanas</a></p></div><div class="destaque-placar"><a href="2013/eliminatorias-sul-americanas/22-mar/argentina-venezuela/"><p class="time">Argentina</p><p class="escudo"><img class="png" src="/images/escudos/50b44bf9-52f1-45f4-8cbd-5126ee69cb87.png" title="Argentina" /></p><p class="gols-esquerdo">3</p><span>X</span><p class="gols-direito">0</p><p class="escudo"><img class="png" src="/images/escudos/24520c38-a2f6-43cf-a7a8-f447d1a93824.png" title="Venezuela" /></p><p class="time-direito">Venezuela</p></a></div><div class="info-jogo"><a href="2013/eliminatorias-sul-americanas/22-mar/argentina-venezuela/"><p class="categoria-jogo futebol">Futebol</p><span><strong>Sex, 22/03/2013 - 21:00</strong> | Monumental de Nuñez - Buenos Aires (ARG)</span></a></div><a title="Acompanhar" class="btnAcompanhar" href="2013/eliminatorias-sul-americanas/22-mar/argentina-venezuela/">
+        Acompanhar
+      </a></div>
+                ﻿
+                ﻿
+                ﻿
+            </div>
+            <h2>
+                Outros Lances</h2>
+            <div class="dados-jogo">
+                <div class="legenda-campeonato png">
+                    <select id="cboCampeonato" onchange="GetJogos();"><option value="x" selected="selected">Todos os campeonatos</option><option value="9">Amistosos Internacionais</option><option value="78">Campeonato Paulista</option><option value="85">Campeonato Gaúcho</option><option value="89">Eliminatórias Sul-Americanas</option><option value="101">Eliminatórias Europeias</option><option value="110">Campeonato Catarinense</option></select>
+                    <ul>
+                        <li class="iniciar">A iniciar</li>
+                        <li class="andamento">Em andamento</li>
+                        <li class="encerrado">Encerrados</li></ul>
+                </div>
+                <table class="table-jogos" id="listaJogos" cellpadding="0" cellspacing="0" width="100%"
+                    border="0">
+                    <tbody>
+                        <tr rel="85" class="tr-status-iniciar"><td align="right" width="20%" class="status"><a href="/2013/campeonato-gaucho/23-mar/gremio-caxias/" title="Grêmio">Grêmio</a><img class="png" src="/images/escudos/51089950-1f33-4c4c-8a78-00dcbd7d0553.png" alt="Grêmio" /></td><td class="td-placar" style="width: 5%;">1</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">2</td><td align="left" width="20%"><img class="png" src="/images/escudos/1453e453-e1d4-41e8-adc1-27deafe88b17.png" alt="Caxias" /><a href="/2013/campeonato-gaucho/23-mar/gremio-caxias/" title="Caxias">Caxias</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-gaucho/23-mar/gremio-caxias/" title="Sáb, 23/03 21:00">Sáb, 23/03 21:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-gaucho/23-mar/gremio-caxias/">Campeonato Gaúcho</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="77" class="tr-status-iniciar"><td align="right" width="20%" class="status"><a href="/2013/campeonato-carioca/23-mar/boavista-rj-flamengo/" title="Boavista">Boavista</a><img class="png" src="/images/escudos/1d591a86-66d0-4677-9072-7d819549b301.png" alt="Boavista" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/00111967-d547-4d74-80b5-f124de68b180.png" alt="Flamengo" /><a href="/2013/campeonato-carioca/23-mar/boavista-rj-flamengo/" title="Flamengo">Flamengo</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-carioca/23-mar/boavista-rj-flamengo/" title="Sáb, 23/03 18:30">Sáb, 23/03 18:30</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-carioca/23-mar/boavista-rj-flamengo/">Campeonato Carioca</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="78" class="tr-status-iniciar"><td align="right" width="20%" class="status"><a href="/2013/campeonato-paulista/23-mar/sao-paulo-bragantino/" title="São Paulo">São Paulo</a><img class="png" src="/images/escudos/d819ce3d-6080-4ec5-be6f-f7c88c94d443.png" alt="São Paulo" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/2c56753e-aa9f-432f-ab99-0a8dc674aaad.png" alt="Bragantino" /><a href="/2013/campeonato-paulista/23-mar/sao-paulo-bragantino/" title="Bragantino">Bragantino</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-paulista/23-mar/sao-paulo-bragantino/" title="Sáb, 23/03 18:30">Sáb, 23/03 18:30</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-paulista/23-mar/sao-paulo-bragantino/">Campeonato Paulista</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="78" class="tr-status-iniciar"><td align="right" width="20%" class="status"><a href="/2013/campeonato-paulista/23-mar/atletico-sorocaba-xv-de-piracicaba/" title="Atlético Sorocaba">Atlético Sorocaba</a><img class="png" src="/images/escudos/6acace9d-312e-44bc-8b82-73edaa4042e5.png" alt="Atlético Sorocaba" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/8918092c-7ed2-49b2-b359-d0a89301031b.png" alt="XV de Piracicaba" /><a href="/2013/campeonato-paulista/23-mar/atletico-sorocaba-xv-de-piracicaba/" title="XV de Piracicaba">XV de Piracicaba</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-paulista/23-mar/atletico-sorocaba-xv-de-piracicaba/" title="Sáb, 23/03 18:30">Sáb, 23/03 18:30</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-paulista/23-mar/atletico-sorocaba-xv-de-piracicaba/">Campeonato Paulista</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="110" class="tr-status-iniciar"><td align="right" width="20%" class="status"><a href="/2013/campeonato-catarinense/23-mar/criciuma-chapecoense/" title="Criciúma">Criciúma</a><img class="png" src="/images/escudos/a82efc29-c404-40bf-9126-e09e7ef2fb08.png" alt="Criciúma" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/80355719-54ce-4cf8-a2ee-9af263801452.png" alt="Chapecoense" /><a href="/2013/campeonato-catarinense/23-mar/criciuma-chapecoense/" title="Chapecoense">Chapecoense</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-catarinense/23-mar/criciuma-chapecoense/" title="Sáb, 23/03 16:00">Sáb, 23/03 16:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-catarinense/23-mar/criciuma-chapecoense/">Campeonato Catarinense</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="110" class="tr-status-iniciar"><td align="right" width="20%" class="status"><a href="/2013/campeonato-catarinense/23-mar/guarani-sc-atletico-ibirama-sc/" title="Guarani-SC">Guarani-SC</a><img class="png" src="/images/escudos/1513934a-0775-4d92-a70c-5f296c7b21f4.png" alt="Guarani-SC" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/8fbf74d1-62e2-45e7-b17d-930d3150750d.png" alt="Atlético Ibirama" /><a href="/2013/campeonato-catarinense/23-mar/guarani-sc-atletico-ibirama-sc/" title="Atlético Ibirama">Atlético Ibirama</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-catarinense/23-mar/guarani-sc-atletico-ibirama-sc/" title="Sáb, 23/03 16:00">Sáb, 23/03 16:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-catarinense/23-mar/guarani-sc-atletico-ibirama-sc/">Campeonato Catarinense</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="77" class="tr-status-iniciar"><td align="right" width="20%" class="status"><a href="/2013/campeonato-carioca/23-mar/duque-de-caxias-fluminense/" title="Duque de Caxias">Duque de Caxias</a><img class="png" src="/images/escudos/5c54ea79-8119-4eec-9ee4-72b8be9ea280.png" alt="Duque de Caxias" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/fa03f5d1-2975-4739-b2a9-cda491c742c4.png" alt="Fluminense" /><a href="/2013/campeonato-carioca/23-mar/duque-de-caxias-fluminense/" title="Fluminense">Fluminense</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-carioca/23-mar/duque-de-caxias-fluminense/" title="Sáb, 23/03 16:00">Sáb, 23/03 16:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-carioca/23-mar/duque-de-caxias-fluminense/">Campeonato Carioca</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="77" class="tr-status-iniciar"><td align="right" width="20%" class="status"><a href="/2013/campeonato-carioca/23-mar/audax-rio-bangu-rj/" title="Audax Rio">Audax Rio</a><img class="png" src="/images/escudos/93ceff98-1152-494f-9478-a02c2f6cee9d.png" alt="Audax Rio" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/1c3a33ce-b76b-4288-8908-04397858aef9.png" alt="Bangu" /><a href="/2013/campeonato-carioca/23-mar/audax-rio-bangu-rj/" title="Bangu">Bangu</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-carioca/23-mar/audax-rio-bangu-rj/" title="Sáb, 23/03 16:00">Sáb, 23/03 16:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-carioca/23-mar/audax-rio-bangu-rj/">Campeonato Carioca</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="77" class="tr-status-iniciar"><td align="right" width="20%" class="status"><a href="/2013/campeonato-carioca/23-mar/resende-rj-macae/" title="Resende">Resende</a><img class="png" src="/images/escudos/a046f6ba-0e6a-4fdc-b834-fccb33bbea28.png" alt="Resende" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/b42ac64e-9070-4c5f-b1a4-3a5fba20b3cf.png" alt="Macaé" /><a href="/2013/campeonato-carioca/23-mar/resende-rj-macae/" title="Macaé">Macaé</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-carioca/23-mar/resende-rj-macae/" title="Sáb, 23/03 16:00">Sáb, 23/03 16:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-carioca/23-mar/resende-rj-macae/">Campeonato Carioca</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="77" class="tr-status-iniciar"><td align="right" width="20%" class="status"><a href="/2013/campeonato-carioca/23-mar/quissama-olaria-rj/" title="Quissamã">Quissamã</a><img class="png" src="/images/escudos/e229a77b-9f1d-4b25-a83a-da8abb5f704b.png" alt="Quissamã" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/411fd138-556d-46df-b500-b854650297a4.png" alt="Olaria" /><a href="/2013/campeonato-carioca/23-mar/quissama-olaria-rj/" title="Olaria">Olaria</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-carioca/23-mar/quissama-olaria-rj/" title="Sáb, 23/03 16:00">Sáb, 23/03 16:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-carioca/23-mar/quissama-olaria-rj/">Campeonato Carioca</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="78" class="tr-status-iniciar"><td align="right" width="20%" class="status"><a href="/2013/campeonato-paulista/23-mar/botafogo-sp-linense-sp/" title="Botafogo-SP">Botafogo-SP</a><img class="png" src="/images/escudos/b25aa0c0-135d-482d-ad2f-ad78f54bc91c.png" alt="Botafogo-SP" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/b6c2e5fd-87ef-473b-96c0-88c3056aa87f.png" alt="Linense" /><a href="/2013/campeonato-paulista/23-mar/botafogo-sp-linense-sp/" title="Linense">Linense</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-paulista/23-mar/botafogo-sp-linense-sp/" title="Sáb, 23/03 16:00">Sáb, 23/03 16:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-paulista/23-mar/botafogo-sp-linense-sp/">Campeonato Paulista</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="78" class="tr-status-iniciar"><td align="right" width="20%" class="status"><a href="/2013/campeonato-paulista/23-mar/penapolense-sao-bernardo-sp/" title="Penapolense">Penapolense</a><img class="png" src="/images/escudos/0d964b3b-6cd9-48a5-a8aa-3d2e19589c10.png" alt="Penapolense" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/59a017b0-18d3-4994-ae00-a1eba7337253.png" alt="São Bernardo" /><a href="/2013/campeonato-paulista/23-mar/penapolense-sao-bernardo-sp/" title="São Bernardo">São Bernardo</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-paulista/23-mar/penapolense-sao-bernardo-sp/" title="Sáb, 23/03 16:00">Sáb, 23/03 16:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-paulista/23-mar/penapolense-sao-bernardo-sp/">Campeonato Paulista</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="89" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/eliminatorias-sul-americanas/22-mar/argentina-venezuela/" title="Argentina">Argentina</a><img class="png" src="/images/escudos/b4d3801b-b7c4-4288-a974-7d1891f5b0ab.png" alt="Argentina" /></td><td class="td-placar" style="width: 5%;">3</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/ecfa0228-1f06-437e-84a2-e05be418c47d.png" alt="Venezuela" /><a href="/2013/eliminatorias-sul-americanas/22-mar/argentina-venezuela/" title="Venezuela">Venezuela</a></td><td class="dia-jogo" width="20%"><a href="/2013/eliminatorias-sul-americanas/22-mar/argentina-venezuela/" title="Sex, 22/03 21:00">Sex, 22/03 21:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/eliminatorias-sul-americanas/22-mar/argentina-venezuela/">Eliminatórias Sul-Americanas</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="89" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/eliminatorias-sul-americanas/22-mar/uruguai-paraguai/" title="Uruguai">Uruguai</a><img class="png" src="/images/escudos/b1fcb9e9-b139-4ad1-8629-dfacce9687b9.png" alt="Uruguai" /></td><td class="td-placar" style="width: 5%;">2</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">1</td><td align="left" width="20%"><img class="png" src="/images/escudos/a0e88230-e602-4896-b2c3-0fed0e87ab6b.png" alt="Paraguai" /><a href="/2013/eliminatorias-sul-americanas/22-mar/uruguai-paraguai/" title="Paraguai">Paraguai</a></td><td class="dia-jogo" width="20%"><a href="/2013/eliminatorias-sul-americanas/22-mar/uruguai-paraguai/" title="Sex, 22/03 19:00">Sex, 22/03 19:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/eliminatorias-sul-americanas/22-mar/uruguai-paraguai/">Eliminatórias Sul-Americanas</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="89" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/eliminatorias-sul-americanas/22-mar/colombia-bolivia/" title="Colômbia">Colômbia</a><img class="png" src="/images/escudos/48973d7b-6aff-4b1a-b944-d0ce60f2c6dd.png" alt="Colômbia" /></td><td class="td-placar" style="width: 5%;">5</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/c5971997-aa69-48d2-87b5-95e0ccdee496.png" alt="Bolívia" /><a href="/2013/eliminatorias-sul-americanas/22-mar/colombia-bolivia/" title="Bolívia">Bolívia</a></td><td class="dia-jogo" width="20%"><a href="/2013/eliminatorias-sul-americanas/22-mar/colombia-bolivia/" title="Sex, 22/03 17:00">Sex, 22/03 17:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/eliminatorias-sul-americanas/22-mar/colombia-bolivia/">Eliminatórias Sul-Americanas</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="101" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/eliminatorias-europeias/22-mar/espanha-finlandia/" title="Espanha">Espanha</a><img class="png" src="/images/escudos/c4b4104e-e254-440b-a133-00feab4f8a81.png" alt="Espanha" /></td><td class="td-placar" style="width: 5%;">1</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">1</td><td align="left" width="20%"><img class="png" src="/images/escudos/3db1d2d0-6046-4f80-b636-4dda971d5b1a.png" alt="Finlândia" /><a href="/2013/eliminatorias-europeias/22-mar/espanha-finlandia/" title="Finlândia">Finlândia</a></td><td class="dia-jogo" width="20%"><a href="/2013/eliminatorias-europeias/22-mar/espanha-finlandia/" title="Sex, 22/03 17:00">Sex, 22/03 17:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/eliminatorias-europeias/22-mar/espanha-finlandia/">Eliminatórias Europeias</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="101" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/eliminatorias-europeias/22-mar/franca-georgia/" title="França">França</a><img class="png" src="/images/escudos/da1aa912-dcb3-4ca5-9006-c5ec6d621c9c.png" alt="França" /></td><td class="td-placar" style="width: 5%;">3</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">1</td><td align="left" width="20%"><img class="png" src="/images/escudos/8679d1a7-57dc-4396-9358-dbd2a3633977.png" alt="Geórgia" /><a href="/2013/eliminatorias-europeias/22-mar/franca-georgia/" title="Geórgia">Geórgia</a></td><td class="dia-jogo" width="20%"><a href="/2013/eliminatorias-europeias/22-mar/franca-georgia/" title="Sex, 22/03 17:00">Sex, 22/03 17:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/eliminatorias-europeias/22-mar/franca-georgia/">Eliminatórias Europeias</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="101" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/eliminatorias-europeias/22-mar/san-marino-inglaterra/" title="San Marino">San Marino</a><img class="png" src="/images/escudos/76d79d63-5303-4ed4-bf0e-ff256661cd17.png" alt="San Marino" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">8</td><td align="left" width="20%"><img class="png" src="/images/escudos/16559c77-9906-4f7b-89df-8694b90b89e9.png" alt="Inglaterra" /><a href="/2013/eliminatorias-europeias/22-mar/san-marino-inglaterra/" title="Inglaterra">Inglaterra</a></td><td class="dia-jogo" width="20%"><a href="/2013/eliminatorias-europeias/22-mar/san-marino-inglaterra/" title="Sex, 22/03 17:00">Sex, 22/03 17:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/eliminatorias-europeias/22-mar/san-marino-inglaterra/">Eliminatórias Europeias</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="101" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/eliminatorias-europeias/22-mar/holanda-estonia/" title="Holanda">Holanda</a><img class="png" src="/images/escudos/9e5fa9fe-098f-4788-93fb-b3a8856969af.png" alt="Holanda" /></td><td class="td-placar" style="width: 5%;">3</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/7be05028-9a97-42dc-8a5c-7464c4426de2.png" alt="Estônia" /><a href="/2013/eliminatorias-europeias/22-mar/holanda-estonia/" title="Estônia">Estônia</a></td><td class="dia-jogo" width="20%"><a href="/2013/eliminatorias-europeias/22-mar/holanda-estonia/" title="Sex, 22/03 16:30">Sex, 22/03 16:30</a></td><td width="30%" class="td-campeonato"><a href="/2013/eliminatorias-europeias/22-mar/holanda-estonia/">Eliminatórias Europeias</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="101" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/eliminatorias-europeias/22-mar/cazaquistao-alemanha/" title="Cazaquistão">Cazaquistão</a><img class="png" src="/images/escudos/e0e6b9e4-002e-43f2-828e-c380aace9e93.png" alt="Cazaquistão" /></td><td class="td-placar" style="width: 5%;">0</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">3</td><td align="left" width="20%"><img class="png" src="/images/escudos/c4881c07-95b1-4391-a857-668e1be4396c.png" alt="Alemanha" /><a href="/2013/eliminatorias-europeias/22-mar/cazaquistao-alemanha/" title="Alemanha">Alemanha</a></td><td class="dia-jogo" width="20%"><a href="/2013/eliminatorias-europeias/22-mar/cazaquistao-alemanha/" title="Sex, 22/03 15:00">Sex, 22/03 15:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/eliminatorias-europeias/22-mar/cazaquistao-alemanha/">Eliminatórias Europeias</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="101" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/eliminatorias-europeias/22-mar/israel-portugal/" title="Israel">Israel</a><img class="png" src="/images/escudos/0dc3f2dd-c09d-423e-a007-0b1983bc3dcd.png" alt="Israel" /></td><td class="td-placar" style="width: 5%;">3</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">3</td><td align="left" width="20%"><img class="png" src="/images/escudos/f344da25-fda6-4b49-b4ed-6d41d23af4db.png" alt="Portugal" /><a href="/2013/eliminatorias-europeias/22-mar/israel-portugal/" title="Portugal">Portugal</a></td><td class="dia-jogo" width="20%"><a href="/2013/eliminatorias-europeias/22-mar/israel-portugal/" title="Sex, 22/03 09:45">Sex, 22/03 09:45</a></td><td width="30%" class="td-campeonato"><a href="/2013/eliminatorias-europeias/22-mar/israel-portugal/">Eliminatórias Europeias</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="78" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/campeonato-paulista/21-mar/santos-mirassol-sp/" title="Santos">Santos</a><img class="png" src="/images/escudos/f3392704-98a7-4946-b672-11d7e5522d1b.png" alt="Santos" /></td><td class="td-placar" style="width: 5%;">2</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">1</td><td align="left" width="20%"><img class="png" src="/images/escudos/2c66606d-cffb-4669-a291-4ee60aa8db72.png" alt="Mirassol" /><a href="/2013/campeonato-paulista/21-mar/santos-mirassol-sp/" title="Mirassol">Mirassol</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-paulista/21-mar/santos-mirassol-sp/" title="Qui, 21/03 21:00">Qui, 21/03 21:00</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-paulista/21-mar/santos-mirassol-sp/">Campeonato Paulista</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="85" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/campeonato-gaucho/21-mar/internacional-sao-luiz/" title="Internacional">Internacional</a><img class="png" src="/images/escudos/83526e06-4ce2-46ba-af45-367d39f904c6.png" alt="Internacional" /></td><td class="td-placar" style="width: 5%;">2</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">1</td><td align="left" width="20%"><img class="png" src="/images/escudos/597bf91d-f83a-4eaf-acff-4e9902a9d5d7.png" alt="São Luiz" /><a href="/2013/campeonato-gaucho/21-mar/internacional-sao-luiz/" title="São Luiz">São Luiz</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-gaucho/21-mar/internacional-sao-luiz/" title="Qui, 21/03 19:30">Qui, 21/03 19:30</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-gaucho/21-mar/internacional-sao-luiz/">Campeonato Gaúcho</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="78" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/campeonato-paulista/21-mar/u-barbarense-ponte-preta/" title="União Barbarense">União Barbarense</a><img class="png" src="/images/escudos/7339a967-4e16-4a83-82ec-7ba18442d88d.png" alt="União Barbarense" /></td><td class="td-placar" style="width: 5%;">1</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">1</td><td align="left" width="20%"><img class="png" src="/images/escudos/a24d5766-ba62-42a4-9248-560741c5d658.png" alt="Ponte Preta" /><a href="/2013/campeonato-paulista/21-mar/u-barbarense-ponte-preta/" title="Ponte Preta">Ponte Preta</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-paulista/21-mar/u-barbarense-ponte-preta/" title="Qui, 21/03 19:30">Qui, 21/03 19:30</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-paulista/21-mar/u-barbarense-ponte-preta/">Campeonato Paulista</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="78" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/campeonato-paulista/21-mar/guarani-paulista/" title="Guarani">Guarani</a><img class="png" src="/images/escudos/b2fe3b21-4ffe-4d70-bf73-4f65f84b9768.png" alt="Guarani" /></td><td class="td-placar" style="width: 5%;">1</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">2</td><td align="left" width="20%"><img class="png" src="/images/escudos/de04d1be-c3fd-43d9-89df-14a650df97f2.png" alt="Paulista" /><a href="/2013/campeonato-paulista/21-mar/guarani-paulista/" title="Paulista">Paulista</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-paulista/21-mar/guarani-paulista/" title="Qui, 21/03 19:30">Qui, 21/03 19:30</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-paulista/21-mar/guarani-paulista/">Campeonato Paulista</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="78" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/campeonato-paulista/21-mar/sao-caetano-ituano-sp/" title="São Caetano">São Caetano</a><img class="png" src="/images/escudos/1183844d-b31b-43f3-81db-25972168c183.png" alt="São Caetano" /></td><td class="td-placar" style="width: 5%;">3</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">0</td><td align="left" width="20%"><img class="png" src="/images/escudos/87d0830a-561e-4cd6-ac5c-7d82a2848c6c.png" alt="Ituano" /><a href="/2013/campeonato-paulista/21-mar/sao-caetano-ituano-sp/" title="Ituano">Ituano</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-paulista/21-mar/sao-caetano-ituano-sp/" title="Qui, 21/03 19:30">Qui, 21/03 19:30</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-paulista/21-mar/sao-caetano-ituano-sp/">Campeonato Paulista</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="110" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/campeonato-catarinense/21-mar/metropolitano-joinville/" title="Metropolitano">Metropolitano</a><img class="png" src="/images/escudos/f20bfeb1-e6fa-4403-a719-6f2f4b1ae6d0.png" alt="Metropolitano" /></td><td class="td-placar" style="width: 5%;">1</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">1</td><td align="left" width="20%"><img class="png" src="/images/escudos/cf1a956a-c7b8-429c-ac60-dfd2869d582e.png" alt="Joinville" /><a href="/2013/campeonato-catarinense/21-mar/metropolitano-joinville/" title="Joinville">Joinville</a></td><td class="dia-jogo" width="20%"><a href="/2013/campeonato-catarinense/21-mar/metropolitano-joinville/" title="Qui, 21/03 19:30">Qui, 21/03 19:30</a></td><td width="30%" class="td-campeonato"><a href="/2013/campeonato-catarinense/21-mar/metropolitano-joinville/">Campeonato Catarinense</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr><tr rel="9" class="tr-status-encerrado"><td align="right" width="20%" class="status"><a href="/2013/amistosos-internacionais/21-mar/brasil-italia/" title="Brasil">Brasil</a><img class="png" src="/images/escudos/9b87291e-0e16-4cc9-8b04-1f8c458f0911.png" alt="Brasil" /></td><td class="td-placar" style="width: 5%;">2</td><td class="td-placar" style="width: 5%;">
+      x
+    </td><td class="td-placar" style="width: 5%;">2</td><td align="left" width="20%"><img class="png" src="/images/escudos/06f62f34-63df-422c-9ec5-5d8d4da5d4e6.png" alt="Itália" /><a href="/2013/amistosos-internacionais/21-mar/brasil-italia/" title="Itália">Itália</a></td><td class="dia-jogo" width="20%"><a href="/2013/amistosos-internacionais/21-mar/brasil-italia/" title="Qui, 21/03 16:30">Qui, 21/03 16:30</a></td><td width="30%" class="td-campeonato"><a href="/2013/amistosos-internacionais/21-mar/brasil-italia/">Amistosos Internacionais</a></td><td width="5%"><img src="/images/ico-gol.png" class="png" title="Futebol" alt="Futebol" /></td></tr>
+                    </tbody>
+                </table>
+                <table class="table-jogos" id="listaCorridas" cellpadding="0" cellspacing="0" width="100%"
+                    border="0">
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <table class="table-jogos" id="listaEventos" cellpadding="0" cellspacing="0" width="100%"
+                    border="0">
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="publicidade">
+                    Publicidade<div> <!-- OAS AD 'x02' begin -->
+<SCRIPT LANGUAGE=JavaScript>
+<!--
+  if (dominioparceiro){
+	document.write ('<a href="http://msn.lancenet.com.br/maisesportes/" target="_blank"><img src="http://www.lancenet.com.br/img/mais_esportes_arroba.jpg" /></a>');
+  }else{
+  	OAS_AD('Right1');
+  }
+
+//-->
+</SCRIPT>
+<!-- OAS AD 'x02' end -->
+</div>
+            </div>
+        </div>
+    </div>
+	<div class="advertisingtop2">
+		<script type="text/javascript">
+			OAS_AD("Top2");
+		</script>
+	</div>
+
+	<!-- Begin comScore Tag -->
+        <script>
+        var _comscore = _comscore || [];
+        _comscore.push({ c1: "2", c2: "14617396" });
+        (function() {
+            var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+            s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+            el.parentNode.insertBefore(s, el);
+        })();
+        </script>
+        <noscript>
+        <img src="http://b.scorecardresearch.com/p?c1=2&c2=14617396&cv=2.0&cj=1" />
+        </noscript>
+    <!-- End comScore Tag -->
+
+    <!-- TAG GOOGLE ANALYTICS - 08 nov 2011-->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+
+  //IP & Global
+  _gaq.push(['lnetip._setAccount', 'UA-2249725-9']);
+  _gaq.push(['lnetip._setDomainName', '.lancenet.com.br']);
+  _gaq.push(['lnetip._setAllowLinker', true]);
+  _gaq.push(['lnetip._setLocalGifPath', 'http://urchin.lancenet.com.br/urchin/urchin.gif']);
+  _gaq.push(['lnetip._setLocalRemoteServerMode']);
+  _gaq.push(['lnetip._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!-- TAG GOOGLE ANALYTICS - 08 nov 2011-->
+
+</body>
+</html>

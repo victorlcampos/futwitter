@@ -1,17 +1,14 @@
 source 'https://rubygems.org'
 
-# IMAGES
 gem "carrierwave"
 gem "mini_magick"
-gem 'dimensions-rails'
-
-# PARSE
 gem 'nokogiri'
 
 # UTILITIES
-gem 'pry', group: :development
+gem 'pry-rails', group: :development
 
 # QUALITY
+gem 'dimensions-rails'
 gem "rspec-rails", :group => [:test, :development]
 group :test do
   gem 'shoulda-matchers'
@@ -19,6 +16,8 @@ group :test do
   gem "capybara"
 
   gem "guard-rspec"
+  gem 'guard-brakeman'
+
   gem 'rb-fsevent', require: false if RUBY_PLATFORM =~ /darwin/i
 
   gem 'simplecov'

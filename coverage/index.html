@@ -14,7 +14,7 @@
       <img src="./assets/0.7.1/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2013-03-24T10:03:12-03:00">2013-03-24T10:03:12-03:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2013-04-01T11:15:18-03:00">2013-04-01T11:15:18-03:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -25,15 +25,15 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         22.75
+         20.63
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>11</b> files in total.
-    <b>70</b> relevant lines. 
-    <span class="green"><b>70</b> lines covered</span> and
+    <b>73</b> relevant lines. 
+    <span class="green"><b>73</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -107,7 +107,7 @@
         <td>27</td>
         <td>27</td>
         <td>0</td>
-        <td>149.5</td>
+        <td>141.7</td>
       </tr>
       
       <tr>
@@ -133,11 +133,11 @@
       <tr>
         <td class="strong"><a href="#49f23f0925e7d5e1d228d4b6f95215072990fd94" class="src_link" title="app/models/team.rb">app/models/team.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>26</td>
-        <td>15</td>
-        <td>15</td>
+        <td>31</td>
+        <td>18</td>
+        <td>18</td>
         <td>0</td>
-        <td>87.7</td>
+        <td>72.2</td>
       </tr>
       
       <tr>
@@ -250,15 +250,15 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         59.8
+         53.97
        </span>
     </span> hits/line)
   </h2>
   <a name="Models"></a>
   <div>
     <b>4</b> files in total.
-    <b>48</b> relevant lines. 
-    <span class="green"><b>48</b> lines covered</span> and
+    <b>51</b> relevant lines. 
+    <span class="green"><b>51</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -282,7 +282,7 @@
         <td>27</td>
         <td>27</td>
         <td>0</td>
-        <td>149.5</td>
+        <td>141.7</td>
       </tr>
       
       <tr>
@@ -308,11 +308,11 @@
       <tr>
         <td class="strong"><a href="#49f23f0925e7d5e1d228d4b6f95215072990fd94" class="src_link" title="app/models/team.rb">app/models/team.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>26</td>
-        <td>15</td>
-        <td>15</td>
+        <td>31</td>
+        <td>18</td>
+        <td>18</td>
         <td>0</td>
-        <td>87.7</td>
+        <td>72.2</td>
       </tr>
       
     </tbody>
@@ -943,14 +943,14 @@
           <code class="ruby">    doc.css(&quot;#listaJogos tr&quot;).each do |match|</code>
         </li>
       
-        <li class="covered" data-hits="371" data-linenumber="20">
-          <span class="hits">371</span>
+        <li class="covered" data-hits="352" data-linenumber="20">
+          <span class="hits">352</span>
           
           <code class="ruby">      datas = match.css(&quot;td&quot;)</code>
         </li>
       
-        <li class="covered" data-hits="371" data-linenumber="21">
-          <span class="hits">371</span>
+        <li class="covered" data-hits="352" data-linenumber="21">
+          <span class="hits">352</span>
           
           <code class="ruby">      home_team, away_team = create_teams(datas)</code>
         </li>
@@ -961,8 +961,8 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="371" data-linenumber="23">
-          <span class="hits">371</span>
+        <li class="covered" data-hits="352" data-linenumber="23">
+          <span class="hits">352</span>
           
           <code class="ruby">      match_data = {</code>
         </li>
@@ -991,8 +991,8 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="371" data-linenumber="28">
-          <span class="hits">371</span>
+        <li class="covered" data-hits="352" data-linenumber="28">
+          <span class="hits">352</span>
           
           <code class="ruby">      if match = Match.where(home_team_id: home_team, away_team_id: away_team).first</code>
         </li>
@@ -1009,8 +1009,8 @@
           <code class="ruby">      else</code>
         </li>
       
-        <li class="covered" data-hits="287" data-linenumber="31">
-          <span class="hits">287</span>
+        <li class="covered" data-hits="268" data-linenumber="31">
+          <span class="hits">268</span>
           
           <code class="ruby">        match_data.merge!({</code>
         </li>
@@ -1039,8 +1039,8 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="287" data-linenumber="36">
-          <span class="hits">287</span>
+        <li class="covered" data-hits="268" data-linenumber="36">
+          <span class="hits">268</span>
           
           <code class="ruby">        Match.create!(match_data)</code>
         </li>
@@ -1081,14 +1081,14 @@
           <code class="ruby">  def self.create_teams(datas)</code>
         </li>
       
-        <li class="covered" data-hits="371" data-linenumber="43">
-          <span class="hits">371</span>
+        <li class="covered" data-hits="352" data-linenumber="43">
+          <span class="hits">352</span>
           
           <code class="ruby">    home_team_name = datas[0].text</code>
         </li>
       
-        <li class="covered" data-hits="371" data-linenumber="44">
-          <span class="hits">371</span>
+        <li class="covered" data-hits="352" data-linenumber="44">
+          <span class="hits">352</span>
           
           <code class="ruby">    home_team = Team.create!(name: home_team_name) unless (home_team = Team.where(name: home_team_name.downcase).first)</code>
         </li>
@@ -1099,20 +1099,20 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="371" data-linenumber="46">
-          <span class="hits">371</span>
+        <li class="covered" data-hits="352" data-linenumber="46">
+          <span class="hits">352</span>
           
           <code class="ruby">    away_team_name = datas[4].text</code>
         </li>
       
-        <li class="covered" data-hits="371" data-linenumber="47">
-          <span class="hits">371</span>
+        <li class="covered" data-hits="352" data-linenumber="47">
+          <span class="hits">352</span>
           
           <code class="ruby">    away_team = Team.create!(name: away_team_name) unless (away_team = Team.where(name: away_team_name.downcase).first)</code>
         </li>
       
-        <li class="covered" data-hits="371" data-linenumber="48">
-          <span class="hits">371</span>
+        <li class="covered" data-hits="352" data-linenumber="48">
+          <span class="hits">352</span>
           
           <code class="ruby">    [home_team, away_team]</code>
         </li>
@@ -1234,8 +1234,8 @@
     <h3>app/models/team.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>15</b> relevant lines. 
-      <span class="green"><b>15</b> lines covered</span> and
+      <b>18</b> relevant lines. 
+      <span class="green"><b>18</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -1357,8 +1357,8 @@
           <code class="ruby">  def name=(name)</code>
         </li>
       
-        <li class="covered" data-hits="630" data-linenumber="20">
-          <span class="hits">630</span>
+        <li class="covered" data-hits="595" data-linenumber="20">
+          <span class="hits">595</span>
           
           <code class="ruby">    write_attribute(:name, name.downcase)</code>
         </li>
@@ -1381,8 +1381,8 @@
           <code class="ruby">  def name</code>
         </li>
       
-        <li class="covered" data-hits="659" data-linenumber="24">
-          <span class="hits">659</span>
+        <li class="covered" data-hits="624" data-linenumber="24">
+          <span class="hits">624</span>
           
           <code class="ruby">    read_attribute(:name).humanize</code>
         </li>
@@ -1394,6 +1394,36 @@
         </li>
       
         <li class="never" data-hits="" data-linenumber="26">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="27">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def badge_url</code>
+        </li>
+      
+        <li class="covered" data-hits="26" data-linenumber="28">
+          <span class="hits">26</span>
+          
+          <code class="ruby">    url = super</code>
+        </li>
+      
+        <li class="covered" data-hits="26" data-linenumber="29">
+          <span class="hits">26</span>
+          
+          <code class="ruby">    url.nil? ? &quot;default.png&quot; : url</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="30">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="31">
           
           
           <code class="ruby">end</code>
