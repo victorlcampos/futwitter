@@ -1,0 +1,179 @@
+metric_fu shift the first line
+================================================================================
+ ./app/controllers/application_controller.rb
+================================================================================
+   class ApplicationController < ActionController::Base
+     protect_from_forgery
+     before_filter :load_teams
+   
+     protected
+     def load_teams
+       @teams = Team.all
+     end
+   end
+
+================================================================================
+ ./app/controllers/home_controller.rb
+================================================================================
+   class HomeController < ApplicationController
+     def index
+       Match.update_matches_from_internet
+       @matches = Match.all
+       @matches.each do |match|
+         match.home_team.badge_url
+       end
+     end
+   end
+
+================================================================================
+ ./app/controllers/matches_controller.rb
+================================================================================
+   class MatchesController < ApplicationController
+     def show
+       @match = Match.find(params[:id])
+       @moves = @match.moves
+     end
+   end
+
+================================================================================
+ ./app/controllers/teams_controller.rb
+================================================================================
+   class TeamsController < ApplicationController
+     def show
+       @team = Team.find(params[:id])
+       @match = @team.current_match
+       @news = @team.news
+     end
+   end
+
+================================================================================
+ ./app/helpers/application_helper.rb
+================================================================================
+   module ApplicationHelper
+   end
+
+================================================================================
+ ./app/models/match.rb
+================================================================================
+   class Match < ActiveRecord::Base
+     LANCENET_URL = "http://temporeal.lancenet.com.br/"
+   
+     has_many :moves
+   
+     belongs_to :home_team, class_name: "Team"
+     belongs_to :away_team, class_name: "Team"
+   
+     delegate :name, to: :home_team, prefix: true
+     delegate :badge_url, to: :home_team, prefix: true
+     delegate :name, to: :away_team, prefix: true
+     delegate :badge_url, to: :away_team, prefix: true
+   
+     attr_accessible :home_team, :away_team, :home_team_score, :away_team_score
+   
+     def self.update_matches_from_internet
+       doc = Nokogiri::HTML(open(LANCENET_URL))
+   
+       doc.css("#listaJogos tr").each do |match|
+         datas = match.css("td")
+         home_team, away_team = create_teams(datas)
+   
+         match_data = {
+           home_team_score: datas[1].text,
+           away_team_score: datas[3].text
+         }
+   
+         if match = Match.where(home_team_id: home_team, away_team_id: away_team).first
+           match.update_attributes!(match_data)
+         else
+           match_data.merge!({
+             home_team: home_team,
+             away_team: away_team
+           })
+   
+           Match.create!(match_data)
+         end
+       end
+     end
+   
+     private
+     def self.create_teams(datas)
+       home_team_name = datas[0].text
+       home_team = Team.create!(name: home_team_name) unless (home_team = Team.where(name: home_team_name.downcase).first)
+   
+       away_team_name = datas[4].text
+       away_team = Team.create!(name: away_team_name) unless (away_team = Team.where(name: away_team_name.downcase).first)
+       [home_team, away_team]
+     end
+   end
+
+================================================================================
+ ./app/models/move.rb
+================================================================================
+   class Move < ActiveRecord::Base
+     default_scope order("id DESC")
+   
+     belongs_to :match
+   end
+
+================================================================================
+ ./app/models/news.rb
+================================================================================
+   class News < ActiveRecord::Base
+     mount_uploader :image, ImageUploader
+   
+     belongs_to :team
+   end
+
+================================================================================
+ ./app/models/team.rb
+================================================================================
+   class Team < ActiveRecord::Base
+     mount_uploader :badge, BadgeUploader
+   
+     has_many :home_matches, class_name: "Match", foreign_key: "home_team_id"
+     has_many :away_matches, class_name: "Match", foreign_key: "away_team_id"
+     has_many :news
+   
+     attr_accessible :name
+   
+     def matches
+       my_id = self.id
+       Match.where("home_team_id = ? OR away_team_id = ?", my_id, my_id)
+     end
+   
+     def current_match
+       matches.last
+     end
+   
+     def name=(name)
+       write_attribute(:name, name.downcase)
+     end
+   
+     def name
+       read_attribute(:name).humanize
+     end
+   
+     def badge_url
+       url = super
+       url.nil? ? "default.png" : url
+     end
+   end
+
+================================================================================
+ ./app/uploaders/badge_uploader.rb
+================================================================================
+   # encoding: utf-8
+   
+   class BadgeUploader < CarrierWave::Uploader::Base
+     # include CarrierWave::MiniMagick
+   end
+
+================================================================================
+ ./app/uploaders/image_uploader.rb
+================================================================================
+   # encoding: utf-8
+   
+   class ImageUploader < CarrierWave::Uploader::Base
+     # include CarrierWave::MiniMagick
+   end
+

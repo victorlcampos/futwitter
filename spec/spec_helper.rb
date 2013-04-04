@@ -1,4 +1,14 @@
 require 'simplecov'
+require 'simplecov-rcov-text'
+
+class SimpleCov::Formatter::MergedFormatter
+  def format(result)
+     SimpleCov::Formatter::HTMLFormatter.new.format(result)
+     SimpleCov::Formatter::RcovTextFormatter.new.format(result)
+  end
+end
+SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
+
 SimpleCov.start 'rails'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
@@ -36,4 +46,15 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  config.before(:all) do
+    Bullet.start_request if Bullet.enable?
+  end
+
+  config.after(:each) do
+    if Bullet.enable? && Bullet.notification?
+      Bullet.perform_out_of_channel_notifications
+    end
+    Bullet.end_request if Bullet.enable?
+  end
 end
