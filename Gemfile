@@ -5,11 +5,15 @@ gem "mini_magick"
 gem 'nokogiri'
 
 # UTILITIES
-gem 'pry-rails', group: :development
+group :development do
+  gem 'pry-rails'
+  gem "better_errors"
+  gem "binding_of_caller"
+end
 
 # QUALITY
 gem 'dimensions-rails'
-gem "rspec-rails", :group => [:test, :development]
+gem "rspec-rails", group: [:test, :development]
 group :test do
   gem 'shoulda-matchers'
   gem "factory_girl_rails"
@@ -23,6 +27,8 @@ group :test do
   gem 'simplecov'
   gem 'metric_fu'
   gem "brakeman", require: false
+
+  gem 'minitest'
 end
 
 # CORE

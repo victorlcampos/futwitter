@@ -17,6 +17,5 @@ describe MatchesController do
       get :show, {:id => @flamengo_vs_vasco.to_param}
       assigns(:moves).should eq([@flamengo_vs_vasco_move2, @flamengo_vs_vasco_move1])
     end
-
   end
 end

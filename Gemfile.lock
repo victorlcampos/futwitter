@@ -31,6 +31,11 @@ GEM
     arel (3.0.2)
     arrayfields (4.7.4)
     awesome_print (1.1.0)
+    better_errors (0.7.2)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.1)
+      debug_inspector (>= 0.0.1)
     bluff (0.1.0)
     bourne (1.2.1)
       mocha (= 0.12.7)
@@ -79,6 +84,7 @@ GEM
       execjs
     coffee-script-source (1.6.1)
     colored (1.2)
+    debug_inspector (0.0.2)
     diff-lcs (1.2.1)
     dimensions (1.2.0)
     dimensions-rails (1.0.5)
@@ -168,6 +174,7 @@ GEM
     mime-types (1.21)
     mini_magick (3.5.0)
       subexec (~> 0.2.1)
+    minitest (3.5.0)
     mocha (0.12.7)
       metaclass (~> 0.0.1)
     multi_json (1.7.2)
@@ -288,6 +295,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  better_errors
+  binding_of_caller
   brakeman
   capybara
   carrierwave
@@ -299,6 +308,7 @@ DEPENDENCIES
   jquery-rails
   metric_fu
   mini_magick
+  minitest
   nokogiri
   pry-rails
   rails (= 3.2.13)
