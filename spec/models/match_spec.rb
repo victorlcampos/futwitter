@@ -17,38 +17,17 @@ describe Match do
   end
 
   context "delegated mathods" do
-    before(:each) do
-      @flamengo_vs_vasco = FactoryGirl.create(:flamengo_vs_vasco)
-    end
+    subject(:flamengo_vs_vasco) {FactoryGirl.create(:flamengo_vs_vasco)}
+    its(:home_team_name) { should eq("Flamengo") }
+    its(:away_team_name) { should eq("Vasco") }
 
-    describe ".home_team_name" do
-      it "should return the name of home team" do
-        @flamengo_vs_vasco.home_team_name.should eq("Flamengo")
-      end
-    end
-
-    describe ".away_team_name" do
-      it "should return the name of away team" do
-        @flamengo_vs_vasco.away_team_name.should eq("Vasco")
-      end
-    end
-
-    describe ".home_team_badge_url" do
-      it "should return the badge url of home team" do
-        @flamengo_vs_vasco.home_team_badge_url.should eq(@flamengo_vs_vasco.home_team.badge_url)
-      end
-    end
-
-
-    describe ".away_team_badge_url" do
-      it "should return the badge url of away team" do
-        @flamengo_vs_vasco.away_team_badge_url.should eq(@flamengo_vs_vasco.away_team.badge_url)
-      end
-    end
+    its(:home_team_badge_url) { should eq(flamengo_vs_vasco.home_team.badge_url) }
+    its(:away_team_badge_url) { should eq(flamengo_vs_vasco.away_team.badge_url) }
   end
 
   context "parse matches from internet" do
     describe "self.update_matches_from_internet" do
+
       before(:each) do
         stub_const("Match::LANCENET_URL", File.join(Rails.root, 'spec', 'support', 'urls', 'temporeal_lancenet.html'))
         Match.update_matches_from_internet
@@ -57,7 +36,7 @@ describe Match do
       context "teams" do
         describe "teams did not exist" do
           it "should create teams from url" do
-            Team.count.should  eq(56)
+            Team.count.should eq(56)
           end
 
           it "should save the teams name" do

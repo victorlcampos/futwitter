@@ -18,10 +18,7 @@ metric_fu shift the first line
    class HomeController < ApplicationController
      def index
        Match.update_matches_from_internet
-       @matches = Match.all
-       @matches.each do |match|
-         match.home_team.badge_url
-       end
+!!     @matches = Match.all
      end
    end
 

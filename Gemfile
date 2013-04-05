@@ -12,27 +12,27 @@ group :development do
 end
 
 # QUALITY
-# PERFORMANCE
+# performance
 gem 'dimensions-rails'
 gem 'bullet', group: [:test, :development]
 
-# TEST
+# test
 gem "rspec-rails", group: [:test, :development]
 group :test do
-  # TEST
+  # test
   gem 'shoulda-matchers'
   gem "factory_girl_rails"
   gem "capybara"
 
-  # SECURITY
+  # security
   gem "brakeman", require: false
 
-  # CONTINUOUS INTEGRATION
+  # continuous integration
   gem "guard-rspec"
   gem 'guard-brakeman'
   gem 'rb-fsevent', require: false if RUBY_PLATFORM =~ /darwin/i
 
-  # METRICS
+  # metrics
   gem 'simplecov', require: false
   gem 'simplecov-rcov-text', require: false
   gem 'metric_fu', '4.1.0'
