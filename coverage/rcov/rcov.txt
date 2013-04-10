@@ -19,9 +19,6 @@ metric_fu shift the first line
      def index
        Match.update_matches_from_internet
        @matches = Match.all
-       @matches.each do |match|
-         team = match.home_team.badge_url
-       end
      end
    end
 

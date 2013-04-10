@@ -9,6 +9,12 @@ group :development do
   gem 'pry-rails'
   gem "better_errors"
   gem "binding_of_caller"
+
+  # continuous integration
+  gem "guard-rspec"
+  gem 'guard-brakeman'
+  gem 'guard-bundler'
+
 end
 
 # QUALITY
@@ -28,8 +34,6 @@ group :test do
   gem "brakeman", require: false
 
   # continuous integration
-  gem "guard-rspec"
-  gem 'guard-brakeman'
   gem 'rb-fsevent', require: false if RUBY_PLATFORM =~ /darwin/i
 
   # metrics
