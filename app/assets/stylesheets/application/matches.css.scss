@@ -1,0 +1,12 @@
+.match {
+  display: inline-block;
+
+  .vs {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  div, .vs {
+    float: left;
+  }
+}

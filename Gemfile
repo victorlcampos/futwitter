@@ -14,7 +14,7 @@ group :development do
   gem "guard-rspec"
   gem 'guard-brakeman'
   gem 'guard-bundler'
-
+  gem 'guard-livereload'
 end
 
 # QUALITY
@@ -48,6 +48,8 @@ gem 'sqlite3'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
+  gem 'compass-rails'
+
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
 end

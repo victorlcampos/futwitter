@@ -41,10 +41,10 @@ class Match < ActiveRecord::Base
   private
   def self.create_teams(datas)
     home_team_name = datas[0].text
-    home_team = Team.create!(name: home_team_name) unless (home_team = Team.where(name: home_team_name.downcase).first)
+    home_team = Team.find_or_create_by_name(home_team_name.downcase)
 
     away_team_name = datas[4].text
-    away_team = Team.create!(name: away_team_name) unless (away_team = Team.where(name: away_team_name.downcase).first)
+    away_team = Team.find_or_create_by_name(away_team_name.downcase)
     [home_team, away_team]
   end
 end

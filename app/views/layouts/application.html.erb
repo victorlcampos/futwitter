@@ -13,11 +13,15 @@
     <h1 class="title">Futwitter | Plataforma social do futebol</h1>
   </div>
 
-  <% @teams.each do |team| %>
-    <%= link_to team.name, team_path(team) %>
-  <% end %>
+  <div id="teams">
+    <% @teams.each do |team| %>
+      <%= link_to team.name, team_path(team) %>
+    <% end %>
+  </div>
 
-  <%= yield %>
+  <div id="content">
+    <%= yield %>
+  </div>
 
 </body>
 </html>

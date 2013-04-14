@@ -16,6 +16,8 @@ describe "matches/_match_score.html.erb" do
         assert_select "span.team_score", text: match.home_team_score
       end
 
+      assert_select "span.vs", text: "x"
+
       assert_select "div.away_team" do
         assert_select "span.team_score", text: match.away_team_score
         assert_select "span.team_name",  text: match.away_team_name
