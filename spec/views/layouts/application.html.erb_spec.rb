@@ -25,7 +25,7 @@ describe "layouts/application.html.erb" do
     render
     @teams.each do |team|
       assert_select "a[href='#{team_path(team)}']", count: 1 do
-        assert_select "img[src='#{team.badge_url}']"
+        assert_select "img[src='#{team.badge_url(:thumb)}']"
       end
     end
   end
