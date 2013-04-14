@@ -1,6 +1,9 @@
 require 'spec_helper'
+require 'carrierwave/test/matchers'
 
 describe Team do
+  include CarrierWave::Test::Matchers
+
   subject(:flamengo)      { FactoryGirl.create(:flamengo) }
 
   context 'relationships' do
@@ -38,12 +41,17 @@ describe Team do
     describe ".badge_url" do
       describe "when have a badge" do
         its(:badge_url) { should_not be_nil }
+
+        it "thumb version should not be nil" do
+          flamengo.badge_url(:thumb).should_not be_nil
+        end
       end
 
       describe "when don't have a badge" do
         it "should return the default badge" do
           flamengo.remove_badge!
           flamengo.badge_url.should eq("default.png")
+          flamengo.badge_url(:thumb).should eq("thumb-default.png")
         end
       end
     end

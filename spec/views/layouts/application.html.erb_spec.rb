@@ -24,7 +24,9 @@ describe "layouts/application.html.erb" do
   it "should show link to all team with names" do
     render
     @teams.each do |team|
-      assert_select "a[href='#{team_path(team)}']", text: team.name, count: 1
+      assert_select "a[href='#{team_path(team)}']", count: 1 do
+        assert_select "img[src='#{team.badge_url}']"
+      end
     end
   end
 

@@ -23,9 +23,4 @@ class Team < ActiveRecord::Base
   def name
     read_attribute(:name).humanize
   end
-
-  def badge_url
-    url = super
-    url.nil? ? "default.png" : url
-  end
 end

@@ -1,12 +1,27 @@
+@import "compass";
+
 .match {
   display: inline-block;
+  background-color: white;
+  width: 480px;
+  border-radius: 8px;
+  padding: 5px;
+  margin: 10px;
+  text-align: center;
 
-  .vs {
-    margin-left: 10px;
-    margin-right: 10px;
+  div {
+    display: inline;
   }
-
-  div, .vs {
-    float: left;
+  .away_team {
+    @include float-right;
+  }
+  .home_team {
+    @include float-left;
+  }
+  .vs {
+    width: 10px;
+    height: 10px;
+    position: relative;
+    top: 48px;
   }
 }

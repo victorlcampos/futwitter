@@ -13,3 +13,16 @@
  *= require_self
  *= require_tree ./application
  */
+
+@import "compass";
+
+body {
+  @include background-image(image-url("background.png"));
+}
+
+#content {
+  @include columns(20em 2);
+  width: 1000px;
+
+  margin: 0 auto;
+}
