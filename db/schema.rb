@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130323130438) do
+ActiveRecord::Schema.define(:version => 20130414173456) do
+
+  create_table "championships", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "matches", :force => true do |t|
     t.integer  "home_team_id"
@@ -20,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20130323130438) do
     t.integer  "away_team_score"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "championship_id"
   end
 
   add_index "matches", ["away_team_id"], :name => "index_matches_on_away_team_id"

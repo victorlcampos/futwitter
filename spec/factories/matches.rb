@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :flamengo_vs_vasco, class: Match do
     association :home_team, factory: :flamengo
     association :away_team, factory: :vasco
+    association :championship, factory: :campeonato_carioca
   end
 
   factory :botafogo_vs_flamengo, class: Match do

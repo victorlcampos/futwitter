@@ -1,5 +1,12 @@
 @import "compass";
 
+.match:hover {
+  img {
+    top: -5px;
+    position: relative;
+  }
+}
+
 .match {
   display: inline-block;
   background-color: white;
@@ -18,10 +25,18 @@
   .home_team {
     @include float-left;
   }
+
+  img {
+    @include transition(all 0.3s);
+    position: relative;
+    top: 0;
+  }
+
   .vs {
     width: 10px;
     height: 10px;
     position: relative;
     top: 48px;
   }
+
 }
