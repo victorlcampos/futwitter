@@ -20,26 +20,32 @@ end
 # QUALITY
 # performance
 gem 'dimensions-rails'
-gem 'bullet', group: [:test, :development]
 
-# test
-gem "rspec-rails", group: [:test, :development]
+group :test, :development do
+  # metrics
+  gem 'simplecov', require: false
+  gem 'simplecov-rcov-text', require: false
+  gem 'metric_fu', '4.1.0'
+  gem 'rubocop', '0.4.6'
+
+  # security
+  gem "brakeman", require: false
+
+  # performance
+  gem 'bullet'
+
+  # test
+  gem "rspec-rails"
+end
+
 group :test do
   # test
   gem 'shoulda-matchers'
   gem "factory_girl_rails"
   gem "capybara"
 
-  # security
-  gem "brakeman", require: false
-
   # continuous integration
   gem 'rb-fsevent', require: false if RUBY_PLATFORM =~ /darwin/i
-
-  # metrics
-  gem 'simplecov', require: false
-  gem 'simplecov-rcov-text', require: false
-  gem 'metric_fu', '4.1.0'
 end
 
 # CORE

@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20130414173456) do
   end
 
   add_index "matches", ["away_team_id"], :name => "index_matches_on_away_team_id"
+  add_index "matches", ["championship_id"], :name => "index_matches_on_championship_id"
   add_index "matches", ["home_team_id", "away_team_id"], :name => "index_matches_on_home_team_id_and_away_team_id"
   add_index "matches", ["home_team_id"], :name => "index_matches_on_home_team_id"
 

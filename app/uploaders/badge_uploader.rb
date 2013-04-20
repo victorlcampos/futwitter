@@ -10,6 +10,6 @@ class BadgeUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    [version_name, "default.png"].compact.join("-")
+    [version_name, 'default.png'].compact.join('-')
   end
 end
