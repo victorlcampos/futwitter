@@ -7,6 +7,9 @@ describe 'layouts/application.html.erb' do
     vasco = FactoryGirl.create(:vasco)
 
     @teams = assign(:teams, [flamengo, vasco])
+
+    campeonato_carioca = FactoryGirl.create(:campeonato_carioca)
+    @championships = assign(:championship, [campeonato_carioca])
   end
 
   it 'should render the title' do
@@ -25,11 +28,21 @@ describe 'layouts/application.html.erb' do
     end
   end
 
-  it 'should show link to all team with names' do
+  it 'should show link to all team with images' do
     render
     @teams.each do |team|
       assert_select "a[href='#{team_path(team)}']", count: 1 do
         assert_select "img[src='#{team.badge_url(:thumb)}']"
+      end
+    end
+  end
+
+  it 'should show select to championships' do
+    render
+    assert_select 'select#championship' do
+      @championships.each do |championship|
+        assert_select "option[value=#{championship.id}]",
+                                              count: 1, text: championship.name
       end
     end
   end

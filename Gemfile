@@ -11,6 +11,7 @@ group :development do
   gem "binding_of_caller"
 
   # continuous integration
+  gem 'guard-jasmine'
   gem "guard-rspec"
   gem 'guard-brakeman'
   gem 'guard-bundler'
@@ -36,6 +37,7 @@ group :test, :development do
 
   # test
   gem "rspec-rails"
+  gem 'jasminerice'
 end
 
 group :test do

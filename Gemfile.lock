@@ -137,6 +137,11 @@ GEM
     guard-bundler (1.0.0)
       bundler (~> 1.0)
       guard (~> 1.1)
+    guard-jasmine (1.15.1)
+      childprocess
+      guard (>= 1.1.0)
+      multi_json
+      thor
     guard-livereload (1.1.3)
       em-websocket (>= 0.2.0)
       guard (>= 1.5.0)
@@ -152,6 +157,9 @@ GEM
     http_parser.rb (0.5.3)
     i18n (0.6.1)
     japgolly-Saikuro (1.1.1.0)
+    jasminerice (0.0.10)
+      coffee-rails
+      haml
     journey (1.0.4)
     jquery-rails (2.2.1)
       railties (>= 3.0, < 5.0)
@@ -334,8 +342,10 @@ DEPENDENCIES
   factory_girl_rails
   guard-brakeman
   guard-bundler
+  guard-jasmine
   guard-livereload
   guard-rspec
+  jasminerice
   jquery-rails
   metric_fu (= 4.1.0)
   mini_magick
