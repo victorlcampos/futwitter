@@ -1,3 +1,23 @@
+== Instalar o Istanbul - a JS code coverage tool written in JS
+
+1. Instalar o Node.js: http://nodejs.org/download/
+2.
+```bash
+  npm install -g istanbul
+```
+* On OSx
+```bash
+  ln -s /usr/local/share/npm/bin/istanbul /usr/local/bin
+```
+
+== Instalar o PhantomJS
+
+1. Windows: https://code.google.com/p/phantomjs/downloads/list
+2. Mac:
+```bash
+  brew install phantomjs
+```
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create

@@ -11,6 +11,7 @@ group :development do
   gem 'binding_of_caller'
 
   # continuous integration
+  gem 'guard-rails'
   gem 'guard-jasmine'
   gem 'guard-rspec'
   gem 'guard-brakeman'

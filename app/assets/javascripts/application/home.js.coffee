@@ -1,0 +1,2 @@
+$ ->
+  championshipFilter = new ChampionshipFilter($("#championship"))

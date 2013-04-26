@@ -12,7 +12,11 @@ describe 'home/index.html.erb' do
     render
 
     @matches.each do |match|
-      assert_select "a.match#match_#{match.id}[href='#{match_path(match)}']" do
+      a_id = "match_#{match.id}"
+      a_attributes = "href='#{match_path(match)}'"
+      a_classes = "match.filter.championship_#{match.championship_id}"
+
+      assert_select "a.#{a_classes}##{a_id}[#{a_attributes}]" do
         assert_select 'div.home_team' do
           badge_url = match.home_team_badge_url
 

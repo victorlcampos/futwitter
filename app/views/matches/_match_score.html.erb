@@ -1,4 +1,7 @@
-<a id="match_<%= match.id %>" href="<%= match_path(match) %>" class="match">
+<% filter ||= false %>
+<% a_classes = "match#{ filter ? ' filter' : ''} championship_#{match.championship_id}" %>
+
+<a id="match_<%= match.id %>" href="<%= match_path(match) %>" class="<%= a_classes %> ">
   <div class="home_team">
     <span class="team_badge"><%= image_tag match.home_team_badge_url %></span>
     <span class="team_name"><%= match.home_team_name %></span>

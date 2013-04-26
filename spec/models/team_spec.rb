@@ -4,7 +4,7 @@ require 'carrierwave/test/matchers'
 describe Team do
   include CarrierWave::Test::Matchers
 
-  subject(:flamengo)      { FactoryGirl.create(:flamengo) }
+  subject(:flamengo) { FactoryGirl.create(:flamengo) }
 
   context 'relationships' do
     it { should have_many(:home_matches).class_name('Match') }

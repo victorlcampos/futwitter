@@ -87,10 +87,8 @@ metric_fu shift the first line
      belongs_to :championship
    
      delegate :name, to: :championship, prefix: true
-     delegate :name, to: :home_team, prefix: true
-     delegate :badge_url, to: :home_team, prefix: true
-     delegate :name, to: :away_team, prefix: true
-     delegate :badge_url, to: :away_team, prefix: true
+     delegate :name, :badge_url, to: :home_team, prefix: true
+     delegate :name, :badge_url, to: :away_team, prefix: true
    
      attr_accessible :home_team, :away_team, :home_team_score,
                      :away_team_score, :championship

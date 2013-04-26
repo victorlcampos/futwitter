@@ -147,6 +147,8 @@ GEM
       em-websocket (>= 0.2.0)
       guard (>= 1.5.0)
       multi_json (~> 1.0)
+    guard-rails (0.4.2)
+      guard (>= 0.2.2)
     guard-rspec (2.5.2)
       guard (>= 1.1)
       rspec (~> 2.11)
@@ -346,6 +348,7 @@ DEPENDENCIES
   guard-bundler
   guard-jasmine
   guard-livereload
+  guard-rails
   guard-rspec
   jasminerice
   jquery-rails
