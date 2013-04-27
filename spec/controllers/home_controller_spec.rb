@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe HomeController do
   before(:each) do
-    stub_const('Match::LANCENET_URL',
+    stub_const('UpdateMatchService::LANCENET_URL',
                 File.join(Rails.root, 'spec', 'support',
                                       'urls', 'temporeal_lancenet.html'))
 
