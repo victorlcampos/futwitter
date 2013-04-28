@@ -36,7 +36,7 @@ class UpdateMatchService
   end
 
   def search_data(parents)
-    search_data = {
+    {
       home_team_id: parents[:home_team],
       away_team_id: parents[:away_team],
       championship_id: parents[:championship]

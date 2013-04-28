@@ -31,7 +31,7 @@ describe 'layouts/application.html.erb' do
 
   it 'should show link to all team with images' do
     render
-    assert_select "div#teams" do
+    assert_select 'div#teams' do
       @teams.each do |team|
         team_class = team_classes(team).gsub(' ', '.')
 
