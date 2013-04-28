@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'layouts/application.html.erb' do
+  helper(ApplicationHelper, TeamsHelper)
 
   before(:each) do
     flamengo = FactoryGirl.create(:flamengo)
@@ -30,9 +31,13 @@ describe 'layouts/application.html.erb' do
 
   it 'should show link to all team with images' do
     render
-    @teams.each do |team|
-      assert_select "a[href='#{team_path(team)}']", count: 1 do
-        assert_select "img[src='#{team.badge_url(:thumb)}']"
+    assert_select "div#teams" do
+      @teams.each do |team|
+        team_class = team_classes(team).gsub(' ', '.')
+
+        assert_select "a.#{team_class}[href='#{team_path(team)}']", count: 1 do
+          assert_select "img[src='#{team.badge_url(:thumb)}']"
+        end
       end
     end
   end

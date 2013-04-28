@@ -12,6 +12,14 @@ class Team < ActiveRecord::Base
     Match.where('home_team_id = ? OR away_team_id = ?', my_id, my_id)
   end
 
+  def championships
+    Championship.joins(:matches).merge(matches)
+  end
+
+  def championships_ids
+    championships.pluck('championships.id')
+  end
+
   def current_match
     matches.last
   end

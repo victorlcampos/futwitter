@@ -60,10 +60,22 @@ metric_fu shift the first line
    end
 
 ================================================================================
+ ./app/helpers/teams_helper.rb
+================================================================================
+   module TeamsHelper
+     def team_classes(team)
+       championships_ids = team.championships_ids
+       "championship_#{championships_ids.join(' championship_')}"
+     end
+   end
+
+================================================================================
  ./app/models/championship.rb
 ================================================================================
    class Championship < ActiveRecord::Base
      attr_accessible :name
+   
+     has_many :matches
    
    
      def name=(name)
@@ -126,6 +138,14 @@ metric_fu shift the first line
      def matches
        my_id = self.id
        Match.where('home_team_id = ? OR away_team_id = ?', my_id, my_id)
+     end
+   
+     def championships
+       Championship.joins(:matches).merge(matches)
+     end
+   
+     def championships_ids
+       championships.pluck('championships.id')
      end
    
      def current_match

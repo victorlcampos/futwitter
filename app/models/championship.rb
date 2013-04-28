@@ -1,6 +1,8 @@
 class Championship < ActiveRecord::Base
   attr_accessible :name
 
+  has_many :matches
+
 
   def name=(name)
     write_attribute(:name, name.downcase)

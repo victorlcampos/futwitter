@@ -13,14 +13,27 @@ describe Team do
   end
 
   context 'general methods' do
-    let(:flamengo_vs_vasco) do
-      FactoryGirl.create(:flamengo_vs_vasco, home_team: flamengo)
+    let!(:campeonato_carioca) do
+      FactoryGirl.create(:campeonato_carioca)
     end
-    let(:botafogo_vs_vasco) do
-      FactoryGirl.create(:botafogo_vs_flamengo, away_team: flamengo)
+    let!(:brasileirao) do
+      FactoryGirl.create(:campeonato_brasileiro)
+    end
+    let!(:flamengo_vs_vasco) do
+      FactoryGirl.create(:flamengo_vs_vasco,
+                                      home_team: flamengo,
+                                      championship: campeonato_carioca)
+    end
+    let!(:botafogo_vs_vasco) do
+      FactoryGirl.create(:botafogo_vs_flamengo,
+                                      away_team: flamengo,
+                                      championship: brasileirao)
     end
 
     its(:matches)       { should eq([flamengo_vs_vasco, botafogo_vs_vasco]) }
+    its(:championships) { should eq([campeonato_carioca, brasileirao]) }
+    its(:championships_ids) { should eq([1, 2]) }
+
     its(:current_match) { should eq(botafogo_vs_vasco) }
   end
 

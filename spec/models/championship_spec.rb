@@ -3,6 +3,10 @@ require 'spec_helper'
 describe Championship do
   subject(:campeonato_carioca)      { FactoryGirl.create(:campeonato_carioca) }
 
+  context 'relationships' do
+    it { should have_many(:matches) }
+  end
+
   context 'geters and seters' do
     describe '.name=(name)' do
       it 'should save name as downcase' do
