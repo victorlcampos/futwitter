@@ -147,7 +147,7 @@
         null,
         null
       ],
-      "/Users/victorcampos/Workspace/futwitter/app/services/update_match.rb": [
+      "/Users/victorcampos/Workspace/futwitter/app/services/update_match_service.rb": [
         1,
         1,
         null,
@@ -210,7 +210,7 @@
         null
       ]
     },
-    "timestamp": 1367072037
+    "timestamp": 1367087774
   },
   "Cucumber Features": {
     "coverage": {

@@ -2,9 +2,7 @@
 
 1. Windows: https://code.google.com/p/phantomjs/downloads/list
 2. Mac:
-```bash
   brew install phantomjs
-```
 
 == Welcome to Rails
 

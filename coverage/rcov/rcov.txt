@@ -142,7 +142,7 @@ metric_fu shift the first line
    end
 
 ================================================================================
- ./app/services/update_match.rb
+ ./app/services/update_match_service.rb
 ================================================================================
    class UpdateMatchService
      LANCENET_URL = 'http://temporeal.lancenet.com.br/'
