@@ -12,6 +12,3 @@ window.ChampionshipFilter = class ChampionshipFilter
     championship_id = this.get_selected_championship()
     $('.filter').not('.championship_'+championship_id ).hide();
     $('.filter').filter('.championship_'+championship_id ).show();
-
-
-

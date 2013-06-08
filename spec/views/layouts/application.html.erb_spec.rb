@@ -33,9 +33,9 @@ describe 'layouts/application.html.erb' do
     render
     assert_select 'div#teams' do
       @teams.each do |team|
-        team_class = team_classes(team).gsub(' ', '.')
+        team_class = ".filter.#{team_classes(team).gsub(' ', '.')}"
 
-        assert_select "a.#{team_class}[href='#{team_path(team)}']", count: 1 do
+        assert_select "a#{team_class}[href='#{team_path(team)}']", count: 1 do
           assert_select "img[src='#{team.badge_url(:thumb)}']"
         end
       end

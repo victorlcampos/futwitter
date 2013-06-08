@@ -18,7 +18,7 @@ describe TeamsHelper do
     end
 
     it 'should return the championships filter class' do
-      class_expected = 'championship_1 championship_2'
+      class_expected = 'filter championship_1 championship_2'
       helper.team_classes(flamengo).should eq(class_expected)
     end
   end

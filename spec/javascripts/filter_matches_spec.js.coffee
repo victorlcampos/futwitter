@@ -1,6 +1,6 @@
-describe 'Filter match', ->
+describe 'ChampionshipFilter', ->
   beforeEach ->
-    loadFixtures("filter_matches.html")
+    loadFixtures("filter_matches_and_teams.html")
     window.select_championship = $("#championship")
     window.filter = new ChampionshipFilter(select_championship)
 
