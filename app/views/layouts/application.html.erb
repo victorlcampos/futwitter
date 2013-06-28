@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Futwitter | Plataforma social do futebol</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <title>Futwitter | Plataforma social do futebol</title>
+    <%= stylesheet_link_tag    'application', :media => "all" %>
+    <%= csrf_meta_tags %>
+    <%= javascript_include_tag 'https://www.google.com/jsapi' %>
+  </head>
+  <body>
 
-  <div id="header">
-    <%= link_to image_tag("logo.png"), root_path %>
-    <h1 class="title">Futwitter | Plataforma social do futebol</h1>
-  </div>
-
-  <div id="teams_nav">
-    <div id="championships">
-      <%= select_tag :championship, options_from_collection_for_select(@championships, 'id', 'name') %>
+    <div id="header">
+      <%= link_to image_tag("logo.png"), root_path %>
+      <h1 class="title">Futwitter | Plataforma social do futebol</h1>
     </div>
-    <div id="teams">
-      <% @teams.each do |team| %>
-        <%= link_to image_tag(team.badge_url(:thumb)), team_path(team), class: team_classes(team) %>
-      <% end %>
+
+    <div id="teams_nav">
+      <div id="championships">
+        <%= select_tag :championship, options_from_collection_for_select(@championships, 'id', 'name') %>
+      </div>
+      <div id="teams">
+        <% @teams.each do |team| %>
+          <%= link_to image_tag(team.badge_url(:thumb)), team_path(team), class: team_classes(team) %>
+        <% end %>
+      </div>
     </div>
-  </div>
 
-  <div id="content">
-    <%= yield %>
-  </div>
-
-</body>
+    <div id="content" class='<%= controller_name %>'>
+      <%= yield %>
+    </div>
+  </body>
+  <%= javascript_include_tag 'application' %>
 </html>

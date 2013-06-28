@@ -14,8 +14,28 @@ class UpdateMatchService
   def match_data(datas)
     {
       home_team_score: datas[1].text,
-      away_team_score: datas[3].text
+      away_team_score: datas[3].text,
+      internet_url: datas.css('a').first.attributes['href'].value,
+      start_time: start_time(datas)
     }
+  end
+
+  def start_time(datas)
+    date_text = datas.text.split(', ')[1]
+
+    day,     date_text = split_text('/', date_text)
+    month,   date_text = split_text(' ', date_text)
+    hour,    date_text = split_text(':', date_text)
+    minutes, date_text = date_text[1].to_i
+
+    DateTime.new(Date.today.year, month, day, hour, minutes)
+  end
+
+  def split_text(partern, text)
+    text  = text.split(partern)
+    value = text[0]
+    text  = text[1]
+    [value.to_i, text]
   end
 
   def parents(datas)

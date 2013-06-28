@@ -9,11 +9,11 @@ metric_fu shift the first line
    
      protected
      def load_championchip
-       @championships = Championship.all
+!!     @championships = Championship.all
      end
    
      def load_teams
-       @teams = Team.all
+!!     @teams = Team.all
      end
    end
 
@@ -24,11 +24,11 @@ metric_fu shift the first line
      skip_before_filter :load_teams, :load_championchip
    
      def index
-       UpdateMatchService.new.update_matches_from_internet
+!!     UpdateMatchService.new.update_matches_from_internet
    
-       @matches = Match.includes(:home_team, :away_team).all
-       @teams = Team.all
-       @championships = Championship.all
+!!     @matches = Match.includes(:home_team, :away_team).all
+!!     @teams = Team.all
+!!     @championships = Championship.all
      end
    end
 
@@ -37,8 +37,11 @@ metric_fu shift the first line
 ================================================================================
    class MatchesController < ApplicationController
      def show
-       @match = Match.find(params[:id])
-       @moves = @match.moves
+!!     @match = Match.find(params[:id])
+!!     UpdateMovesService.new(@match).update_moves_from_internet
+!!     @moves = @match.moves
+!!     @home_tweets_per_minute = @match.home_tweets_per_minute
+!!     @away_tweets_per_minute = @match.away_tweets_per_minute
      end
    end
 
@@ -47,9 +50,9 @@ metric_fu shift the first line
 ================================================================================
    class TeamsController < ApplicationController
      def show
-       @team = Team.find(params[:id])
-       @match = @team.current_match
-       @news = @team.news
+!!     @team = Team.find(params[:id])
+!!     @match = @team.current_match
+!!     @news = @team.news
      end
    end
 
@@ -64,8 +67,8 @@ metric_fu shift the first line
 ================================================================================
    module TeamsHelper
      def team_classes(team)
-       championships_ids = team.championships_ids
-       "filter championship_#{championships_ids.join(' championship_')}"
+!!     championships_ids = team.championships_ids
+!!     "filter championship_#{championships_ids.join(' championship_')}"
      end
    end
 
@@ -97,21 +100,60 @@ metric_fu shift the first line
      belongs_to :away_team, class_name: 'Team'
      belongs_to :championship
    
-     delegate :name, to: :championship, prefix: true
-     delegate :name, :badge_url, to: :home_team, prefix: true
-     delegate :name, :badge_url, to: :away_team, prefix: true
-   
      attr_accessible :home_team, :away_team, :home_team_score,
-                     :away_team_score, :championship
+                     :away_team_score, :championship, :internet_url, :start_time
+   
+     delegate :name, to: :championship, prefix: true
+     delegate :name, :badge_url, :tweets_count, to: :home_team, prefix: true
+     delegate :name, :badge_url, :tweets_count, to: :away_team, prefix: true
+   
+     def home_tweets_per_minute
+!!     team_tweets_per_minute(home_team)
+     end
+   
+     def away_tweets_per_minute
+!!     team_tweets_per_minute(away_team)
+     end
+   
+     def end_time
+!!     start_time + 2.hours
+     end
+   
+     private
+     def team_tweets_per_minute(team)
+!!     (team.tweets_count / passed_minutes).round
+     end
+   
+     def passed_minutes
+!!     (end_time_count_tweet - start_time_count_tweet) / 60
+     end
+   
+     def end_time_count_tweet
+!!     [Time.zone.now, end_time + 30.minute].min
+     end
+   
+     def start_time_count_tweet
+!!     start_time - 30.minutes
+     end
    end
 
 ================================================================================
  ./app/models/move.rb
 ================================================================================
    class Move < ActiveRecord::Base
-     default_scope order('id DESC')
+     default_scope order('half Desc, minute Desc')
    
      belongs_to :match
+     attr_accessible :match_id, :minute, :text, :team_name, :half
+   
+     def team_name=(team_name)
+       write_attribute(:team_name, team_name.downcase) if team_name
+     end
+   
+     def team_name
+       my_team_name = read_attribute(:team_name)
+       my_team_name.humanize if my_team_name
+     end
    end
 
 ================================================================================
@@ -132,24 +174,34 @@ metric_fu shift the first line
      has_many :home_matches, class_name: 'Match', foreign_key: 'home_team_id'
      has_many :away_matches, class_name: 'Match', foreign_key: 'away_team_id'
      has_many :news
+     has_many :tweets
    
      attr_accessible :name
+     after_create :schedule_twitter
    
      def matches
-       my_id = self.id
-       Match.where('home_team_id = ? OR away_team_id = ?', my_id, my_id)
+!!     my_id = self.id
+!!     Match.where('home_team_id = ? OR away_team_id = ?', my_id, my_id)
      end
    
      def championships
-       Championship.joins(:matches).merge(matches)
+!!     Championship.joins(:matches).merge(matches)
      end
    
      def championships_ids
-       championships.pluck('championships.id')
+!!     championships.pluck('championships.id')
      end
    
      def current_match
-       matches.last
+!!     matches.last
+     end
+   
+     def current_match_end_time
+!!     current_match.end_time
+     end
+   
+     def current_match_start_time
+!!     current_match.start_time
      end
    
      def name=(name)
@@ -158,6 +210,34 @@ metric_fu shift the first line
    
      def name
        read_attribute(:name).humanize
+     end
+   
+     private
+     def schedule_twitter
+       Resque.enqueue(TwitterStream, id)
+     end
+   end
+
+================================================================================
+ ./app/models/tweet.rb
+================================================================================
+   class Tweet < ActiveRecord::Base
+     belongs_to :team, counter_cache: true
+     attr_accessible :geo, :text, :team, :minute
+   
+     def self.create_using_real_tweet(real_tweet, team)
+!!     tweets_params = {
+         text: real_tweet.text,
+         geo: real_tweet.geo,
+         team: team,
+         minute: get_minute(team)
+       }
+!!     Tweet.create!(tweets_params)
+     end
+   
+     private
+     def self.get_minute(team)
+!!     (Time.zone.now - team.current_match_start_time) / 60
      end
    end
 
@@ -168,11 +248,11 @@ metric_fu shift the first line
      LANCENET_URL = 'http://temporeal.lancenet.com.br/'
    
      def update_matches_from_internet
-       doc = Nokogiri::HTML(open(LANCENET_URL))
+!!     doc = Nokogiri::HTML(open(LANCENET_URL))
    
-       doc.css('#listaJogos tr').each do |match|
-         datas = match.css('td')
-         update_or_create_match(match_data(datas), parents(datas))
+!!     doc.css('#listaJogos tr').each do |match|
+!!       datas = match.css('td')
+!!       update_or_create_match(match_data(datas), parents(datas))
        end
      end
    
@@ -180,8 +260,28 @@ metric_fu shift the first line
      def match_data(datas)
        {
          home_team_score: datas[1].text,
-         away_team_score: datas[3].text
-       }
+         away_team_score: datas[3].text,
+         internet_url: datas.css('a').first.attributes['href'].value,
+         start_time: start_time(datas)
+!!     }
+     end
+   
+     def start_time(datas)
+!!     date_text = datas.text.split(', ')[1]
+   
+!!     day,     date_text = split_text('/', date_text)
+!!     month,   date_text = split_text(' ', date_text)
+!!     hour,    date_text = split_text(':', date_text)
+!!     minutes, date_text = date_text[1].to_i
+   
+!!     DateTime.new(Date.today.year, month, day, hour, minutes)
+     end
+   
+     def split_text(partern, text)
+!!     text  = text.split(partern)
+!!     value = text[0]
+!!     text  = text[1]
+!!     [value.to_i, text]
      end
    
      def parents(datas)
@@ -189,15 +289,15 @@ metric_fu shift the first line
          home_team:    find_or_create_home_team(datas),
          away_team:    find_or_create_away_team(datas),
          championship: find_or_create_championship(datas)
-       }
+!!     }
      end
    
      def update_or_create_match(match_data, parents)
-       if match = Match.where(search_data(parents)).first
-         match.update_attributes!(match_data)
+!!     if match = Match.where(search_data(parents)).first
+!!       match.update_attributes!(match_data)
        else
-         match_data.merge!(parents)
-         Match.create!(match_data)
+!!       match_data.merge!(parents)
+!!       Match.create!(match_data)
        end
      end
    
@@ -206,22 +306,93 @@ metric_fu shift the first line
          home_team_id: parents[:home_team],
          away_team_id: parents[:away_team],
          championship_id: parents[:championship]
-       }
+!!     }
      end
    
      def find_or_create_home_team(datas)
-       home_team_name = datas[0].text
-       Team.find_or_create_by_name(home_team_name.downcase)
+!!     home_team_name = datas[0].text
+!!     Team.find_or_create_by_name(home_team_name.downcase)
      end
    
      def find_or_create_away_team(datas)
-       away_team_name = datas[4].text
-       Team.find_or_create_by_name(away_team_name.downcase)
+!!     away_team_name = datas[4].text
+!!     Team.find_or_create_by_name(away_team_name.downcase)
      end
    
      def find_or_create_championship(datas)
-       championship_name = datas[6].text
-       Championship.find_or_create_by_name(championship_name.downcase)
+!!     championship_name = datas[6].text
+!!     Championship.find_or_create_by_name(championship_name.downcase)
+     end
+   end
+
+================================================================================
+ ./app/services/update_moves_service.rb
+================================================================================
+   class UpdateMovesService
+     FIRST_HALF  = 'etapa-1.htm'
+     SECOND_HALF = 'etapa-2.htm'
+   
+     attr_accessor :match
+   
+     def initialize(match)
+!!     @match = match
+     end
+   
+     def update_moves_from_internet
+!!     find_or_create_move(FIRST_HALF)
+!!     find_or_create_move(SECOND_HALF)
+     end
+   
+     protected
+   
+     def find_or_create_move(half)
+!!     doc = Nokogiri::HTML(open(get_url(half)), nil, 'UTF-8')
+!!     doc.css('tr').each do |move|
+!!       params = get_param(move, half)
+!!       Move.create!(params) unless Move.where(params).first
+       end
+     end
+   
+     def get_url(half)
+!!     base_url = UpdateMatchService::LANCENET_URL
+!!     match_url = match.internet_url
+!!     "#{base_url}#{match_url}#{half}"
+     end
+   
+     def get_param(move, half)
+       {
+         match_id: match.id,
+         minute: get_minutes(move),
+         text: get_text(move),
+         team_name: get_team_name(move),
+         half: get_half(half)
+!!     }
+     end
+   
+     def get_half(half)
+!!     case half
+       when FIRST_HALF
+!!       1
+       when SECOND_HALF
+!!       2
+       end
+     end
+   
+     def get_minutes(move)
+!!      move.css('.minuto').text.gsub(/[^0-9]/, '')
+     end
+   
+     def get_text(move)
+!!     move.css('.lances').text
+     end
+   
+     def get_team_name(move)
+!!     team_name = nil
+!!     team_tag = move.css('.td-EscudoTime .png')
+!!     unless team_tag.empty?
+!!       team_name = team_tag[0].attributes['alt'].value.downcase
+       end
+!!     team_name
      end
    end
 
@@ -240,7 +411,7 @@ metric_fu shift the first line
      end
    
      def default_url
-       [version_name, 'default.png'].compact.join('-')
+!!     [version_name, 'default.png'].compact.join('-')
      end
    end
 
@@ -251,5 +422,26 @@ metric_fu shift the first line
    
    class ImageUploader < CarrierWave::Uploader::Base
      # include CarrierWave::MiniMagick
+   end
+
+================================================================================
+ ./app/workers/twitter_stream.rb
+================================================================================
+   class TwitterStream
+     @queue = :twitter
+     DAEMON_FILE = File.join(Rails.root, 'lib', 'daemons', 'team_daemon.rb')
+     def self.perform(team_id)
+!!     team = Team.find(team_id)
+   
+!!     options = {
+         app_name: team.name,
+         ARGV: ['start', '-f', '--', "team=#{team.id}"],
+         dir: Rails.root.join('pids'),
+         backtrac: true,
+         monitor: true
+       }
+   
+!!     Daemons.run(DAEMON_FILE, options)
+     end
    end
 

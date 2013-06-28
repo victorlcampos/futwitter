@@ -10,6 +10,7 @@ describe Team do
     it { should have_many(:home_matches).class_name('Match') }
     it { should have_many(:away_matches).class_name('Match') }
     it { should have_many(:news) }
+    it { should have_many(:tweets) }
   end
 
   context 'general methods' do
@@ -35,10 +36,18 @@ describe Team do
     its(:championships_ids) { should eq([1, 2]) }
 
     its(:current_match) { should eq(botafogo_vs_vasco) }
+
+    its(:current_match_end_time) do
+      should eq(subject.current_match.end_time)
+    end
+
+    its(:current_match_start_time) do
+      should eq(subject.current_match.start_time)
+    end
   end
 
   context 'geters and seters' do
-    describe '.name=(name)' do
+    describe '#name=(name)' do
       it 'should save name as downcase' do
         flamengo.name = 'FlaMengO'
         flamengo.save!
@@ -47,7 +56,7 @@ describe Team do
       end
     end
 
-    describe '.name' do
+    describe '#name' do
       it 'should return name as humanize' do
         flamengo.name = 'FlaMengO'
         flamengo.save!
@@ -55,7 +64,7 @@ describe Team do
       end
     end
 
-    describe '.badge_url' do
+    describe '#badge_url' do
       describe 'when have a badge' do
         its(:badge_url) { should_not be_nil }
 
@@ -70,6 +79,20 @@ describe Team do
           flamengo.badge_url.should eq('default.png')
           flamengo.badge_url(:thumb).should eq('thumb-default.png')
         end
+      end
+    end
+  end
+
+  context 'callbacks' do
+    context 'after create' do
+      it 'should schedule twitter stream' do
+        worker = TwitterStream
+        team_id = 1
+        Resque.stub(:enqueue_at) { true }
+        Resque.should_receive(:enqueue)
+                              .with(worker, team_id).once
+
+        FactoryGirl.create(:flamengo, id: team_id)
       end
     end
   end

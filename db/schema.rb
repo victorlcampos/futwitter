@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130414173456) do
+ActiveRecord::Schema.define(:version => 20130627141137) do
 
   create_table "championships", :force => true do |t|
     t.string   "name"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20130414173456) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.integer  "championship_id"
+    t.string   "internet_url"
+    t.datetime "start_time"
   end
 
   add_index "matches", ["away_team_id"], :name => "index_matches_on_away_team_id"
@@ -41,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20130414173456) do
     t.text     "text"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "half"
   end
 
   add_index "moves", ["match_id"], :name => "index_moves_on_match_id"
@@ -60,10 +63,22 @@ ActiveRecord::Schema.define(:version => 20130414173456) do
   create_table "teams", :force => true do |t|
     t.string   "name"
     t.string   "badge"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.integer  "tweets_count", :default => 0
   end
 
   add_index "teams", ["name"], :name => "index_teams_on_name"
+
+  create_table "tweets", :force => true do |t|
+    t.integer  "team_id"
+    t.string   "text"
+    t.string   "geo"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "minute"
+  end
+
+  add_index "tweets", ["team_id"], :name => "index_tweets_on_team_id"
 
 end

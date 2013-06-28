@@ -4,6 +4,11 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'nokogiri'
 
+gem 'resque'
+gem 'resque-scheduler', require: 'resque_scheduler'
+gem 'daemons', '~> 1.1.9'
+gem 'tweetstream'
+
 # UTILITIES
 group :development do
   gem 'pry-rails'

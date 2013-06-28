@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'matches/show.html.erb' do
   before(:each) do
+    DateTime.stub(:now) { DateTime.new(2013, 1, 1, 1, 1, 1) }
     @match = FactoryGirl.create(:flamengo_vs_vasco)
     flamengo_vs_vasco_move_2 = FactoryGirl.create(:flamengo_vs_vasco_move_2,
                                                    match: @match)
@@ -9,7 +10,17 @@ describe 'matches/show.html.erb' do
     flamengo_vs_vasco_move_1 = FactoryGirl.create(:flamengo_vs_vasco_move_1,
                                                    match: @match)
 
+    FactoryGirl.create(:tweet, team: @match.home_team)
+    FactoryGirl.create(:tweet, team: @match.home_team)
+    FactoryGirl.create(:tweet, team: @match.home_team)
+    FactoryGirl.create(:tweet, team: @match.away_team)
+
+
+    @match = Match.find(@match.id)
     @moves = [flamengo_vs_vasco_move_2, flamengo_vs_vasco_move_1]
+
+    @home_tweets_per_minute = 1
+    @away_tweets_per_minute = 0
   end
 
   it 'should show the match score' do
@@ -31,5 +42,25 @@ describe 'matches/show.html.erb' do
         end
       end
     end
+  end
+
+  it 'should show the total home tweets' do
+    render
+    assert_select '.total_home_tweets', text: 3
+  end
+
+  it 'should show the total home tweets' do
+    render
+    assert_select '.total_away_tweets', text: 1
+  end
+
+  it 'should show the total home tweets' do
+    render
+    assert_select '.tpm_home', text: 1
+  end
+
+  it 'should show the total home tweets' do
+    render
+    assert_select '.tpm_home', text: 0
   end
 end

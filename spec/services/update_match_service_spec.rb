@@ -11,8 +11,8 @@ describe UpdateMatchService do
     end
   end
 
-  context 'parse matches from internet' do
-    describe 'self.update_matches_from_internet' do
+  context 'parse score from internet' do
+    describe '#update_matches_from_internet' do
 
       before(:each) do
         stub_const('UpdateMatchService::LANCENET_URL', File.join(Rails.root,
@@ -98,6 +98,24 @@ describe UpdateMatchService do
 
             championship_name = 'Amistosos internacionais'
             last_match.championship_name.should eq(championship_name)
+          end
+
+          it 'should save the internet url' do
+            internet_url = '/2013/campeonato-gaucho/23-mar/gremio-caxias/'
+            first_match.internet_url.should eq(internet_url)
+
+            internet_url =
+                  '/2013/eliminatorias-sul-americanas/22-mar/uruguai-paraguai/'
+            medium_match.internet_url.should eq(internet_url)
+
+            internet_url =
+                  '/2013/amistosos-internacionais/21-mar/brasil-italia/'
+            last_match.internet_url.should eq(internet_url)
+          end
+
+          it 'should save the match time' do
+            first_match.start_time.should eq(DateTime.new(2013, 3, 23, 21))
+            last_match.start_time.should eq(DateTime.new(2013, 3, 21, 16))
           end
         end
 

@@ -1,17 +1,10 @@
 @import "compass";
 
-.match:hover {
-  img {
-    top: -5px;
-    position: relative;
-  }
-}
-
 .match {
   display: inline-block;
   background-color: white;
   width: 470px;
-  border-radius: 8px;
+  @include border-radius(8px);
   padding: 5px;
   margin: 10px;
   text-align: center;

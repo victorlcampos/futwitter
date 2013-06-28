@@ -1,0 +1,24 @@
+
+#tweets {
+  padding-top: 10px;
+  .home_team_tweets {
+    float: left;
+    margin-right: 41px;
+    margin-top: 21px;
+    text-align: right;
+  }
+  .match {
+    float: left;
+  }
+  .away_team_tweets {
+    float: left;
+    margin-left: 41px;
+  }
+}
+
+.match:hover {
+  img {
+    top: -5px;
+    position: relative;
+  }
+}

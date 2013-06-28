@@ -21,8 +21,11 @@ body {
 }
 
 #content {
-  @include columns(20em 2);
   width: 1000px;
 
   margin: 0 auto;
+}
+
+.clear {
+  clear: both;
 }

@@ -75,5 +75,13 @@ module Futwitter
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    TweetStream.configure do |config|
+      config.consumer_key = "rsbMz8NVhfBLuRjoXMjCVg"
+      config.consumer_secret = "DUtjKzfpyQMzGNdXkEAVrYm6kRPeIWm3rcbLZVuoei4"
+      config.oauth_token = "53695518-qBVOmBE5BzkVmDLbRQRYaX3Ust5VSOlJXur4oQZo"
+      config.oauth_token_secret = "4T4ZkdI5MK7AmgsRbuJGTJ5lR25MocqI0AWzwZo"
+      config.auth_method        = :oauth
+    end
   end
 end
