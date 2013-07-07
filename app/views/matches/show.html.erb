@@ -1,25 +1,28 @@
 <div id='tweets'>
   <div class='home_team_tweets'>
     <div>Total de Tweets durante o jogo:</div>
-    <div class='total_home_tweets'><%= @match.home_team_tweets_count %></div>
+    <div class='total_home_tweets'><%= @presenter.home_team_tweets_count %></div>
 
     <div>Tweets por minuto:</div>
-    <div class='tpm_home'><%= @home_tweets_per_minute %></div>
+    <div class='tpm_home'><%= @presenter.home_tweets_per_minute %></div>
   </div>
-  <%= render partial: "matches/match_score", locals: { match: @match } %>
+  <%= render partial: "matches/match_score", locals: { match: @presenter.match } %>
   <br />
   <div class='away_team_tweets'>
     <div>Total de Tweets durante o jogo:</div>
-    <div class='total_away_tweets'><%= @match.away_team_tweets_count %></div>
+    <div class='total_away_tweets'><%= @presenter.away_team_tweets_count %></div>
     <div>Tweets por minuto:</div>
-    <div class='tpm_home'><%= @away_tweets_per_minute %></div>
+    <div class='tpm_home'><%= @presenter.away_tweets_per_minute %></div>
   </div>
 </div>
-
+<br class='clear' />
+<div id='tweets_during_the_minutes'></div>
+<br class='clear' />
+<div id="world_map" style="width: 1000px; height: 400px"></div>
 <br class='clear' />
 <hr />
 <div id='moves'>
-  <% @moves.each do |move| %>
+  <% @presenter.moves.each do |move| %>
     <div class="move" id="move_<%= move.id %>">
       <div class="time">
         <span><%= move.minute %></span>
@@ -33,35 +36,6 @@
   <% end %>
 </div>
 
-<script type="text/javascript">
-  // // Load the Visualization API and the piechart package.
-  // google.load('visualization', '1.0', {'packages':['corechart']});
-
-  // // Set a callback to run when the Google Visualization API is loaded.
-  // google.setOnLoadCallback(drawChart);
-
-
-  // // Callback that creates and populates a data table,
-  // // instantiates the pie chart, passes in the data and
-  // // draws it.
-  // function drawChart() {
-
-  //   // Create the data table.
-  //   var data = new google.visualization.DataTable();
-  //   data.addColumn('string', 'Topping');
-  //   data.addColumn('number', 'Slices');
-  //   data.addRows([
-  //     ['<%= @match.home_team_name %>', <%= @match.home_team_tweets_count %>],
-  //     ['<%= @match.away_team_name %>', <%= @match.away_team_tweets_count %>]
-  //   ]);
-
-  //   // Set chart options
-  //   var options = {'title':'Total de tweets',
-  //                  'width':400,
-  //                  'height':300};
-
-  //   // Instantiate and draw our chart, passing in some options.
-  //   var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-  //   chart.draw(data, options);
-  // }
-</script>
+<%= content_for :javascripts do %>
+  <%= render 'charts', match: @presenter.match, presenter: @presenter %>
+<% end %>

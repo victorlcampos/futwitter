@@ -1,37 +1,35 @@
 require 'spec_helper'
 
 describe 'matches/show.html.erb' do
+  let!(:start_time) { Time.zone.now }
   before(:each) do
-    DateTime.stub(:now) { DateTime.new(2013, 1, 1, 1, 1, 1) }
-    @match = FactoryGirl.create(:flamengo_vs_vasco)
+    match = FactoryGirl.create(:flamengo_vs_vasco, start_time: start_time)
+
     flamengo_vs_vasco_move_2 = FactoryGirl.create(:flamengo_vs_vasco_move_2,
-                                                   match: @match)
+                                                   match: match)
 
     flamengo_vs_vasco_move_1 = FactoryGirl.create(:flamengo_vs_vasco_move_1,
-                                                   match: @match)
+                                                   match: match)
 
-    FactoryGirl.create(:tweet, team: @match.home_team)
-    FactoryGirl.create(:tweet, team: @match.home_team)
-    FactoryGirl.create(:tweet, team: @match.home_team)
-    FactoryGirl.create(:tweet, team: @match.away_team)
+    FactoryGirl.create(:tweet, team: match.home_team)
+    FactoryGirl.create(:tweet, team: match.home_team)
+    FactoryGirl.create(:tweet, team: match.home_team)
+    FactoryGirl.create(:tweet, team: match.away_team)
 
 
-    @match = Match.find(@match.id)
-    @moves = [flamengo_vs_vasco_move_2, flamengo_vs_vasco_move_1]
-
-    @home_tweets_per_minute = 1
-    @away_tweets_per_minute = 0
+    match = Match.find(match.id)
+    @presenter = MatchesShowPresenter.new(match)
   end
 
   it 'should show the match score' do
     render
     assert_template partial: 'matches/match_score',
-                    locals: { match: @match }, count: 1
+                    locals: { match: @presenter.match }, count: 1
   end
 
   it 'should show the move of match' do
     render
-    @moves.each do |move|
+    @presenter.moves.each do |move|
       assert_select "div.move#move_#{move.id}" do
         assert_select 'div.time' do
           assert_select 'span', text: move.minute
@@ -55,12 +53,24 @@ describe 'matches/show.html.erb' do
   end
 
   it 'should show the total home tweets' do
+    Time.zone.stub(:now) { start_time - 27.minutes }
     render
     assert_select '.tpm_home', text: 1
   end
 
   it 'should show the total home tweets' do
+    Time.zone.stub(:now) { start_time - 27.minutes }
     render
     assert_select '.tpm_home', text: 0
+  end
+
+  it 'should show tweets tweets_during_the_minutes' do
+    render
+    assert_select '#tweets_during_the_minutes'
+  end
+
+  it 'should show tweets world_map' do
+    render
+    assert_select '#world_map'
   end
 end

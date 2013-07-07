@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627141137) do
+ActiveRecord::Schema.define(:version => 20130707125345) do
 
   create_table "championships", :force => true do |t|
     t.string   "name"
@@ -73,10 +73,12 @@ ActiveRecord::Schema.define(:version => 20130627141137) do
   create_table "tweets", :force => true do |t|
     t.integer  "team_id"
     t.string   "text"
-    t.string   "geo"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "minute"
+    t.boolean  "geo",        :default => false
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "tweets", ["team_id"], :name => "index_tweets_on_team_id"

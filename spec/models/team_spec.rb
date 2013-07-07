@@ -3,12 +3,15 @@ require 'carrierwave/test/matchers'
 
 describe Team do
   include CarrierWave::Test::Matchers
-
   subject(:flamengo) { FactoryGirl.create(:flamengo) }
 
   context 'relationships' do
-    it { should have_many(:home_matches).class_name('Match') }
-    it { should have_many(:away_matches).class_name('Match') }
+    it do
+      should have_many(:home_matches).class_name('Match').dependent(:destroy)
+    end
+    it do
+      should have_many(:away_matches).class_name('Match').dependent(:destroy)
+    end
     it { should have_many(:news) }
     it { should have_many(:tweets) }
   end
@@ -37,12 +40,28 @@ describe Team do
 
     its(:current_match) { should eq(botafogo_vs_vasco) }
 
-    its(:current_match_end_time) do
-      should eq(subject.current_match.end_time)
-    end
-
     its(:current_match_start_time) do
       should eq(subject.current_match.start_time)
+    end
+
+    its(:current_match_open_time) do
+      should eq(subject.current_match.open_time)
+    end
+
+    its(:current_match_close_time) do
+      should eq(subject.current_match.close_time)
+    end
+
+    describe '#match_tweets(match)' do
+      let(:match) do
+        flamengo_vs_vasco = FactoryGirl.create(:flamengo_vs_vasco)
+        Match.find(flamengo_vs_vasco.id)
+      end
+
+      it 'should return tweets in match time' do
+        subject.match_tweets(match)
+          .should eq(subject.tweets.match_tweets(match))
+      end
     end
   end
 

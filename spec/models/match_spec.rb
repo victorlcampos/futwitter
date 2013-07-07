@@ -19,7 +19,26 @@ describe Match do
     Match.find(flamengo_vs_vasco.id)
   end
 
-  its(:end_time) { should eq(subject.start_time + 2.hours) }
+  its(:end_time)  { should eq(subject.start_time + 2.hours) }
+  its(:open_time) { should eq(subject.start_time - 30.minutes)}
+  its(:close_time) { should eq(subject.end_time + 30.minutes)}
+  its(:home_team_tweets) { should eq(subject.home_team.match_tweets(subject)) }
+  its(:away_team_tweets) { should eq(subject.away_team.match_tweets(subject)) }
+  its(:home_team_tweets_count) do
+    subject.stub_chain(:home_team_tweets, :count) { 5 }
+    should eq(5)
+  end
+  its(:away_team_tweets_count) do
+    subject.stub_chain(:away_team_tweets, :count) { 1 }
+    should eq(1)
+  end
+
+  its(:geo_home_team_tweets) do
+    should eq(subject.home_team_tweets.where(geo: true))
+  end
+  its(:geo_away_team_tweets) do
+    should eq(subject.away_team_tweets.where(geo: true))
+  end
 
   context 'delegated mathods' do
     its(:home_team_name) { should eq('Flamengo') }
@@ -33,21 +52,13 @@ describe Match do
     its(:away_team_badge_url) do
       should eq(flamengo_vs_vasco.away_team.badge_url)
     end
-
-    its(:home_team_tweets_count) do
-      should eq(flamengo_vs_vasco.home_team.tweets_count)
-    end
-
-    its(:away_team_tweets_count) do
-      should eq(flamengo_vs_vasco.away_team.tweets_count)
-    end
   end
 
   describe 'running game' do
     before(:each) do
       Time.zone.stub(:now) { start_time - 27.minutes }
-      subject.home_team.stub(:tweets_count) { 5 }
-      subject.away_team.stub(:tweets_count) { 1 }
+      subject.stub_chain(:home_team_tweets, :count) { 5 }
+      subject.stub_chain(:away_team_tweets, :count) { 1 }
     end
     its(:home_tweets_per_minute) { should eq(2) }
     its(:away_tweets_per_minute) { should eq(0) }
@@ -56,8 +67,8 @@ describe Match do
   describe 'ended game' do
     before(:each) do
       Time.zone.stub(:now) { start_time + 10.hours  }
-      subject.home_team.stub(:tweets_count) { 180 * 2 } # 2 tweets per minute
-      subject.away_team.stub(:tweets_count) { 180     } # 1 tweets per minute
+      subject.stub_chain(:home_team_tweets, :count) { 180 * 2 }
+      subject.stub_chain(:away_team_tweets, :count) { 180     }
     end
 
     its(:home_tweets_per_minute) { should eq(2) }

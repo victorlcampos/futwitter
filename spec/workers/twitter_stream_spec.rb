@@ -21,25 +21,14 @@ describe TwitterStream do
       stub_const('TwitterStream::DAEMON_FILE',
                 File.join(Rails.root, 'spec', 'support',
                                       'daemons', 'team_daemon.rb'))
-      Team.stub(:find).with(team.id) { team }
-      Daemons.stub(:run) { true }
-    end
-
-    it 'should find team' do
-      Team.should_receive(:find).with(team.id).once
-      TwitterStream.perform(team.id)
+      TwitterStream.stub(:system) { true }
     end
 
     it 'should create daemon process' do
-      options = {
-        app_name: team.name,
-        ARGV: ['start', '-f', '--', "team=#{team.id}"],
-        dir: Rails.root.join('pids'),
-        backtrac: true,
-        monitor: true
-      }
-      Daemons.should_receive(:run)
-                    .with(TwitterStream::DAEMON_FILE, options).once
+      ruby_call = 'bundle exec ruby'
+      start = "start team='#{team.id}'"
+      TwitterStream.should_receive(:system)
+              .with("#{ruby_call} #{TwitterStream::DAEMON_FILE} #{start}").once
       TwitterStream.perform(team.id)
     end
   end

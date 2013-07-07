@@ -1,4 +1,4 @@
-# encoding: utf-8
+#encoding: UTF-8
 require 'spec_helper'
 
 describe UpdateMatchService do
@@ -70,9 +70,9 @@ describe UpdateMatchService do
 
       context 'matches' do
         describe 'did no exist' do
-          let(:first_match)  { Match.first }
+          let(:first_match)  { Match.find(1) }
           let(:medium_match) { Match.find(14) }
-          let(:last_match)  { Match.last }
+          let(:last_match)  { Match.find(28) }
 
           it 'should create matches from url' do
             Match.count.should  eq(28)
@@ -114,8 +114,8 @@ describe UpdateMatchService do
           end
 
           it 'should save the match time' do
-            first_match.start_time.should eq(DateTime.new(2013, 3, 23, 21))
-            last_match.start_time.should eq(DateTime.new(2013, 3, 21, 16))
+            first_match.start_time.should eq(Time.new(2013, 3, 23, 21))
+            last_match.start_time.should eq(Time.new(2013, 3, 21, 16))
           end
         end
 
@@ -136,7 +136,7 @@ describe UpdateMatchService do
           it 'should update scores' do
             UpdateMatchService.new.update_matches_from_internet
 
-            first_match = Match.first
+            first_match = Match.find(1)
             first_match.home_team_score.should eq(1)
             first_match.away_team_score.should eq(2)
 
