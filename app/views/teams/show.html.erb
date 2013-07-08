@@ -1,15 +1,19 @@
 <%= render partial: "matches/match_score", locals: { match: @match } %>
-<div class="news">
+<div class="main_news">
   <% @news.each do |news| %>
     <div id="news_<%= news.id %>" class="news">
       <div class="image">
-        <%= image_tag news.image_url %>
+        <%= image_tag(news.image_url) if news.image_url %>
       </div>
       <div class="data">
-        <span class="title"><%= news.title %></span>
-        <a href="<%= news.url %>" class="url"><%= news.title %></a>
-        <span class="description"></span>
+        <a href="<%= news.url %>" class="title"><%= news.title %></a>
+        <br class='clear' />
+        <span class="url"><%= news.url %></span>
+        <br class='clear' />
+        <span class="description"><%= news.description %></span>
       </div>
     </div>
+    <br class='clear' />
+    <hr />
   <% end %>
 </div>

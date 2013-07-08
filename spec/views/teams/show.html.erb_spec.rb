@@ -18,13 +18,13 @@ describe 'teams/show.html.erb' do
 
   it 'should show the news' do
     render
-    assert_select 'div.news' do
+    assert_select 'div.main_news' do
       @news.each do |news|
         assert_select "div.news#news_#{news.id}" do
           assert_select "div.image > img[src='#{news.image_url}']"
           assert_select 'div.data' do
-            assert_select 'span.title', text: news.title
-            assert_select "a.url[href='#{news.url}']"
+            assert_select "a.title[href='#{news.url}']", text: news.title
+            assert_select 'span', text: news.url
             assert_select 'span.description', text: news.description
           end
         end

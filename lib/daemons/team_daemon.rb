@@ -3,18 +3,9 @@ require 'rubygems'
 
 ENV['RAILS_ENV'] ||= 'development'
 
-def parser_args
-  ARGV.each do |arg|
-    if arg.include?('=')
-      key, val = arg.split('=', 2)
-      ENV[key] = val
-    end
-  end
-end
-
-def options(team_name)
+def options
   {
-    app_name: team_name,
+    app_name: 'daemon_teams',
     dir: Rails.root.join('tmp', 'pids'),
     backtrac: true,
     monitor: true,
@@ -24,7 +15,7 @@ end
 
 def create_log
   ruote_logger = ActiveSupport::BufferedLogger.new(File.join(Rails.root,
-                                    "log", "daemons_#{ENV['team']}.log"))
+                                    'log', 'daemons.log'))
   Rails.logger = ruote_logger
   ActiveRecord::Base.logger = ruote_logger
   Rails.logger
@@ -36,34 +27,47 @@ def on_opened_time?(team)
   (team.current_match_close_time) > time_now
 end
 
-def find_team
-  Team.find(ENV['team'])
+def find_teams
+  Team.all
+end
+
+def team_names(teams)
+  teams.collect { |team| team.name }
 end
 
 def new_daemon
-  TweetStream::Daemon.new("#{ENV['team']}_daemon", options(ENV['team']))
+  TweetStream::Daemon.new('teams_daemon', options)
 end
 
 def create_tweet(tweet, team)
   Tweet.create_using_real_tweet(tweet, team) if on_opened_time?(team)
 end
 
+def create_news(tweet, team)
+  News.create_by_tweet(tweet, team)
+end
+
 parser_args
 
 daemon = new_daemon
 logger = nil
-team   = find_team
+teams = find_teams
 
 daemon.on_inited do
   ActiveRecord::Base.connection.reconnect!
   logger = create_log
-  team = find_team
+  teams = find_teams
 end
 
 daemon.on_error do |message|
   logger.error message
 end
 
-daemon.track(team.name) do |tweet|
-  create_tweet(tweet, team)
+daemon.track(*team_names(teams)) do |tweet|
+  teams.each do |team|
+    if tweet.text.downcase.match /#{team.name.downcase}/
+      create_news(tweet, team)
+      create_tweet(tweet, team)
+    end
+  end
 end

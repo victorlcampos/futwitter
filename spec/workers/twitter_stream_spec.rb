@@ -26,9 +26,12 @@ describe TwitterStream do
 
     it 'should create daemon process' do
       ruby_call = 'bundle exec ruby'
-      start = "start team='#{team.id}'"
+
       TwitterStream.should_receive(:system)
-              .with("#{ruby_call} #{TwitterStream::DAEMON_FILE} #{start}").once
+              .with("#{ruby_call} #{TwitterStream::DAEMON_FILE} stop").once
+
+      TwitterStream.should_receive(:system)
+              .with("#{ruby_call} #{TwitterStream::DAEMON_FILE} start").once
       TwitterStream.perform(team.id)
     end
   end

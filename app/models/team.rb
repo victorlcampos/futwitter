@@ -54,6 +54,6 @@ class Team < ActiveRecord::Base
 
   private
   def schedule_twitter
-    Resque.enqueue(TwitterStream, id)
+    Resque.enqueue(TwitterStream)
   end
 end

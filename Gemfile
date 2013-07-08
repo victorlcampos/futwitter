@@ -3,11 +3,13 @@ source 'https://rubygems.org'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'nokogiri'
+gem 'fastimage'
 
 gem 'resque'
 gem 'resque-scheduler', require: 'resque_scheduler'
 gem 'daemons', '~> 1.1.9'
 gem 'tweetstream'
+gem 'unshortme'
 
 # UTILITIES
 group :development do

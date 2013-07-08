@@ -129,6 +129,7 @@ GEM
     faraday (0.8.7)
       multipart-post (~> 1.1)
     fastercsv (1.5.5)
+    fastimage (1.2.13)
     fattr (2.2.1)
     ffi (1.8.1)
     flay (2.0.1)
@@ -293,6 +294,8 @@ GEM
       redis (>= 2.0.1)
       resque (>= 1.20.0)
       rufus-scheduler
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -370,6 +373,9 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     uniform_notifier (1.2.0)
+    unshortme (1.0.0)
+      json
+      rest-client
     vegas (0.1.11)
       rack (>= 1.0.0)
     xpath (2.0.0)
@@ -392,6 +398,7 @@ DEPENDENCIES
   database_cleaner
   dimensions-rails
   factory_girl_rails
+  fastimage
   guard-brakeman
   guard-bundler
   guard-jasmine
@@ -417,3 +424,4 @@ DEPENDENCIES
   simplecov-rcov-text
   tweetstream
   uglifier (>= 1.0.3)
+  unshortme

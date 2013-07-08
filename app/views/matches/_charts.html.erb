@@ -37,12 +37,12 @@
       }]
     },
     markers: [
-    <% match.geo_home_team_tweets.find_each do |tweet| %>
+    <% match.geo_home_team_tweets.includes(:team).find_each do |tweet| %>
       {latLng: [<%= tweet.latitude %>,<%= tweet.longitude %>],
         name: '<%= tweet.team_name %>',
       },
     <% end %>
-    <% match.geo_away_team_tweets.find_each do |tweet| %>
+    <% match.geo_away_team_tweets.includes(:team).find_each do |tweet| %>
       {latLng: [<%= tweet.latitude %>,<%= tweet.longitude %>],
        name: '<%= tweet.team_name %>'},
        <%= binding.pry %>

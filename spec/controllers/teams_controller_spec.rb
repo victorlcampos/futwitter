@@ -23,6 +23,5 @@ describe TeamsController do
     it 'should assigns the news as @news' do
       assigns(:news).should eq(@flamengo.news)
     end
-
   end
 end

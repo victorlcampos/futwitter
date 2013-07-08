@@ -107,9 +107,9 @@ describe Team do
       it 'should schedule twitter stream' do
         worker = TwitterStream
         team_id = 1
-        Resque.stub(:enqueue_at) { true }
+        Resque.stub(:enqueue) { true }
         Resque.should_receive(:enqueue)
-                              .with(worker, team_id).once
+                              .with(worker).once
 
         FactoryGirl.create(:flamengo, id: team_id)
       end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130707125345) do
+ActiveRecord::Schema.define(:version => 20130707173823) do
 
   create_table "championships", :force => true do |t|
     t.string   "name"
@@ -56,6 +56,11 @@ ActiveRecord::Schema.define(:version => 20130707125345) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "shorted_url"
+    t.integer  "retweets"
+    t.datetime "time"
+    t.string   "domain_name"
+    t.string   "image_url"
   end
 
   add_index "news", ["team_id"], :name => "index_news_on_team_id"
