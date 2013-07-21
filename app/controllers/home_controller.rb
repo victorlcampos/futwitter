@@ -4,8 +4,8 @@ class HomeController < ApplicationController
   def index
     UpdateMatchService.new.update_matches_from_internet
 
-    @matches = Match.includes(:home_team, :away_team).all
-    @teams = Team.all
+    @matches = Match.includes(:home_team, :away_team).order('start_time').all
+    @teams = Team.order('name').all
     @championships = Championship.all
   end
 end

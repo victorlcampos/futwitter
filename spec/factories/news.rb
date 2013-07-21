@@ -10,6 +10,8 @@ FactoryGirl.define do
     title 'Flamengo perde para o vasco'
     url 'http://globo.com/flamengo'
     description 'olaaa mundooo'
+
+    domain_name 'globo'
   end
 
   factory :news_flamengo_2, class: News do
@@ -20,5 +22,6 @@ FactoryGirl.define do
     end
     title 'Flamengo troca de técnico'
     url 'http://globo.com/flamengo2'
+    domain_name 'sportv'
   end
 end

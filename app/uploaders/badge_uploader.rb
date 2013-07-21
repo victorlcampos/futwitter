@@ -6,10 +6,18 @@ class BadgeUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::IsolatedHelper
 
   version :thumb do
-    process resize_to_fill: [50, 50, '#ffffff', 'Center']
+    process resize_to_fill: [30, 30, 'Center']
   end
 
   def default_url
     [version_name, 'default.png'].compact.join('-')
+  end
+
+  def store_dir
+    'uploads/badges'
+  end
+
+  def root
+    Rails.root.join 'public/'
   end
 end

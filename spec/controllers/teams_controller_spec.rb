@@ -9,6 +9,10 @@ describe TeamsController do
       FactoryGirl.create(:botafogo_vs_flamengo, away_team: @flamengo)
       FactoryGirl.create(:news_flamengo_1     ,      team: @flamengo)
 
+      FactoryGirl.create(:trusted_domain, name: 'globo')
+      FactoryGirl.create(:trusted_domain, name: 'sportv')
+      FactoryGirl.create(:trusted_domain, name: 'espm')
+
       get :show, { id: @flamengo.to_param }
     end
 
@@ -22,6 +26,10 @@ describe TeamsController do
 
     it 'should assigns the news as @news' do
       assigns(:news).should eq(@flamengo.news)
+    end
+
+    it 'should assings the trusted domains as @trusted_domains' do
+      assigns(:trusted_domains).should eq(['globo', 'sportv', 'espm'])
     end
   end
 end

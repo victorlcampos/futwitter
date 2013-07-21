@@ -47,8 +47,6 @@ def create_news(tweet, team)
   News.create_by_tweet(tweet, team)
 end
 
-parser_args
-
 daemon = new_daemon
 logger = nil
 teams = find_teams

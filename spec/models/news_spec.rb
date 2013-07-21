@@ -31,13 +31,15 @@ describe News do
           tweet.stub(:urls) { [expanded_url] }
 
           url_with_params = url
-          url_with_params << '?utm_term=a'
-          url_with_params << '&utm_content=b'
-          url_with_params << '&utm_source=c'
-          url_with_params << '&utm_medium=d'
-          url_with_params << '&utm_campaign=e'
+          url_with_params += '?utm_term=a'
+          url_with_params += '&utm_content=b'
+          url_with_params += '&utm_source=c'
+          url_with_params += '&utm_medium=d'
+          url_with_params += '&utm_campaign=e'
 
           Unshortme.stub(:unshort).with('shorted_url.com') { url_with_params }
+          Unshortme.stub(:unshort).with( url ) { url }
+
           News.create_by_tweet(tweet, team)
         end
 
@@ -95,13 +97,15 @@ describe News do
           tweet.stub(:urls) { [expanded_url] }
 
           url_with_params = url
-          url_with_params << '?utm_term=a'
-          url_with_params << '&utm_content=b'
-          url_with_params << '&utm_source=c'
-          url_with_params << '&utm_medium=d'
-          url_with_params << '&utm_campaign=e'
+          url_with_params += '?utm_term=a'
+          url_with_params += '&utm_content=b'
+          url_with_params += '&utm_source=c'
+          url_with_params += '&utm_medium=d'
+          url_with_params += '&utm_campaign=e'
 
           Unshortme.stub(:unshort).with('shorted_url.com') { url_with_params }
+          Unshortme.stub(:unshort).with(url) { url }
+
           News.create_by_tweet(tweet, team)
           News.create_by_tweet(tweet, team)
         end
@@ -118,12 +122,16 @@ describe News do
           tweet.stub(:urls) { [expanded_url] }
 
           url_with_params = url
-          url_with_params << '?utm_term=a'
-          url_with_params << '&utm_content=b'
-          url_with_params << '&utm_source=c'
-          url_with_params << '&utm_medium=d'
-          url_with_params << '&utm_campaign=e'
+          url_with_params += '?utm_term=a'
+          url_with_params += '&utm_content=b'
+          url_with_params += '&utm_source=c'
+          url_with_params += '&utm_medium=d'
+          url_with_params += '&utm_campaign=e'
+          Unshortme.stub(:unshort).with(url) { url }
+
+
           Unshortme.stub(:unshort).with('shorted_url.com') { url_with_params }
+
           News.create_by_tweet(tweet, team)
 
           expanded_url.stub(:expanded_url) { 'shorted2_url.com' }

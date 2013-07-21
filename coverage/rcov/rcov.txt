@@ -9,11 +9,11 @@ metric_fu shift the first line
    
      protected
      def load_championchip
-       @championships = Championship.all
+!!     @championships = Championship.all
      end
    
      def load_teams
-       @teams = Team.all
+!!     @teams = Team.order('name').all
      end
    end
 
@@ -24,11 +24,11 @@ metric_fu shift the first line
      skip_before_filter :load_teams, :load_championchip
    
      def index
-       UpdateMatchService.new.update_matches_from_internet
+!!     UpdateMatchService.new.update_matches_from_internet
    
-       @matches = Match.includes(:home_team, :away_team).all
-       @teams = Team.all
-       @championships = Championship.all
+!!     @matches = Match.includes(:home_team, :away_team).order('start_time').all
+!!     @teams = Team.order('name').all
+!!     @championships = Championship.all
      end
    end
 
@@ -37,9 +37,9 @@ metric_fu shift the first line
 ================================================================================
    class MatchesController < ApplicationController
      def show
-       match = Match.find(params[:id])
-       UpdateMovesService.new(match).update_moves_from_internet
-       @presenter = MatchesShowPresenter.new(match)
+!!     match = Match.find(params[:id])
+!!     UpdateMovesService.new(match).update_moves_from_internet
+!!     @presenter = MatchesShowPresenter.new(match)
      end
    end
 
@@ -48,9 +48,10 @@ metric_fu shift the first line
 ================================================================================
    class TeamsController < ApplicationController
      def show
-       @team = Team.find(params[:id])
-       @match = @team.current_match
-       @news = @team.news
+!!     @team = Team.find(params[:id])
+!!     @match = @team.current_match
+!!     @news = @team.news
+!!     @trusted_domains = TrustedDomain.pluck(:name)
      end
    end
 
@@ -65,8 +66,8 @@ metric_fu shift the first line
 ================================================================================
    module TeamsHelper
      def team_classes(team)
-       championships_ids = team.championships_ids
-       "filter championship_#{championships_ids.join(' championship_')}"
+!!     championships_ids = team.championships_ids
+!!     "filter championship_#{championships_ids.join(' championship_')}"
      end
    end
 
@@ -106,60 +107,60 @@ metric_fu shift the first line
      delegate :name, :badge_url, to: :away_team, prefix: true
    
      def home_team_tweets
-       home_team.match_tweets(self)
+!!     home_team.match_tweets(self)
      end
    
      def home_team_tweets_count
-       home_team_tweets.count
+!!     home_team_tweets.count
      end
    
      def home_tweets_per_minute
-       (home_team_tweets_count / passed_minutes).round
+!!     (home_team_tweets_count / passed_minutes).round
      end
    
      def geo_home_team_tweets
-       home_team_tweets.geo
+!!     home_team_tweets.geo
      end
    
      def away_team_tweets
-       away_team.match_tweets(self)
+!!     away_team.match_tweets(self)
      end
    
      def away_team_tweets_count
-       away_team_tweets.count
+!!     away_team_tweets.count
      end
    
      def away_tweets_per_minute
-       (away_team_tweets_count / passed_minutes).round
+!!     (away_team_tweets_count / passed_minutes).round
      end
    
      def geo_away_team_tweets
-       away_team_tweets.geo
+!!     away_team_tweets.geo
      end
    
      def end_time
-       start_time + 2.hours
+!!     start_time + 2.hours
      end
    
      def open_time
-       start_time - 30.minutes
+!!     start_time - 30.minutes
      end
    
      def close_time
-       end_time + 30.minutes
+!!     end_time + 30.minutes
      end
    
      private
      def passed_minutes
-       (end_time_count_tweet - start_time_count_tweet) / 60
+!!     (end_time_count_tweet - start_time_count_tweet) / 60
      end
    
      def end_time_count_tweet
-       [Time.zone.now, end_time + 30.minute].min
+!!     [Time.zone.now, end_time + 30.minute].min
      end
    
      def start_time_count_tweet
-       start_time - 30.minutes
+!!     start_time - 30.minutes
      end
    end
 
@@ -173,12 +174,12 @@ metric_fu shift the first line
      attr_accessible :match_id, :minute, :text, :team_name, :half
    
      def team_name=(team_name)
-       write_attribute(:team_name, team_name.downcase) if team_name
+!!     write_attribute(:team_name, team_name.downcase) if team_name
      end
    
      def team_name
-       my_team_name = read_attribute(:team_name)
-       my_team_name.humanize if my_team_name
+!!     my_team_name = read_attribute(:team_name)
+!!     my_team_name.humanize if my_team_name
      end
    end
 
@@ -192,45 +193,48 @@ metric_fu shift the first line
      belongs_to :team
    
      def self.create_by_tweet(tweet, team)
-       if url = tweet.urls[0]
-         shorted_url = shorted_url(url)
-         unshorted_url = unshorted_url(shorted_url)
-         unless News.where(url: unshorted_url).first
-           create_news(tweet, team, shorted_url, unshorted_url)
+!!     if url = tweet.urls[0]
+!!       shorted_url = shorted_url(url)
+!!       unshorted_url = unshorted_url(unshorted_url(shorted_url))
+!!       unless News.where(url: unshorted_url).first
+!!         create_news(tweet, team, shorted_url, unshorted_url)
          end
        end
      end
    
      private
      def self.shorted_url(tweeter_url)
-       tweeter_url.expanded_url
+!!     tweeter_url.expanded_url
      end
    
      def self.unshorted_url(shorted_url)
-       URI.remove_params(Unshortme.unshort(shorted_url), analytics_params)
+!!     URI.remove_params(Unshortme.unshort(shorted_url), analytics_params)
      end
    
      def self.analytics_params
-       ['utm_term', 'utm_content', 'utm_source', 'utm_medium', 'utm_campaign']
+!!     ['utm_term', 'utm_content', 'utm_source', 'utm_medium', 'utm_campaign']
      end
    
      def self.create_news(tweet, team, shorted_url, unshorted_url)
-       params = url_params(shorted_url, unshorted_url).merge({
-         team: team,
-         retweets: tweet.retweet_count,
-         time: tweet.created_at
-       }).merge(SummaryUrl.fetch(unshorted_url))
+!!     begin
+!!       params = url_params(shorted_url, unshorted_url).merge({
+           team: team,
+           retweets: tweet.retweet_count,
+           time: tweet.created_at
+         }).merge(SummaryUrl.fetch(unshorted_url))
    
-       News.create!(params)
+!!       News.create!(params)
+       rescue
+!!     end
      end
    
      def self.url_params(shorted_url, unshorted_url)
-       domain_name = URI.parse(unshorted_url).host
+!!     domain_name = URI.parse(unshorted_url).host
        {
          url: unshorted_url,
          shorted_url: shorted_url,
          domain_name: domain_name
-       }
+!!     }
      end
    end
 
@@ -251,36 +255,36 @@ metric_fu shift the first line
      after_create :schedule_twitter
    
      def match_tweets(match)
-       tweets.match_tweets(match)
+!!     tweets.match_tweets(match)
      end
    
      def matches
-       my_id = self.id
-       Match.where('home_team_id = ? OR away_team_id = ?', my_id, my_id)
+!!     my_id = self.id
+!!     Match.where('home_team_id = ? OR away_team_id = ?', my_id, my_id)
      end
    
      def championships
-       Championship.joins(:matches).merge(matches)
+!!     Championship.joins(:matches).merge(matches)
      end
    
      def championships_ids
-       championships.pluck('championships.id')
+!!     championships.pluck('championships.id')
      end
    
      def current_match
-       matches.last
+!!     matches.last
      end
    
      def current_match_start_time
-       current_match.start_time
+!!     current_match.start_time
      end
    
      def current_match_open_time
-       current_match.open_time
+!!     current_match.open_time
      end
    
      def current_match_close_time
-       current_match.close_time
+!!     current_match.close_time
      end
    
      def name=(name)
@@ -298,11 +302,18 @@ metric_fu shift the first line
    end
 
 ================================================================================
+ ./app/models/trusted_domain.rb
+================================================================================
+   class TrustedDomain < ActiveRecord::Base
+     attr_accessible :name
+   end
+
+================================================================================
  ./app/models/tweet.rb
 ================================================================================
    class Tweet < ActiveRecord::Base
      scope :match_tweets, lambda { |match|
-       where('created_at >= ? AND created_at <= ?',
+!!     where('created_at >= ? AND created_at <= ?',
                                match.open_time, match.close_time)
      }
      scope :geo, where(geo: true)
@@ -312,31 +323,31 @@ metric_fu shift the first line
      delegate :name, to: :team, prefix: true
    
      def self.create_using_real_tweet(real_tweet, team)
-       tweets_params = {
+!!     tweets_params = {
          text: real_tweet.text,
          team: team,
          minute: get_minute(team)
        }
    
-       tweets_params.merge!(get_geo(real_tweet))
+!!     tweets_params.merge!(get_geo(real_tweet))
    
-       Tweet.create!(tweets_params)
+!!     Tweet.create!(tweets_params)
      end
    
      private
      def self.get_minute(team)
-       (Time.zone.now - team.current_match_start_time) / 60
+!!     (Time.zone.now - team.current_match_start_time) / 60
      end
    
      def self.get_geo(tweet)
-       if geo = tweet.geo
+!!     if geo = tweet.geo
          {
            geo: true,
            latitude:  geo.latitude,
            longitude: geo.longitude,
-         }
+!!       }
        else
-         {}
+!!       {}
        end
      end
    end
@@ -347,57 +358,57 @@ metric_fu shift the first line
    class MatchesShowPresenter
      attr_accessor :match
      def initialize(match)
-       @match = match
+!!     @match = match
      end
    
      def home_team_tweets_count
-       match.home_team_tweets_count
+!!     match.home_team_tweets_count
      end
    
      def home_tweets_per_minute
-       match.home_tweets_per_minute
+!!     match.home_tweets_per_minute
      end
    
      def away_team_tweets_count
-       match.away_team_tweets_count
+!!     match.away_team_tweets_count
      end
    
      def away_tweets_per_minute
-       match.away_tweets_per_minute
+!!     match.away_tweets_per_minute
      end
    
      def moves
-       match.moves
+!!     match.moves
      end
    
      def tweets_during_the_minutes
-       result = {}
+!!     result = {}
    
-       get_tweets_group_by_minutes(:home).each do |key, value|
-         result[key] = { home: value, away: 0 }
+!!     get_tweets_group_by_minutes(:home).each do |key, value|
+!!       result[key] = { home: value, away: 0 }
        end
    
-       get_tweets_group_by_minutes(:away).each do |key, value|
-         if result[key]
-           result[key][:away] = value
+!!     get_tweets_group_by_minutes(:away).each do |key, value|
+!!       if result[key]
+!!         result[key][:away] = value
          else
-           result[key] = { home: 0, away: value }
+!!         result[key] = { home: 0, away: value }
          end
        end
-       result.sort
+!!     result.sort
      end
    
      def home_team_name
-       match.home_team_name
+!!     match.home_team_name
      end
    
      def away_team_name
-       match.away_team_name
+!!     match.away_team_name
      end
    
      private
      def get_tweets_group_by_minutes(team)
-       match.send("#{team}_team_tweets").group(:minute).count(:minute)
+!!     match.send("#{team}_team_tweets").group(:minute).count(:minute)
      end
    end
 
@@ -408,21 +419,24 @@ metric_fu shift the first line
      LANCENET_URL = 'http://temporeal.lancenet.com.br/'
    
      def update_matches_from_internet
-       doc = Nokogiri::HTML(open(LANCENET_URL))
+!!     doc = Nokogiri::HTML(open(LANCENET_URL))
    
-       doc.css('#listaJogos tr').each do |match|
-         datas = match.css('td')
-         update_or_create_match(match_data(datas), parents(datas))
+!!     doc.css('#listaJogos tr').each do |match|
+!!       datas = match.css('td')
+!!       match_url = datas.css('a').first.attributes['href'].value
+   
+!!       update_or_create_match(match_data(datas, match_url),
+                                  parents(datas, match_url))
        end
      end
    
      private
      def update_or_create_match(match_data, parents)
-       if match = Match.where(search_data(parents)).first
-         match.update_attributes!(match_data)
+!!     if match = Match.where(search_data(parents)).first
+!!       match.update_attributes!(match_data)
        else
-         match_data.merge!(parents)
-         Match.create!(match_data)
+!!       match_data.merge!(parents)
+!!       Match.create!(match_data)
        end
      end
    
@@ -431,57 +445,78 @@ metric_fu shift the first line
          home_team_id: parents[:home_team],
          away_team_id: parents[:away_team],
          championship_id: parents[:championship]
-       }
+!!     }
      end
    
-     def match_data(datas)
+     def match_data(datas, match_url)
        {
          home_team_score: datas[1].text,
          away_team_score: datas[3].text,
-         internet_url: datas.css('a').first.attributes['href'].value,
+         internet_url: match_url,
          start_time: start_time(datas)
-       }
+!!     }
      end
    
      def start_time(datas)
-       date_text = datas.text.split(', ')[1]
+!!     date_text = datas.text.split(', ')[1]
    
-       day     = split_text('/', date_text)
-       month   = split_text(' ', date_text)
-       hour    = split_text(':', date_text)
-       minutes = date_text[1].to_i
+!!     day     = split_text('/', date_text)
+!!     month   = split_text(' ', date_text)
+!!     hour    = split_text(':', date_text)
+!!     minutes = date_text[1].to_i
    
-       Time.new(Date.today.year, month, day, hour, minutes)
+!!     Time.new(Date.today.year, month, day, hour, minutes)
      end
    
      def split_text(partern, text)
-       splited_text  = text.split(partern)
-       value = splited_text[0]
-       text.replace splited_text[1]
-       value.to_i
+!!     splited_text  = text.split(partern)
+!!     value = splited_text[0]
+!!     text.replace splited_text[1]
+!!     value.to_i
      end
    
-     def parents(datas)
+     def parents(datas, match_url)
        {
-         home_team:    find_or_create_home_team(datas),
-         away_team:    find_or_create_away_team(datas),
+         home_team:    find_or_create_home_team(datas, match_url),
+         away_team:    find_or_create_away_team(datas, match_url),
          championship: find_or_create_championship(datas)
-       }
+!!     }
      end
    
-     def find_or_create_home_team(datas)
-       home_team_name = datas[0].text
-       Team.find_or_create_by_name(home_team_name.downcase)
+     def find_or_create_home_team(datas, match_url)
+!!     home_team_name = datas[0].text
+!!     team = Team.find_or_create_by_name(home_team_name.downcase)
+   
+!!     unless team.badge?
+!!       team.remote_badge_url = find_home_team_badge(match_url)
+!!       team.save!
+       end
+!!     team
      end
    
-     def find_or_create_away_team(datas)
-       away_team_name = datas[4].text
-       Team.find_or_create_by_name(away_team_name.downcase)
+     def find_home_team_badge(match_url)
+!!     doc = Nokogiri::HTML(open("#{LANCENET_URL}#{match_url}"))
+!!     "#{LANCENET_URL}#{doc.css('.escudo img.png')[0].attributes['src'].value}"
+     end
+   
+     def find_or_create_away_team(datas, match_url)
+!!     away_team_name = datas[4].text
+!!     team = Team.find_or_create_by_name(away_team_name.downcase)
+!!     unless team.badge?
+!!       team.remote_badge_url = find_away_team_badge(match_url)
+!!       team.save!
+       end
+!!     team
+     end
+   
+     def find_away_team_badge(match_url)
+!!     doc = Nokogiri::HTML(open("#{LANCENET_URL}#{match_url}"))
+!!     "#{LANCENET_URL}#{doc.css('.escudo img.png')[1].attributes['src'].value}"
      end
    
      def find_or_create_championship(datas)
-       championship_name = datas[6].text
-       Championship.find_or_create_by_name(championship_name.downcase)
+!!     championship_name = datas[6].text
+!!     Championship.find_or_create_by_name(championship_name.downcase)
      end
    end
 
@@ -495,28 +530,28 @@ metric_fu shift the first line
      attr_accessor :match
    
      def initialize(match)
-       @match = match
+!!     @match = match
      end
    
      def update_moves_from_internet
-       find_or_create_move(FIRST_HALF)
-       find_or_create_move(SECOND_HALF)
+!!     find_or_create_move(FIRST_HALF)
+!!     find_or_create_move(SECOND_HALF)
      end
    
      protected
    
      def find_or_create_move(half)
-       doc = Nokogiri::HTML(open(get_url(half)), nil, 'UTF-8')
-       doc.css('tr').each do |move|
-         params = get_param(move, half)
-         Move.create!(params) unless Move.where(params).first
+!!     doc = Nokogiri::HTML(open(get_url(half)), nil, 'UTF-8')
+!!     doc.css('tr').each do |move|
+!!       params = get_param(move, half)
+!!       Move.create!(params) unless Move.where(params).first
        end
      end
    
      def get_url(half)
-       base_url = UpdateMatchService::LANCENET_URL
-       match_url = match.internet_url
-       "#{base_url}#{match_url}#{half}"
+!!     base_url = UpdateMatchService::LANCENET_URL
+!!     match_url = match.internet_url
+!!     "#{base_url}#{match_url}#{half}"
      end
    
      def get_param(move, half)
@@ -526,33 +561,33 @@ metric_fu shift the first line
          text: get_text(move),
          team_name: get_team_name(move),
          half: get_half(half)
-       }
+!!     }
      end
    
      def get_half(half)
-       case half
+!!     case half
        when FIRST_HALF
-         1
+!!       1
        when SECOND_HALF
-         2
+!!       2
        end
      end
    
      def get_minutes(move)
-        move.css('.minuto').text.gsub(/[^0-9]/, '')
+!!      move.css('.minuto').text.gsub(/[^0-9]/, '')
      end
    
      def get_text(move)
-       move.css('.lances').text
+!!     move.css('.lances').text
      end
    
      def get_team_name(move)
-       team_name = nil
-       team_tag = move.css('.td-EscudoTime .png')
-       unless team_tag.empty?
-         team_name = team_tag[0].attributes['alt'].value.downcase
+!!     team_name = nil
+!!     team_tag = move.css('.td-EscudoTime .png')
+!!     unless team_tag.empty?
+!!       team_name = team_tag[0].attributes['alt'].value.downcase
        end
-       team_name
+!!     team_name
      end
    end
 
@@ -567,11 +602,19 @@ metric_fu shift the first line
      include Sprockets::Helpers::IsolatedHelper
    
      version :thumb do
-       process resize_to_fill: [50, 50, '#ffffff', 'Center']
+       process resize_to_fill: [30, 30, 'Center']
      end
    
      def default_url
-       [version_name, 'default.png'].compact.join('-')
+!!     [version_name, 'default.png'].compact.join('-')
+     end
+   
+     def store_dir
+       'uploads/badges'
+     end
+   
+     def root
+       Rails.root.join 'public/'
      end
    end
 
@@ -590,9 +633,9 @@ metric_fu shift the first line
    class TwitterStream
      @queue = :twitter
      DAEMON_FILE = File.join(Rails.root, 'lib', 'daemons', 'team_daemon.rb')
-     def self.perform(team_id)
-       system "bundle exec ruby #{DAEMON_FILE} stop"
-       system "bundle exec ruby #{DAEMON_FILE} start"
+     def self.perform
+!!     system "bundle exec ruby #{DAEMON_FILE} stop"
+!!     system "bundle exec ruby #{DAEMON_FILE} start"
      end
    end
 

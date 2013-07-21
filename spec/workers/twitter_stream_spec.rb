@@ -32,7 +32,7 @@ describe TwitterStream do
 
       TwitterStream.should_receive(:system)
               .with("#{ruby_call} #{TwitterStream::DAEMON_FILE} start").once
-      TwitterStream.perform(team.id)
+      TwitterStream.perform
     end
   end
 end

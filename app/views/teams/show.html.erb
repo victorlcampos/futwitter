@@ -1,7 +1,11 @@
 <%= render partial: "matches/match_score", locals: { match: @match } %>
 <div class="main_news">
+  <div>
+    <%= link_to 'Filtrar por domínios confiáveis', 'javascript:void();', id: 'filter_news', 'data-method' => 'filter' %>
+  </div>
+  <hr />
   <% @news.each do |news| %>
-    <div id="news_<%= news.id %>" class="news">
+    <div id="news_<%= news.id %>" class="news" data-domain='<%= news.domain_name %>'>
       <div class="image">
         <%= image_tag(news.image_url) if news.image_url %>
       </div>
@@ -12,8 +16,43 @@
         <br class='clear' />
         <span class="description"><%= news.description %></span>
       </div>
+      <br class='clear' />
+      <hr />
     </div>
-    <br class='clear' />
-    <hr />
   <% end %>
 </div>
+
+<%= content_for :javascripts do %>
+  <script type="text/javascript">
+    var domain_names = <%= @trusted_domains.to_s.html_safe %>;
+
+    var filter_news = function() {
+      $('.news').hide();
+      for(i = 0; i < domain_names.length; i++){
+        $('.news[data-domain="'+domain_names[i]+'"]').show();
+      }
+    }
+
+    var unfilter_news = function() {
+      $('.news').show();
+    }
+
+    $(document).ready(function(){
+      unfilter_news();
+
+      $('#filter_news').on('click', function(){
+        method =  $('#filter_news').data('method');
+        if(method == 'unfilter') {
+          unfilter_news();
+          $('#filter_news').text('Filtrar por domínios confiáveis');
+          $('#filter_news').data('method', 'filter');
+        }else if(method = 'filter') {
+          filter_news();
+          $('#filter_news').text('Mostrar todas as notícias');
+          $('#filter_news').data('method', 'unfilter');
+        }
+      });
+    });
+
+  </script>
+<% end %>

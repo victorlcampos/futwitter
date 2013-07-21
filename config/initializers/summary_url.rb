@@ -59,11 +59,12 @@ class SummaryUrl
 
     unless url
       image = doc.xpath("//link[@rel='image_src']").collect do |img|
-        url = img.attributes['content'].value
-        {
-          url: url,
-          size: FastImage.size(url)
-        }
+        if (content = img.attributes['content']) && (url = content.value)
+          {
+            url: url,
+            size: FastImage.size(url)
+          }
+        end
       end.reject do |img|
         img.nil? || img[:size].nil? || img[:size][0] < 50 || img[:size][1] < 50
       end

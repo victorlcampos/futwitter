@@ -1,0 +1,5 @@
+"pt-BR":
+  time:
+    formats:
+      default: "%H:%M:%S do dia %d/%m"
+      w3c: "%Y-%m-%dT%H:%M:%S.%N%:z"

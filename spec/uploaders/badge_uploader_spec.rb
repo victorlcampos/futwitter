@@ -2,7 +2,13 @@ require 'spec_helper'
 require 'carrierwave/test/matchers'
 
 describe BadgeUploader do
-  let(:uploader) { BadgeUploader }
+  subject(:uploader) { BadgeUploader }
+  describe 'store_dir' do
+    it 'should eq "uploads/badges"' do
+      badge_uploader = uploader.new
+      badge_uploader.store_dir.should eq('uploads/badges')
+    end
+  end
 
   describe 'versions' do
     it 'includes "thumb"' do
@@ -12,7 +18,7 @@ describe BadgeUploader do
 
   context 'the "thumb" version' do
     it 'should resize to 50x50' do
-      processor = [:resize_to_fill, [50, 50, '#ffffff', 'Center'], nil]
+      processor = [:resize_to_fill, [30, 30, 'Center'], nil]
       uploader.version(:thumb)[:uploader].processors.should include processor
     end
   end
@@ -25,5 +31,4 @@ describe BadgeUploader do
       badge_uploader.thumb.default_url.should eq('thumb-default.png')
     end
   end
-
 end

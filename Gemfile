@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'carrierwave'
+gem 'fog'
 gem 'mini_magick'
 gem 'nokogiri'
 gem 'fastimage'
@@ -10,6 +11,8 @@ gem 'resque-scheduler', require: 'resque_scheduler'
 gem 'daemons', '~> 1.1.9'
 gem 'tweetstream'
 gem 'unshortme'
+
+gem 'capistrano'
 
 # UTILITIES
 group :development do
@@ -46,6 +49,7 @@ group :test, :development do
   # test
   gem 'rspec-rails'
   gem 'jasminerice'
+  gem "fakeweb", "~> 1.3"
 end
 
 group :test do

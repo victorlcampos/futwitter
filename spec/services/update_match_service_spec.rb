@@ -13,13 +13,29 @@ describe UpdateMatchService do
 
   context 'parse score from internet' do
     describe '#update_matches_from_internet' do
+      before(:all) do
+        real_lancenet_url = UpdateMatchService::LANCENET_URL
+        fake_lancenet_url = File.join(Rails.root, 'spec', 'support', 'urls',
+                                             'temporeal_lancenet.html')
+        FakeWeb.register_uri(:get, real_lancenet_url,
+                                   body: open(fake_lancenet_url).read)
 
+        fake_match_url = File.join(Rails.root, 'spec', 'support', 'urls',
+                              'Grêmio 2 x 0 Caxias - Lancenet Tempo Real.html')
+        FakeWeb.register_uri(:get, %r|#{real_lancenet_url}|,
+                                   body: open(fake_match_url).read)
+
+        fake_gremio_image = File.join(Rails.root, 'spec', 'support', 'image',
+                                                                  'gremio.png')
+        fake_caxias_image = File.join(Rails.root, 'spec', 'support', 'image',
+                                                                  'caxias.png')
+
+        FakeWeb.register_uri(:get, "#{real_lancenet_url}/image/gremio.png",
+                                   body: open(fake_gremio_image))
+        FakeWeb.register_uri(:get, "#{real_lancenet_url}/image/caxias.png",
+                                   body: open(fake_caxias_image))
+      end
       before(:each) do
-        stub_const('UpdateMatchService::LANCENET_URL', File.join(Rails.root,
-                                          'spec',
-                                          'support', 'urls',
-                                          'temporeal_lancenet.html'))
-
         UpdateMatchService.new.update_matches_from_internet
       end
 
@@ -33,6 +49,16 @@ describe UpdateMatchService do
             Team.where(name: 'flamengo').first.should_not be_nil
             Team.where(name: 'olaria').first.should_not be_nil
             Team.where(name: 'brasil').first.should_not be_nil
+          end
+
+          it 'should save images' do
+            default_url = BadgeUploader.new.default_url
+
+            gremio = Team.where(name: 'grêmio').first
+            gremio.badge_url.should_not eq(default_url)
+
+            caxias = Team.where(name: 'caxias').first
+            caxias.badge_url.should_not eq(default_url)
           end
         end
 

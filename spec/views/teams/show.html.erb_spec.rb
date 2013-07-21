@@ -8,6 +8,7 @@ describe 'teams/show.html.erb' do
     news_flamengo_2 = FactoryGirl.create(:news_flamengo_2)
 
     @news = [news_flamengo_1, news_flamengo_2]
+    @trusted_domains = ['glo.bo']
   end
 
   it 'should show the match score' do
@@ -20,7 +21,8 @@ describe 'teams/show.html.erb' do
     render
     assert_select 'div.main_news' do
       @news.each do |news|
-        assert_select "div.news#news_#{news.id}" do
+        domain = news.domain_name
+        assert_select "div.news#news_#{news.id}[data-domain='#{domain}']" do
           assert_select "div.image > img[src='#{news.image_url}']"
           assert_select 'div.data' do
             assert_select "a.title[href='#{news.url}']", text: news.title

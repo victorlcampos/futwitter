@@ -9,6 +9,6 @@ class ApplicationController < ActionController::Base
   end
 
   def load_teams
-    @teams = Team.all
+    @teams = Team.order('name').all
   end
 end

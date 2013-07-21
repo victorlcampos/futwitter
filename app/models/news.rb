@@ -7,7 +7,7 @@ class News < ActiveRecord::Base
   def self.create_by_tweet(tweet, team)
     if url = tweet.urls[0]
       shorted_url = shorted_url(url)
-      unshorted_url = unshorted_url(shorted_url)
+      unshorted_url = unshorted_url(unshorted_url(shorted_url))
       unless News.where(url: unshorted_url).first
         create_news(tweet, team, shorted_url, unshorted_url)
       end
@@ -28,13 +28,16 @@ class News < ActiveRecord::Base
   end
 
   def self.create_news(tweet, team, shorted_url, unshorted_url)
-    params = url_params(shorted_url, unshorted_url).merge({
-      team: team,
-      retweets: tweet.retweet_count,
-      time: tweet.created_at
-    }).merge(SummaryUrl.fetch(unshorted_url))
+    begin
+      params = url_params(shorted_url, unshorted_url).merge({
+        team: team,
+        retweets: tweet.retweet_count,
+        time: tweet.created_at
+      }).merge(SummaryUrl.fetch(unshorted_url))
 
-    News.create!(params)
+      News.create!(params)
+    rescue
+    end
   end
 
   def self.url_params(shorted_url, unshorted_url)

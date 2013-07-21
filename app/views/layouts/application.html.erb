@@ -19,7 +19,7 @@
       </div>
       <div id="teams">
         <% @teams.each do |team| %>
-          <%= link_to image_tag(team.badge_url(:thumb)), team_path(team), class: team_classes(team) %>
+          <%= link_to image_tag(team.badge_url), team_path(team), class: team_classes(team), title: team.name %>
         <% end %>
       </div>
     </div>

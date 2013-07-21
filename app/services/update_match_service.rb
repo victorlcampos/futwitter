@@ -6,7 +6,10 @@ class UpdateMatchService
 
     doc.css('#listaJogos tr').each do |match|
       datas = match.css('td')
-      update_or_create_match(match_data(datas), parents(datas))
+      match_url = datas.css('a').first.attributes['href'].value
+
+      update_or_create_match(match_data(datas, match_url),
+                               parents(datas, match_url))
     end
   end
 
@@ -28,11 +31,11 @@ class UpdateMatchService
     }
   end
 
-  def match_data(datas)
+  def match_data(datas, match_url)
     {
       home_team_score: datas[1].text,
       away_team_score: datas[3].text,
-      internet_url: datas.css('a').first.attributes['href'].value,
+      internet_url: match_url,
       start_time: start_time(datas)
     }
   end
@@ -55,22 +58,43 @@ class UpdateMatchService
     value.to_i
   end
 
-  def parents(datas)
+  def parents(datas, match_url)
     {
-      home_team:    find_or_create_home_team(datas),
-      away_team:    find_or_create_away_team(datas),
+      home_team:    find_or_create_home_team(datas, match_url),
+      away_team:    find_or_create_away_team(datas, match_url),
       championship: find_or_create_championship(datas)
     }
   end
 
-  def find_or_create_home_team(datas)
+  def find_or_create_home_team(datas, match_url)
     home_team_name = datas[0].text
-    Team.find_or_create_by_name(home_team_name.downcase)
+    team = Team.find_or_create_by_name(home_team_name.downcase)
+
+    unless team.badge?
+      team.remote_badge_url = find_home_team_badge(match_url)
+      team.save!
+    end
+    team
   end
 
-  def find_or_create_away_team(datas)
+  def find_home_team_badge(match_url)
+    doc = Nokogiri::HTML(open("#{LANCENET_URL}#{match_url}"))
+    "#{LANCENET_URL}#{doc.css('.escudo img.png')[0].attributes['src'].value}"
+  end
+
+  def find_or_create_away_team(datas, match_url)
     away_team_name = datas[4].text
-    Team.find_or_create_by_name(away_team_name.downcase)
+    team = Team.find_or_create_by_name(away_team_name.downcase)
+    unless team.badge?
+      team.remote_badge_url = find_away_team_badge(match_url)
+      team.save!
+    end
+    team
+  end
+
+  def find_away_team_badge(match_url)
+    doc = Nokogiri::HTML(open("#{LANCENET_URL}#{match_url}"))
+    "#{LANCENET_URL}#{doc.css('.escudo img.png')[1].attributes['src'].value}"
   end
 
   def find_or_create_championship(datas)
