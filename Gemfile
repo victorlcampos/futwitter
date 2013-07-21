@@ -60,7 +60,7 @@ group :test do
   gem 'capybara'
 
   # continuous integration
-  gem 'rb-fsevent', require: false if RUBY_PLATFORM =~ /darwin/i
+  # gem 'rb-fsevent', require: false if RUBY_PLATFORM =~ /darwin/i
 end
 
 # CORE
