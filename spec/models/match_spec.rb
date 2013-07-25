@@ -54,7 +54,7 @@ describe Match do
     end
   end
 
-  describe 'running game' do
+  context 'running game' do
     before(:each) do
       Time.zone.stub(:now) { start_time - 27.minutes }
       subject.stub_chain(:home_team_tweets, :count) { 5 }
@@ -64,7 +64,7 @@ describe Match do
     its(:away_tweets_per_minute) { should eq(0) }
   end
 
-  describe 'ended game' do
+  context 'ended game' do
     before(:each) do
       Time.zone.stub(:now) { start_time + 10.hours  }
       subject.stub_chain(:home_team_tweets, :count) { 180 * 2 }

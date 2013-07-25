@@ -9,7 +9,7 @@ metric_fu shift the first line
    
      protected
      def load_championchip
-!!     @championships = Championship.all
+!!     @championships = Championship.order_by_matches_count
      end
    
      def load_teams
@@ -66,8 +66,8 @@ metric_fu shift the first line
 ================================================================================
    module TeamsHelper
      def team_classes(team)
-!!     championships_ids = team.championships_ids
-!!     "filter championship_#{championships_ids.join(' championship_')}"
+       championships_ids = team.championships_ids
+       "filter championship_#{championships_ids.join(' championship_')}"
      end
    end
 
@@ -75,8 +75,9 @@ metric_fu shift the first line
  ./app/models/championship.rb
 ================================================================================
    class Championship < ActiveRecord::Base
-     attr_accessible :name
+     scope :order_by_matches_count, order('matches_count Desc, name Asc')
    
+     attr_accessible :name
      has_many :matches
    
    
@@ -97,7 +98,7 @@ metric_fu shift the first line
    
      belongs_to :home_team, class_name: 'Team'
      belongs_to :away_team, class_name: 'Team'
-     belongs_to :championship
+     belongs_to :championship, counter_cache: true
    
      attr_accessible :home_team, :away_team, :home_team_score,
                      :away_team_score, :championship, :internet_url, :start_time
@@ -259,16 +260,16 @@ metric_fu shift the first line
      end
    
      def matches
-!!     my_id = self.id
-!!     Match.where('home_team_id = ? OR away_team_id = ?', my_id, my_id)
+       my_id = self.id
+       Match.where('home_team_id = ? OR away_team_id = ?', my_id, my_id)
      end
    
      def championships
-!!     Championship.joins(:matches).merge(matches)
+       Championship.joins(:matches).merge(matches)
      end
    
      def championships_ids
-!!     championships.pluck('championships.id')
+       championships.pluck('championships.id')
      end
    
      def current_match

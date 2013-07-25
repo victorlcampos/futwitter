@@ -3,7 +3,7 @@ class Match < ActiveRecord::Base
 
   belongs_to :home_team, class_name: 'Team'
   belongs_to :away_team, class_name: 'Team'
-  belongs_to :championship
+  belongs_to :championship, counter_cache: true
 
   attr_accessible :home_team, :away_team, :home_team_score,
                   :away_team_score, :championship, :internet_url, :start_time

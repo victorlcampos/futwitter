@@ -10,10 +10,10 @@ describe 'ChampionshipFilter', ->
         select_championship.val(1);
         filter.filter_championships();
 
-      it 'should show current championships', ->
+      it 'should show current championship', ->
         expect($(".championship_1")).toBeVisible()
 
-      it 'should filter others championships', ->
+      it 'should hide others championships', ->
         expect($(".championship_2")).toBeHidden()
         expect($(".championship_3")).toBeHidden()
 

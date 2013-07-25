@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   protected
   def load_championchip
-    @championships = Championship.all
+    @championships = Championship.order_by_matches_count
   end
 
   def load_teams
