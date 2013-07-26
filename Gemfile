@@ -52,11 +52,11 @@ group :test, :development do
   gem "fakeweb", "~> 1.3"
 end
 
+gem 'factory_girl_rails'
 group :test do
   # test
   gem 'shoulda-matchers'
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
   gem 'capybara'
 
   # continuous integration
