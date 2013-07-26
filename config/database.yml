@@ -17,7 +17,7 @@ production:
   encoding: unicode
   database: futwitter_development
   pool: 5
-  username: postgres
+  username: root
   password:
 
 # Warning: The database defined as "test" will be erased and
