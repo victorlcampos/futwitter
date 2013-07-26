@@ -1,17 +1,12 @@
-require 'factory_girl'
-Dir[Rails.root.join('spec/factories/*.rb')].each { |f| require f }
+TrustedDomain.create(name: 'sportv.globo.com')
+TrustedDomain.create(name: 'globoesporte.com')
+TrustedDomain.create(name: 'globoesporte.globo.com')
 
-# globo
-FactoryGirl.create(:trusted_domain, name: 'sportv.globo.com')
-FactoryGirl.create(:trusted_domain, name: 'globoesporte.com')
-FactoryGirl.create(:trusted_domain, name: 'globoesporte.globo.com')
+TrustedDomain.create(name: 'torcidas.esporte.ig.com.br')
+TrustedDomain.create(name: 'esporte.uol.com.br')
+TrustedDomain.create(name: 'esportes.terra.com.br')
+TrustedDomain.create(name: 'www.espn.com.br')
 
-FactoryGirl.create(:trusted_domain, name: 'torcidas.esporte.ig.com.br')
-FactoryGirl.create(:trusted_domain, name: 'esporte.uol.com.br')
-FactoryGirl.create(:trusted_domain, name: 'esportes.terra.com.br')
-FactoryGirl.create(:trusted_domain, name: 'www.espn.com.br')
-
-# Oficiais de times
-FactoryGirl.create(:trusted_domain, name: 'www.santosfc.com.br')
-FactoryGirl.create(:trusted_domain, name: 'flamengo.com.br')
-FactoryGirl.create(:trusted_domain, name: 'www.botafogo.com.br')
+TrustedDomain.create(name: 'www.santosfc.com.br')
+TrustedDomain.create(name: 'flamengo.com.br')
+TrustedDomain.create(name: 'www.botafogo.com.br')
