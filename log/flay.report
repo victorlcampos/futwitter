@@ -1,0 +1,86 @@
+Total score (lower is better) = 1319
+
+
+1) IDENTICAL code found in :iter (mass*2 = 344)
+  ./spec/controllers/home_controller_spec.rb:6
+  ./spec/services/update_match_service_spec.rb:16
+
+2) IDENTICAL code found in :or (mass*2 = 92)
+  ./config/initializers/summary_url.rb:55
+  ./config/initializers/summary_url.rb:69
+
+3) Similar code found in :iter (mass = 92)
+  ./spec/factories/teams.rb:2
+  ./spec/factories/teams.rb:10
+  ./spec/factories/teams.rb:18
+  ./spec/factories/teams.rb:26
+
+4) Similar code found in :iter (mass = 90)
+  ./spec/factories/matches.rb:2
+  ./spec/factories/matches.rb:9
+  ./spec/factories/matches.rb:16
+
+5) Similar code found in :iter (mass = 78)
+  ./spec/models/championship_spec.rb:32
+  ./spec/models/move_spec.rb:18
+  ./spec/models/team_spec.rb:69
+
+6) Similar code found in :iter (mass = 64)
+  ./spec/presenters/matches_show_presenter_spec.rb:13
+  ./spec/presenters/matches_show_presenter_spec.rb:18
+  ./spec/presenters/matches_show_presenter_spec.rb:33
+  ./spec/presenters/matches_show_presenter_spec.rb:38
+
+7) Similar code found in :iter (mass = 57)
+  ./spec/models/championship_spec.rb:41
+  ./spec/models/move_spec.rb:28
+  ./spec/models/team_spec.rb:78
+
+8) Similar code found in :iter (mass = 52)
+  ./spec/services/update_match_service_spec.rb:118
+  ./spec/services/update_match_service_spec.rb:129
+
+9) Similar code found in :defn (mass = 48)
+  ./app/services/update_match_service.rb:80
+  ./app/services/update_match_service.rb:95
+
+10) Similar code found in :iter (mass = 48)
+  ./spec/services/update_match_service_spec.rb:6
+  ./spec/services/update_moves_service_spec.rb:6
+  ./spec/services/update_moves_service_spec.rb:13
+
+11) Similar code found in :defn (mass = 46)
+  ./app/services/update_match_service.rb:69
+  ./app/services/update_match_service.rb:85
+
+12) Similar code found in :iter (mass = 44)
+  ./spec/controllers/home_controller_spec.rb:51
+  ./spec/controllers/home_controller_spec.rb:59
+
+13) Similar code found in :iter (mass = 40)
+  ./spec/models/tweet_spec.rb:46
+  ./spec/models/tweet_spec.rb:60
+
+14) Similar code found in :iter (mass = 40)
+  ./spec/routing/matches_routing_spec.rb:3
+  ./spec/routing/teams_routing_spec.rb:3
+
+15) Similar code found in :iter (mass = 40)
+  ./spec/services/update_moves_service_spec.rb:51
+  ./spec/services/update_moves_service_spec.rb:57
+
+16) Similar code found in :iter (mass = 38)
+  ./db/migrate/20130316154243_create_matches.rb:3
+  ./db/migrate/20130323130438_create_moves.rb:3
+
+17) Similar code found in :iter (mass = 38)
+  ./spec/factories/moves.rb:11
+  ./spec/factories/moves.rb:18
+
+18) Similar code found in :iter (mass = 34)
+  ./spec/models/tweet_spec.rb:39
+  ./spec/models/tweet_spec.rb:53
+
+19) Similar code found in :iter (mass = 34)
+  ./spec/services/update_match_service_spec.rb:65
+  ./spec/services/update_match_service_spec.rb:89

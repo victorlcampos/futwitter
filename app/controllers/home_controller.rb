@@ -4,8 +4,14 @@ class HomeController < ApplicationController
   def index
     UpdateMatchService.new.update_matches_from_internet
 
-    @matches = Match.includes(:home_team, :away_team).order('start_time').all
     @teams = Team.order('name').all
+
+    @matches = []
+    @teams.each do |team|
+      @matches << team.current_match
+    end
+    @matches.uniq!.sort_by!{|e| e[:start_time]}
+
     @championships = Championship.order_by_matches_count
   end
 end

@@ -27,12 +27,18 @@ describe HomeController do
   end
 
   before(:each) do
-    Team.stub_chain(:order, :all)             { [{}, {}] }
+    team_1 = { 'name' => 'team_1' }
+    team_1.stub(:current_match) { { name: 'jogo 1', start_time: 2 } }
 
-    Match.stub_chain(:order, :all)            { [{}, {}] }
-    Match.stub_chain(:includes, :order, :all) { [{}, {}] }
+    team_2 = { 'name' => 'team_2' }
+    team_2.stub(:current_match) { { name: 'jogo 2', start_time: 1 } }
 
-    Championship.stub(:all)                   { [{}, {}] }
+    team_3 = { 'name' => 'team_3' }
+    team_3.stub(:current_match) { { name: 'jogo 2', start_time: 1 } }
+
+    Team.stub_chain(:order, :all)              { [team_1, team_2, team_3] }
+
+    Championship.stub(:order_by_matches_count) { [{}, {}] }
   end
 
   describe 'GET "index"' do
@@ -48,12 +54,13 @@ describe HomeController do
       Match.count.should eq(28)
     end
 
-    it 'should assigns all matches as @matches' do
+    it 'should assigns current matches as @matches' do
       UpdateMatchService
           .stub_chain(:new, :update_matches_from_internet) { true }
 
       get :index
-      assigns(:matches).should eq(Match.order(:start_time).all)
+      assigns(:matches).should eq([{ 'name' => 'jogo 2', 'start_time' => 1 },
+                                   { 'name' => 'jogo 1', 'start_time' => 2 }])
     end
 
     it 'should assigns all teams as @teams' do
@@ -66,7 +73,7 @@ describe HomeController do
 
     it 'should assigns all championships as @championships' do
       get :index
-      assigns(:championships).should eq(Championship.all)
+      assigns(:championships).should eq(Championship.order_by_matches_count)
     end
 
     it 'should load all teams once' do
@@ -77,7 +84,7 @@ describe HomeController do
     end
 
     it 'should load all championships once' do
-      Championship.should_receive(:all).once
+      Championship.should_receive(:order_by_matches_count).once
       UpdateMatchService
           .stub_chain(:new, :update_matches_from_internet) { true }
       get :index
