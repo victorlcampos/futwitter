@@ -40,7 +40,7 @@ def new_daemon
 end
 
 def create_tweet(tweet, team)
-  Tweet.create_using_real_tweet(tweet, team) if on_opened_time?(team)
+  Tweet.create_using_real_tweet(tweet, team)
 end
 
 def create_news(tweet, team)
@@ -69,9 +69,12 @@ daemon.track(*team_names(teams)) do |tweet|
   teams.each do |team|
     if tweet.text.downcase.match /#{team.name.downcase}/
       create_news(tweet, team)
-      create_tweet(tweet, team)
-      if tweet.media.length > 0
-        create_photo(tweet, team)
+      if on_opened_time?(team)
+        create_tweet(tweet, team)
+
+        if tweet.media.length > 0
+          create_photo(tweet, team)
+        end
       end
     end
   end
