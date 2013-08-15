@@ -47,6 +47,10 @@ def create_news(tweet, team)
   News.create_by_tweet(tweet, team)
 end
 
+def create_photo(tweet, team)
+  Photo.create_by_tweet(tweet, team)
+end
+
 daemon = new_daemon
 logger = nil
 teams = find_teams
@@ -66,6 +70,9 @@ daemon.track(*team_names(teams)) do |tweet|
     if tweet.text.downcase.match /#{team.name.downcase}/
       create_news(tweet, team)
       create_tweet(tweet, team)
+      if tweet.media.length > 0
+        create_photo(tweet, team)
+      end
     end
   end
 end

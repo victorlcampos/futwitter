@@ -9,6 +9,7 @@ describe Match do
     it { should belong_to(:away_team).class_name('Team') }
     it { should belong_to(:championship) }
     it { should have_many(:moves) }
+    it { should have_many(:photos) }
   end
 
   subject(:flamengo_vs_vasco) do

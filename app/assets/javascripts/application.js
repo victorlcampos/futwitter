@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require jquery-jvectormap-1.2.2.min
 //= require jquery-jvectormap-world-mill-en
+//= require jquery.timers-1.2.js
+//= require jquery.galleryview-3.0-dev
 //= require_tree ./application

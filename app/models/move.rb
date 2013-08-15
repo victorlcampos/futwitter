@@ -12,4 +12,11 @@ class Move < ActiveRecord::Base
     my_team_name = read_attribute(:team_name)
     my_team_name.humanize if my_team_name
   end
+
+  def badge_url
+    if my_team_name = team_name
+      team = Team.find_by_name(my_team_name.downcase)
+      team.badge_url if team
+    end
+  end
 end

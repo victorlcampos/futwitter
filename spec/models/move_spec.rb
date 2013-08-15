@@ -24,6 +24,25 @@ describe Move do
       end
     end
 
+    describe '#badge_url' do
+      let!(:team) { FactoryGirl.create(:flamengo) }
+      context 'when have team_name' do
+        it 'should return name as humanize' do
+          subject.team_name = 'FlaMengO'
+          subject.save!
+          subject.badge_url.should eq(team.badge_url)
+        end
+      end
+      context 'when do not have team_name' do
+        it 'should return name as humanize' do
+          subject.team_name = nil
+          subject.save!
+          subject.team_name.should eq(nil)
+        end
+      end
+
+    end
+
     describe '#name' do
       context 'when have team_name' do
         it 'should return name as humanize' do

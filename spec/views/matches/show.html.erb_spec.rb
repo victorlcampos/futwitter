@@ -3,13 +3,19 @@ require 'spec_helper'
 describe 'matches/show.html.erb' do
   let!(:start_time) { Time.zone.now }
   before(:each) do
+    FactoryGirl.create(:flamengo)
+
     match = FactoryGirl.create(:flamengo_vs_vasco, start_time: start_time)
+    FactoryGirl.create(:photo, match: match)
+    FactoryGirl.create(:photo, match: match)
+    FactoryGirl.create(:photo, match: match)
+
 
     flamengo_vs_vasco_move_2 = FactoryGirl.create(:flamengo_vs_vasco_move_2,
-                                                   match: match)
+                                                   match: match, team_name: 'Flamengo')
 
     flamengo_vs_vasco_move_1 = FactoryGirl.create(:flamengo_vs_vasco_move_1,
-                                                   match: match)
+                                                   match: match, team_name: 'Flamengo')
 
     FactoryGirl.create(:tweet, team: match.home_team)
     FactoryGirl.create(:tweet, team: match.home_team)
@@ -27,6 +33,16 @@ describe 'matches/show.html.erb' do
                     locals: { match: @presenter.match }, count: 1
   end
 
+  it "should show match photos" do
+    render
+    assert_select 'ul#gallery' do
+      @presenter.match.photos.each do |photo|
+        src_attribute = "src='#{photo.url}'"
+        assert_select "img[#{src_attribute}]"
+      end
+    end
+  end
+
   it 'should show the move of match' do
     render
     @presenter.moves.each do |move|
@@ -35,7 +51,9 @@ describe 'matches/show.html.erb' do
           assert_select 'span', text: move.minute
         end
         assert_select 'div.move_content' do
-          assert_select 'span.team', text: move.team_name
+          assert_select 'span.team' do
+            assert_select "img[src='#{move.badge_url}']"
+          end
           assert_select 'span.move', text: move.text
         end
       end

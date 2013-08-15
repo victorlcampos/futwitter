@@ -21,6 +21,12 @@
 <div id="world_map" style="width: 1000px; height: 400px"></div>
 <br class='clear' />
 <hr />
+<ul id='gallery'>
+  <% @presenter.match.photos.each do |photo| %>
+    <li><%= image_tag photo.url, data: { description: photo.description }, title: 'Tweet :' %></li>
+  <% end %>
+</ul>
+<hr />
 <div id='moves'>
   <% @presenter.moves.each do |move| %>
     <div class="move" id="move_<%= move.id %>">
@@ -28,7 +34,9 @@
         <span><%= move.minute %></span>
       </div>
       <div class="move_content">
-        <span class="team"><%= move.team_name %></span>
+        <% if badge_url = move.badge_url %>
+          <span class="team"><%= image_tag badge_url %></span>
+        <% end %>
         <span class="move"><%= move.text %></span>
       </div>
     </div>
