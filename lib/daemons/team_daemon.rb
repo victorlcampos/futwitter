@@ -69,6 +69,7 @@ daemon.track(*team_names(teams)) do |tweet|
   teams.each do |team|
     if tweet.text.downcase.match /#{team.name.downcase}/
       create_news(tweet, team)
+
       if on_opened_time?(team)
         create_tweet(tweet, team)
 
@@ -76,6 +77,7 @@ daemon.track(*team_names(teams)) do |tweet|
           create_photo(tweet, team)
         end
       end
+
     end
   end
 end
