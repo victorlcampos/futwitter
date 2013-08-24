@@ -3,6 +3,7 @@ require 'nokogiri'
 class SummaryUrl
   def self.fetch(url)
     html = open(url)
+
     doc = Nokogiri::HTML(html.read)
     doc.encoding = 'utf-8'
 
@@ -11,6 +12,8 @@ class SummaryUrl
       description: description(doc),
       image_url: images(doc)
     }
+
+    html.close
   end
 
   private

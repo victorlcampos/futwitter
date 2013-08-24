@@ -1,4 +1,6 @@
 class News < ActiveRecord::Base
+  default_scope order('time DESC')
+
   attr_accessible :shorted_url, :team, :retweets, :time, :url, :domain_name,
                   :title, :description, :image_url
 
