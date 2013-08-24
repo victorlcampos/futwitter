@@ -7,6 +7,7 @@ class Team < ActiveRecord::Base
                           foreign_key: 'away_team_id', dependent: :destroy
   has_many :news
   has_many :tweets
+  has_many :photos
 
   attr_accessible :name
   after_create :schedule_twitter

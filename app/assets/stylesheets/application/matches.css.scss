@@ -1,5 +1,10 @@
 @import "compass";
 
+.main_matches {
+  position: relative;
+  left: 36em;
+}
+
 .match {
   display: inline-block;
   background-color: white;

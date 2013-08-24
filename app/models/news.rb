@@ -42,7 +42,6 @@ class News < ActiveRecord::Base
   end
 
   def self.create_news(tweet, team, shorted_url, unshorted_url)
-    begin
       params = url_params(shorted_url, unshorted_url).merge({
         team: team,
         retweets: tweet.retweet_count,
@@ -50,6 +49,8 @@ class News < ActiveRecord::Base
       }).merge(SummaryUrl.fetch(unshorted_url))
 
       News.create!(params)
+    begin
+
     rescue
     end
   end

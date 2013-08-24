@@ -9,6 +9,10 @@ describe TeamsController do
       FactoryGirl.create(:botafogo_vs_flamengo, away_team: @flamengo)
       FactoryGirl.create(:news_flamengo_1     ,      team: @flamengo)
 
+      FactoryGirl.create(:photo, team: @flamengo)
+      FactoryGirl.create(:photo, team: @flamengo)
+      FactoryGirl.create(:photo, team: @flamengo)
+
       FactoryGirl.create(:trusted_domain, name: 'globo')
       FactoryGirl.create(:trusted_domain, name: 'sportv')
       FactoryGirl.create(:trusted_domain, name: 'espm')
@@ -24,8 +28,12 @@ describe TeamsController do
       assigns(:match).should eq(@flamengo.current_match)
     end
 
-    it 'should assigns the news as @news' do
-      assigns(:news).should eq(@flamengo.news)
+    it 'should assigns the news as @news limited by 20' do
+      assigns(:news).should eq(@flamengo.news.limit(20))
+    end
+
+    it 'should assigns the photos as @photos limited by 20' do
+      assigns(:photos).should eq(@flamengo.photos.limit(20))
     end
 
     it 'should assings the trusted domains as @trusted_domains' do

@@ -31,3 +31,11 @@ body {
 .clear {
   clear: both;
 }
+
+.two_columns {
+  @include columns(20em 2);
+}
+
+.one_columns {
+  @include columns(20em 1);
+}

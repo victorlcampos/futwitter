@@ -3,6 +3,11 @@ require 'spec_helper'
 describe 'teams/show.html.erb' do
   before(:each) do
     @match = FactoryGirl.create(:flamengo_vs_vasco)
+    @team = @match.home_team
+    @photos = []
+    @photos << FactoryGirl.create(:photo, team: @team)
+    @photos << FactoryGirl.create(:photo, team: @team)
+    @photos << FactoryGirl.create(:photo, team: @team)
 
     news_flamengo_1 = FactoryGirl.create(:news_flamengo_1)
     news_flamengo_2 = FactoryGirl.create(:news_flamengo_2)
@@ -15,6 +20,16 @@ describe 'teams/show.html.erb' do
     render
     assert_template partial: 'matches/match_score',
                     locals: { match: @match }, count: 1
+  end
+
+  it "should show match photos" do
+    render
+    assert_select 'ul#gallery' do
+      @photos.each do |photo|
+        src_attribute = "src='#{photo.url}'"
+        assert_select "img[#{src_attribute}]"
+      end
+    end
   end
 
   it 'should show the news' do

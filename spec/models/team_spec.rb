@@ -13,6 +13,7 @@ describe Team do
       should have_many(:away_matches).class_name('Match').dependent(:destroy)
     end
     it { should have_many(:news) }
+    it { should have_many(:photos) }
     it { should have_many(:tweets) }
   end
 

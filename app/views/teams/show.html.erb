@@ -1,25 +1,41 @@
 <%= render partial: "matches/match_score", locals: { match: @match } %>
-<div class="main_news">
-  <div>
-    <%= link_to 'Filtrar por domínios confiáveis', 'javascript:void();', id: 'filter_news', 'data-method' => 'filter' %>
-  </div>
-  <hr />
-  <% @news.each do |news| %>
-    <div id="news_<%= news.id %>" class="news" data-domain='<%= news.domain_name %>'>
-      <div class="image">
-        <%= image_tag(news.image_url.strip) if news.image_url %>
-      </div>
-      <div class="data">
-        <a href="<%= news.url %>" class="title"><%= news.title %></a>
-        <br class='clear' />
-        <span class="url"><%= news.url %></span>
-        <br class='clear' />
-        <span class="description"><%= news.description %></span>
-      </div>
-      <br class='clear' />
-      <hr />
-    </div>
+
+<ul id='gallery'>
+  <% @photos.each do |photo| %>
+    <li><%= image_tag photo.url, data: { description: photo.description }, title: 'Tweet :' %></li>
   <% end %>
+</ul>
+
+<hr />
+
+<div class='one_columns'>
+  <div class="main_news">
+    <div>
+      <%= link_to 'Filtrar por domínios confiáveis', 'javascript:void();', id: 'filter_news', 'data-method' => 'filter' %>
+    </div>
+    <hr />
+    <% @news.each do |news| %>
+      <div id="news_<%= news.id %>" class="news" data-domain='<%= news.domain_name %>'>
+        <div class="image">
+          <%= image_tag(news.image_url.strip) if news.image_url %>
+        </div>
+        <div class="data">
+          <a href="<%= news.url %>" class="title"><%= news.title %></a>
+          <br class='clear' />
+          <span class="url"><%= news.url %></span>
+          <br class='clear' />
+          <span class="description"><%= news.description %></span>
+        </div>
+        <br class='clear' />
+        <hr />
+      </div>
+    <% end %>
+  </div>
+  <div class="main_matches">
+    <% @matches.each do |match| %>
+      <%= render partial: "matches/match_score", locals: { match: match } %>
+    <% end %>
+  </div>
 </div>
 
 <%= content_for :javascripts do %>

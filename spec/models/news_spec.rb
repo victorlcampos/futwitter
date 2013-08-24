@@ -38,7 +38,18 @@ describe News do
           url_with_params += '&utm_campaign=e'
 
           Unshortme.stub(:unshort).with('shorted_url.com') { url_with_params }
-          Unshortme.stub(:unshort).with( url ) { url }
+          Unshortme.stub(:unshort).with( url_with_params ) { url_with_params }
+
+          URI.stub_chain(:parse, :host) {'glo.co'}
+          URI.stub(:remove_params) { url }
+
+          SummaryUrl.stub(:fetch) do
+            {
+              title: 'Torcida apoia, incendeia Mané',
+              description: 'Mano diz que incentivo',
+              image_url: 'torcida_flamengo_cahe.jpg'
+            }
+          end
 
           News.create_by_tweet(tweet, team)
         end
@@ -104,7 +115,18 @@ describe News do
           url_with_params += '&utm_campaign=e'
 
           Unshortme.stub(:unshort).with('shorted_url.com') { url_with_params }
-          Unshortme.stub(:unshort).with(url) { url }
+          Unshortme.stub(:unshort).with( url_with_params ) { url_with_params }
+
+          URI.stub_chain(:parse, :host) {'glo.co'}
+          URI.stub(:remove_params) { url }
+
+          SummaryUrl.stub(:fetch) do
+            {
+              title: 'Torcida apoia, incendeia Mané',
+              description: 'Mano diz que incentivo',
+              image_url: 'torcida_flamengo_cahe.jpg'
+            }
+          end
 
           News.create_by_tweet(tweet, team)
           News.create_by_tweet(tweet, team)
@@ -131,12 +153,23 @@ describe News do
 
 
           Unshortme.stub(:unshort).with('shorted_url.com') { url_with_params }
+          Unshortme.stub(:unshort).with( url_with_params ) { url_with_params }
+
+          URI.stub_chain(:parse, :host) {'glo.co'}
+          URI.stub(:remove_params) { url }
+
+          SummaryUrl.stub(:fetch) do
+            {
+              title: 'Torcida apoia, incendeia Mané',
+              description: 'Mano diz que incentivo',
+              image_url: 'torcida_flamengo_cahe.jpg'
+            }
+          end
 
           News.create_by_tweet(tweet, team)
 
           expanded_url.stub(:expanded_url) { 'shorted2_url.com' }
           Unshortme.stub(:unshort).with('shorted2_url.com') { url_with_params }
-
           News.create_by_tweet(tweet, team)
         end
 
