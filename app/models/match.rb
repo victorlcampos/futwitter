@@ -1,4 +1,6 @@
 class Match < ActiveRecord::Base
+  default_scope order('id DESC')
+
   has_many :moves
   has_many :photos
 

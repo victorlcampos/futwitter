@@ -30,7 +30,7 @@ class Team < ActiveRecord::Base
   end
 
   def current_match
-    matches.last
+    matches.first
   end
 
   def current_match_start_time
