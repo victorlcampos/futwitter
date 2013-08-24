@@ -7,7 +7,7 @@
   <% @news.each do |news| %>
     <div id="news_<%= news.id %>" class="news" data-domain='<%= news.domain_name %>'>
       <div class="image">
-        <%= image_tag(news.image_url) if news.image_url %>
+        <%= image_tag(news.image_url.strip) if news.image_url %>
       </div>
       <div class="data">
         <a href="<%= news.url %>" class="title"><%= news.title %></a>
