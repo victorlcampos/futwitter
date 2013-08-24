@@ -9,7 +9,7 @@ class News < ActiveRecord::Base
   def self.create_by_tweet(tweet, team)
     if url = tweet.urls[0]
       shorted_url = shorted_url(url)
-      unshorted_url = unshorted_url(unshorted_url(shorted_url))
+      unshorted_url = unshorted_url(shorted_url)
       unless News.where(url: unshorted_url).first
         create_news(tweet, team, shorted_url, unshorted_url)
       end
@@ -22,7 +22,19 @@ class News < ActiveRecord::Base
   end
 
   def self.unshorted_url(shorted_url)
-    URI.remove_params(Unshortme.unshort(shorted_url), analytics_params)
+    my_url = shorted_url
+    tmp_url = my_url
+
+    while true
+      tmp_url = Unshortme.unshort(tmp_url)
+      if my_url == tmp_url
+        break
+      else
+        my_url = tmp_url
+      end
+    end
+
+    URI.remove_params(my_url, analytics_params)
   end
 
   def self.analytics_params
