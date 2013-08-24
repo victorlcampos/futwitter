@@ -53,6 +53,8 @@ module Futwitter
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
+    Logger.new(Rails.root.join("log",Rails.env + ".log"), 5, 100*1024*1024)
+
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
 
