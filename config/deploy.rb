@@ -11,7 +11,7 @@ set :repository,  "git@github.com:victorlcampos/futwitter.git"
 
 set :deploy_to, "/var/www/#{application}"
 
-set :workers, { "*" => 2 }
+set :workers, { '*' => 2, 'mood' => 2 }
 
 after "deploy:restart", "resque:restart"
 

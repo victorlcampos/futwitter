@@ -41,6 +41,7 @@ end
 
 def create_tweet(tweet, team)
   Tweet.create_using_real_tweet(tweet, team)
+  Resque.enqueue(Mood, tweet.id)
 end
 
 def create_news(tweet, team)
