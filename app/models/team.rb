@@ -53,6 +53,26 @@ class Team < ActiveRecord::Base
     read_attribute(:name).humanize
   end
 
+  def geo_tweets
+    tweets.geo
+  end
+
+  def geo_tweets_count
+    tweets.geo.count
+  end
+
+  def tweets_count
+    tweets.count
+  end
+
+  def matches_count
+    matches.count
+  end
+
+  def tweets_per_minute
+    tweets_count / (matches_count*(Match.total_time))
+  end
+
   private
   def schedule_twitter
     Resque.enqueue(TwitterStream)

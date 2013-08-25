@@ -12,12 +12,20 @@ class MatchesShowPresenter
     match.home_tweets_per_minute
   end
 
+  def home_mood
+    @home_mood ||= match.home_mood
+  end
+
   def away_team_tweets_count
     match.away_team_tweets_count
   end
 
   def away_tweets_per_minute
     match.away_tweets_per_minute
+  end
+
+  def away_mood
+    @away_mood ||= match.away_mood
   end
 
   def moves

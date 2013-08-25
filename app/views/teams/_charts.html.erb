@@ -1,0 +1,51 @@
+<% if team.matches_count > 0 %>
+  <script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Jogo', '<%= team.name %>']
+        <% team.matches.limit(10).each do |match| %>
+          ,['<%= match %>', <%= team.match_tweets(match).count %>]
+        <% end %>
+      ]);
+
+      var options = {
+        title: 'Tweets durante os minutos do jogo',
+        hAxis: {title: 'Minutos', titleTextStyle: {color: 'red'}}
+      };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById('tweets_during_the_minutes'));
+      chart.draw(data, options);
+    }
+  </script>
+<% end %>
+
+<script type="text/javascript">
+  var map = new jvm.WorldMap({
+    map: 'world_mill_en',
+    container: $('#world_map'),
+    scaleColors: ['#C8EEFF'],
+    normalizeFunction: 'polynomial',
+    hoverOpacity: 0.7,
+    hoverColor: false,
+    backgroundColor: '#383f47',
+    series: {
+      markers: [{
+        attribute: 'fill',
+        scale: ['#3366CC'],
+        min: 0,
+        max: 1,
+        values: [<%= "0,"*team.geo_tweets_count %>]
+      }]
+    },
+    markers: [
+      <% team.geo_tweets.find_each do |tweet| %>
+        {
+          latLng: [<%= tweet.latitude %>,<%= tweet.longitude %>],
+          name: '<%= team.name %>'
+        },
+      <% end %>
+    ]
+  });
+</script>

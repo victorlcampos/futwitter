@@ -1,14 +1,32 @@
 <div id='tweets'>
   <div class='home_team_tweets'>
+    <div>Humor dos torcedores:</div>
+    <% if @presenter.home_mood && @presenter.home_mood > 0 %>
+      <div class='total_home_tweets'><%= image_tag 'good_mood.png' %></div>
+    <% elsif @presenter.home_mood &&  @presenter.home_mood < 0 %>
+      <div class='total_home_tweets'><%= image_tag 'bad_mood.png' %></div>
+    <% else %>
+      <div class='total_home_tweets'><%= image_tag 'neutral_mood.png' %></div>
+    <% end %>
     <div>Total de Tweets durante o jogo:</div>
     <div class='total_home_tweets'><%= @presenter.home_team_tweets_count %></div>
 
     <div>Tweets por minuto:</div>
     <div class='tpm_home'><%= @presenter.home_tweets_per_minute %></div>
   </div>
+
   <%= render partial: "matches/match_score", locals: { match: @presenter.match } %>
+
   <br />
   <div class='away_team_tweets'>
+    <div>Humor dos torcedores:</div>
+    <% if @presenter.away_mood && @presenter.away_mood > 0 %>
+      <div class='total_home_tweets'><%= image_tag 'good_mood.png' %></div>
+    <% elsif @presenter.away_mood &&  @presenter.away_mood < 0 %>
+      <div class='total_home_tweets'><%= image_tag 'bad_mood.png' %></div>
+    <% else %>
+      <div class='total_home_tweets'><%= image_tag 'neutral_mood.png' %></div>
+    <% end %>
     <div>Total de Tweets durante o jogo:</div>
     <div class='total_away_tweets'><%= @presenter.away_team_tweets_count %></div>
     <div>Tweets por minuto:</div>

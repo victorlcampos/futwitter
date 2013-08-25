@@ -3,6 +3,24 @@
 <span class='name'><%= @team.name %></span>
 </div>
 
+<div class='two_columns'>
+  <div>Total de Tweets durantes os jogos:</div>
+  <div class='total_home_tweets'><%= @team.tweets_count %></div>
+
+  <div>Tweets por minuto:</div>
+  <div class='tpm_home'><%= @team.tweets_per_minute %></div>
+</div>
+
+<br class='clear' />
+<div id='tweets_during_the_minutes'></div>
+<br class='clear' />
+<div id="world_map" style="width: 1000px; height: 400px"></div>
+<br class='clear' />
+
+<%= content_for :javascripts do %>
+  <%= render 'charts', team: @team %>
+<% end %>
+
 <ul id='gallery'>
   <% @photos.each do |photo| %>
     <li><%= image_tag photo.url, data: { description: photo.description }, title: 'Tweet :' %></li>

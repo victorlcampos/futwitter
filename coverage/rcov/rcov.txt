@@ -89,11 +89,11 @@ metric_fu shift the first line
    
    
      def name=(name)
-       write_attribute(:name, name.downcase)
+!!     write_attribute(:name, name.downcase)
      end
    
      def name
-       read_attribute(:name).humanize
+!!     read_attribute(:name).humanize
      end
    end
 
@@ -117,6 +117,10 @@ metric_fu shift the first line
      delegate :name, :badge_url, to: :home_team, prefix: true
      delegate :name, :badge_url, to: :away_team, prefix: true
    
+     def self.total_time
+!!     3.hours / 60
+     end
+   
      def home_team_tweets
 !!     home_team.match_tweets(self)
      end
@@ -127,6 +131,10 @@ metric_fu shift the first line
    
      def home_tweets_per_minute
 !!     (home_team_tweets_count / passed_minutes).round
+     end
+   
+     def home_mood
+!!     home_team_tweets.average(:mood)
      end
    
      def geo_home_team_tweets
@@ -145,6 +153,10 @@ metric_fu shift the first line
 !!     (away_team_tweets_count / passed_minutes).round
      end
    
+     def away_mood
+!!     away_team_tweets.average(:mood)
+     end
+   
      def geo_away_team_tweets
 !!     away_team_tweets.geo
      end
@@ -159,6 +171,10 @@ metric_fu shift the first line
    
      def close_time
 !!     end_time + 30.minutes
+     end
+   
+     def to_s
+!!     "#{home_team_name} VS #{away_team_name}"
      end
    
      private
@@ -344,16 +360,36 @@ metric_fu shift the first line
      end
    
      def name=(name)
-       write_attribute(:name, name.downcase)
+!!     write_attribute(:name, name.downcase)
      end
    
      def name
-       read_attribute(:name).humanize
+!!     read_attribute(:name).humanize
+     end
+   
+     def geo_tweets
+!!     tweets.geo
+     end
+   
+     def geo_tweets_count
+!!     tweets.geo.count
+     end
+   
+     def tweets_count
+!!     tweets.count
+     end
+   
+     def matches_count
+!!     matches.count
+     end
+   
+     def tweets_per_minute
+!!     tweets_count / (matches_count*(Match.total_time))
      end
    
      private
      def schedule_twitter
-       Resque.enqueue(TwitterStream)
+!!     Resque.enqueue(TwitterStream)
      end
    end
 
@@ -425,12 +461,20 @@ metric_fu shift the first line
 !!     match.home_tweets_per_minute
      end
    
+     def home_mood
+!!     @home_mood ||= match.home_mood
+     end
+   
      def away_team_tweets_count
 !!     match.away_team_tweets_count
      end
    
      def away_tweets_per_minute
 !!     match.away_tweets_per_minute
+     end
+   
+     def away_mood
+!!     @away_mood ||= match.away_mood
      end
    
      def moves
@@ -521,7 +565,7 @@ metric_fu shift the first line
 !!     hour    = split_text(':', date_text)
 !!     minutes = date_text[1].to_i
    
-!!     Time.new(Date.today.year, month, day, hour, minutes)
+!!     Time.zone.local(Date.today.year, month, day, hour, minutes)
      end
    
      def split_text(partern, text)
@@ -666,11 +710,11 @@ metric_fu shift the first line
      end
    
      def store_dir
-       'uploads/badges'
+!!     'uploads/badges'
      end
    
      def root
-       Rails.root.join 'public/'
+!!     Rails.root.join 'public/'
      end
    end
 
@@ -687,7 +731,8 @@ metric_fu shift the first line
  ./app/workers/create_news.rb
 ================================================================================
    class CreateNews
-     @queue = :twitter
+     @queue = :news
+   
      def self.perform(tweet, team_id)
 !!     team = Team.find(team_id)
 !!     News.create_by_tweet(tweet, team)
@@ -695,14 +740,39 @@ metric_fu shift the first line
    end
 
 ================================================================================
- ./app/workers/twitter_stream.rb
+ ./app/workers/mood.rb
 ================================================================================
-   class TwitterStream
-     @queue = :twitter
-     DAEMON_FILE = File.join(Rails.root, 'lib', 'daemons', 'team_daemon.rb')
-     def self.perform
-!!     system "bundle exec ruby #{DAEMON_FILE} stop"
-!!     system "bundle exec ruby #{DAEMON_FILE} start"
+   class Mood
+     @queue = :mood
+     def self.perform(tweet_id)
+       tweet = Tweet.find(tweet_id)
+   
+       words = {
+         'gol' => 1,
+         'pra cima' => 1,
+         'golaço' => 1,
+         ':)' => 1,
+         ':D' => 1,
+         ':P' => 1,
+         'perna de pau' => -1,
+         'bobo' => -1,
+         'imbecil' => -1,
+         'idiota' => -1,
+         'cabeça de bagre' => -1,
+         'incompetente' => -1,
+         'gol' => -1,
+         ':(' => -1,
+         ":'(" => -1,
+         'pipocou' => -1,
+         'amarelou' => -1,
+         'pipoqueiro' => -1
+       }
+   
+       words.each do |word, value|
+         tweet.mood += value if tweet.text.match /word/
+       end
+   
+       tweet.save!
      end
    end
 

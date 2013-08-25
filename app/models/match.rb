@@ -15,6 +15,10 @@ class Match < ActiveRecord::Base
   delegate :name, :badge_url, to: :home_team, prefix: true
   delegate :name, :badge_url, to: :away_team, prefix: true
 
+  def self.total_time
+    3.hours / 60
+  end
+
   def home_team_tweets
     home_team.match_tweets(self)
   end
@@ -25,6 +29,10 @@ class Match < ActiveRecord::Base
 
   def home_tweets_per_minute
     (home_team_tweets_count / passed_minutes).round
+  end
+
+  def home_mood
+    home_team_tweets.average(:mood)
   end
 
   def geo_home_team_tweets
@@ -43,6 +51,10 @@ class Match < ActiveRecord::Base
     (away_team_tweets_count / passed_minutes).round
   end
 
+  def away_mood
+    away_team_tweets.average(:mood)
+  end
+
   def geo_away_team_tweets
     away_team_tweets.geo
   end
@@ -57,6 +69,10 @@ class Match < ActiveRecord::Base
 
   def close_time
     end_time + 30.minutes
+  end
+
+  def to_s
+    "#{home_team_name} VS #{away_team_name}"
   end
 
   private
