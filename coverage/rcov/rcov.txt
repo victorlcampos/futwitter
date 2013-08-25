@@ -55,7 +55,7 @@ metric_fu shift the first line
      def show
 !!     @team = Team.find(params[:id])
 !!     @match = @team.current_match
-!!     @matches = @team.matches
+!!     @matches = @team.matches.includes(:home_team, :away_team)
 !!     @news = @team.news.limit(20)
 !!     @trusted_domains = TrustedDomain.pluck(:name)
 !!     @photos = @team.photos.limit(20)
@@ -89,11 +89,11 @@ metric_fu shift the first line
    
    
      def name=(name)
-!!     write_attribute(:name, name.downcase)
+       write_attribute(:name, name.downcase)
      end
    
      def name
-!!     read_attribute(:name).humanize
+       read_attribute(:name).humanize
      end
    end
 
@@ -213,11 +213,11 @@ metric_fu shift the first line
      belongs_to :team
    
      def self.create_by_tweet(tweet, team)
-       shorted_url = tweet['url']
-       unshorted_url = unshorted_url(shorted_url)
+!!     shorted_url = tweet['url']
+!!     unshorted_url = unshorted_url(shorted_url)
    
-       unless News.find_by_url(unshorted_url)
-         create_news(tweet, team, shorted_url, unshorted_url)
+!!     unless News.find_by_url(unshorted_url)
+!!       create_news(tweet, team, shorted_url, unshorted_url)
        end
      end
    
@@ -227,45 +227,45 @@ metric_fu shift the first line
      end
    
      def self.unshorted_url(shorted_url)
-       my_url = shorted_url
-       tmp_url = my_url
+!!     my_url = shorted_url
+!!     tmp_url = my_url
    
-       while true
-         tmp_url = Unshortme.unshort(tmp_url)
-         if my_url == tmp_url
-           break
+!!     while true
+!!       tmp_url = Unshortme.unshort(tmp_url)
+!!       if my_url == tmp_url
+!!         break
          else
-           my_url = tmp_url
+!!         my_url = tmp_url
          end
        end
    
-       URI.remove_params(my_url, analytics_params)
+!!     URI.remove_params(my_url, analytics_params)
      end
    
      def self.analytics_params
-       ['utm_term', 'utm_content', 'utm_source', 'utm_medium', 'utm_campaign']
+!!     ['utm_term', 'utm_content', 'utm_source', 'utm_medium', 'utm_campaign']
      end
    
      def self.create_news(tweet, team, shorted_url, unshorted_url)
-       begin
-         params = url_params(shorted_url, unshorted_url).merge({
+!!     begin
+!!       params = url_params(shorted_url, unshorted_url).merge({
            team: team,
            retweets: tweet['retweet_count'],
            time: Time.parse(tweet['created_at'])
          }).merge(SummaryUrl.fetch(unshorted_url))
    
-         News.create!(params)
+!!       News.create!(params)
        rescue
 !!     end
      end
    
      def self.url_params(shorted_url, unshorted_url)
-       domain_name = URI.parse(unshorted_url).host
+!!     domain_name = URI.parse(unshorted_url).host
        {
          url: unshorted_url,
          shorted_url: shorted_url,
          domain_name: domain_name
-       }
+!!     }
      end
    end
 

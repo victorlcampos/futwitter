@@ -2,7 +2,7 @@ class TeamsController < ApplicationController
   def show
     @team = Team.find(params[:id])
     @match = @team.current_match
-    @matches = @team.matches
+    @matches = @team.matches.includes(:home_team, :away_team)
     @news = @team.news.limit(20)
     @trusted_domains = TrustedDomain.pluck(:name)
     @photos = @team.photos.limit(20)

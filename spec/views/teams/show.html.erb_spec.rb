@@ -14,12 +14,13 @@ describe 'teams/show.html.erb' do
 
     @news = [news_flamengo_1, news_flamengo_2]
     @trusted_domains = ['glo.bo']
+    @matches = []
   end
 
-  it 'should show the match score' do
+  it 'should show the team name' do
     render
-    assert_template partial: 'matches/match_score',
-                    locals: { match: @match }, count: 1
+    assert_select "img[src='#{@team.badge_url}']"
+    assert_select ".name", text: @team.name
   end
 
   it "should show match photos" do

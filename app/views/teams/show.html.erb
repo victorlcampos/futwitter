@@ -1,4 +1,7 @@
-<%= render partial: "matches/match_score", locals: { match: @match } %>
+<div class='team_data'>
+<%= image_tag @team.badge_url %>
+<span class='name'><%= @team.name %></span>
+</div>
 
 <ul id='gallery'>
   <% @photos.each do |photo| %>
