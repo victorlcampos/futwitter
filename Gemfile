@@ -8,6 +8,7 @@ gem 'fastimage'
 
 gem 'resque'
 gem 'resque-scheduler', require: 'resque_scheduler'
+gem "capistrano-resque", "~> 0.1.0"
 gem 'daemons', '~> 1.1.9'
 gem 'tweetstream'
 gem 'unshortme'
