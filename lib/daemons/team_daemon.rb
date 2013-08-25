@@ -8,7 +8,7 @@ def options
     app_name: 'daemon_teams',
     dir: Rails.root.join('tmp', 'pids'),
     backtrac: true,
-    monitor: true,
+    monitor: false,
     log_output: true
   }
 end
