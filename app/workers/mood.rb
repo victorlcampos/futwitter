@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Mood
   @queue = :mood
   def self.perform(tweet_id)
