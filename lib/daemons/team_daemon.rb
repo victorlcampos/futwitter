@@ -44,7 +44,14 @@ def create_tweet(tweet, team)
 end
 
 def create_news(tweet, team)
-  News.create_by_tweet(tweet, team)
+  if url = tweet.urls[0]
+    hash_tweet = {
+      retweet_count: tweet.retweet_count,
+      created_at: tweet.created_at,
+      url: url.expanded_url
+    }
+    Resque.enqueue(CreateNews, hash_tweet, team.id)
+  end
 end
 
 def create_photo(tweet, team)

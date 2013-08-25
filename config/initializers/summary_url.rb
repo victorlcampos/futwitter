@@ -7,13 +7,14 @@ class SummaryUrl
     doc = Nokogiri::HTML(html.read)
     doc.encoding = 'utf-8'
 
-    {
+    ret = {
       title: title(doc),
       description: description(doc),
       image_url: images(doc)
     }
 
     html.close
+    ret
   end
 
   private
