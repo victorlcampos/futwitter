@@ -9,11 +9,11 @@ metric_fu shift the first line
    
      protected
      def load_championchip
-!!     @championships = Championship.order_by_matches_count
+       @championships = Championship.order_by_matches_count
      end
    
      def load_teams
-!!     @teams = Team.order('name').all
+       @teams = Team.order('name').all
      end
    end
 
@@ -89,11 +89,11 @@ metric_fu shift the first line
    
    
      def name=(name)
-!!     write_attribute(:name, name.downcase)
+       write_attribute(:name, name.downcase)
      end
    
      def name
-!!     read_attribute(:name).humanize
+       read_attribute(:name).humanize
      end
    end
 
@@ -201,18 +201,18 @@ metric_fu shift the first line
      attr_accessible :match_id, :minute, :text, :team_name, :half
    
      def team_name=(team_name)
-!!     write_attribute(:team_name, team_name.downcase) if team_name
+       write_attribute(:team_name, team_name.downcase) if team_name
      end
    
      def team_name
-!!     my_team_name = read_attribute(:team_name)
-!!     my_team_name.humanize if my_team_name
+       my_team_name = read_attribute(:team_name)
+       my_team_name.humanize if my_team_name
      end
    
      def badge_url
-!!     if my_team_name = team_name
-!!       team = Team.find_by_name(my_team_name.downcase)
-!!       team.badge_url if team
+       if my_team_name = team_name
+         team = Team.find_by_name(my_team_name.downcase)
+         team.badge_url if team
        end
      end
    end
@@ -229,11 +229,11 @@ metric_fu shift the first line
      belongs_to :team
    
      def self.create_by_tweet(tweet, team)
-!!     shorted_url = tweet['url']
-!!     unshorted_url = unshorted_url(shorted_url)
+       shorted_url = tweet['url']
+       unshorted_url = unshorted_url(shorted_url)
    
-!!     unless News.find_by_url(unshorted_url)
-!!       create_news(tweet, team, shorted_url, unshorted_url)
+       unless News.find_by_url(unshorted_url)
+         create_news(tweet, team, shorted_url, unshorted_url)
        end
      end
    
@@ -243,45 +243,45 @@ metric_fu shift the first line
      end
    
      def self.unshorted_url(shorted_url)
-!!     my_url = shorted_url
-!!     tmp_url = my_url
+       my_url = shorted_url
+       tmp_url = my_url
    
-!!     while true
-!!       tmp_url = Unshortme.unshort(tmp_url)
-!!       if my_url == tmp_url
-!!         break
+       while true
+         tmp_url = Unshortme.unshort(tmp_url)
+         if my_url == tmp_url
+           break
          else
-!!         my_url = tmp_url
+           my_url = tmp_url
          end
        end
    
-!!     URI.remove_params(my_url, analytics_params)
+       URI.remove_params(my_url, analytics_params)
      end
    
      def self.analytics_params
-!!     ['utm_term', 'utm_content', 'utm_source', 'utm_medium', 'utm_campaign']
+       ['utm_term', 'utm_content', 'utm_source', 'utm_medium', 'utm_campaign']
      end
    
      def self.create_news(tweet, team, shorted_url, unshorted_url)
-!!     begin
-!!       params = url_params(shorted_url, unshorted_url).merge({
+       begin
+         params = url_params(shorted_url, unshorted_url).merge({
            team: team,
            retweets: tweet['retweet_count'],
            time: Time.parse(tweet['created_at'])
          }).merge(SummaryUrl.fetch(unshorted_url))
    
-!!       News.create!(params)
+         News.create!(params)
        rescue
 !!     end
      end
    
      def self.url_params(shorted_url, unshorted_url)
-!!     domain_name = URI.parse(unshorted_url).host
+       domain_name = URI.parse(unshorted_url).host
        {
          url: unshorted_url,
          shorted_url: shorted_url,
          domain_name: domain_name
-!!     }
+       }
      end
    end
 
@@ -360,11 +360,11 @@ metric_fu shift the first line
      end
    
      def name=(name)
-!!     write_attribute(:name, name.downcase)
+       write_attribute(:name, name.downcase)
      end
    
      def name
-!!     read_attribute(:name).humanize
+       read_attribute(:name).humanize
      end
    
      def geo_tweets
@@ -389,7 +389,7 @@ metric_fu shift the first line
    
      private
      def schedule_twitter
-!!     Resque.enqueue(TwitterStream)
+       Resque.enqueue(TwitterStream)
      end
    end
 
@@ -519,24 +519,24 @@ metric_fu shift the first line
      LANCENET_URL = 'http://temporeal.lancenet.com.br/'
    
      def update_matches_from_internet
-!!     doc = Nokogiri::HTML(open(LANCENET_URL))
+       doc = Nokogiri::HTML(open(LANCENET_URL))
    
-!!     doc.css('#listaJogos tr').each do |match|
-!!       datas = match.css('td')
-!!       match_url = datas.css('a').first.attributes['href'].value
+       doc.css('#listaJogos tr').each do |match|
+         datas = match.css('td')
+         match_url = datas.css('a').first.attributes['href'].value
    
-!!       update_or_create_match(match_data(datas, match_url),
+         update_or_create_match(match_data(datas, match_url),
                                   parents(datas, match_url))
        end
      end
    
      private
      def update_or_create_match(match_data, parents)
-!!     if match = Match.where(search_data(parents)).first
-!!       match.update_attributes!(match_data)
+       if match = Match.where(search_data(parents)).first
+         match.update_attributes!(match_data)
        else
-!!       match_data.merge!(parents)
-!!       Match.create!(match_data)
+         match_data.merge!(parents)
+         Match.create!(match_data)
        end
      end
    
@@ -545,7 +545,7 @@ metric_fu shift the first line
          home_team_id: parents[:home_team],
          away_team_id: parents[:away_team],
          championship_id: parents[:championship]
-!!     }
+       }
      end
    
      def match_data(datas, match_url)
@@ -554,25 +554,25 @@ metric_fu shift the first line
          away_team_score: datas[3].text,
          internet_url: match_url,
          start_time: start_time(datas)
-!!     }
+       }
      end
    
      def start_time(datas)
-!!     date_text = datas.text.split(', ')[1]
+       date_text = datas.text.split(', ')[1]
    
-!!     day     = split_text('/', date_text)
-!!     month   = split_text(' ', date_text)
-!!     hour    = split_text(':', date_text)
-!!     minutes = date_text[1].to_i
+       day     = split_text('/', date_text)
+       month   = split_text(' ', date_text)
+       hour    = split_text(':', date_text)
+       minutes = date_text[1].to_i
    
-!!     Time.zone.local(Date.today.year, month, day, hour, minutes)
+       Time.zone.local(Date.today.year, month, day, hour, minutes)
      end
    
      def split_text(partern, text)
-!!     splited_text  = text.split(partern)
-!!     value = splited_text[0]
-!!     text.replace splited_text[1]
-!!     value.to_i
+       splited_text  = text.split(partern)
+       value = splited_text[0]
+       text.replace splited_text[1]
+       value.to_i
      end
    
      def parents(datas, match_url)
@@ -580,43 +580,43 @@ metric_fu shift the first line
          home_team:    find_or_create_home_team(datas, match_url),
          away_team:    find_or_create_away_team(datas, match_url),
          championship: find_or_create_championship(datas)
-!!     }
+       }
      end
    
      def find_or_create_home_team(datas, match_url)
-!!     home_team_name = datas[0].text
-!!     team = Team.find_or_create_by_name(home_team_name.downcase)
+       home_team_name = datas[0].text
+       team = Team.find_or_create_by_name(home_team_name.downcase)
    
-!!     unless team.badge?
-!!       team.remote_badge_url = find_home_team_badge(match_url)
-!!       team.save!
+       unless team.badge?
+         team.remote_badge_url = find_home_team_badge(match_url)
+         team.save!
        end
-!!     team
+       team
      end
    
      def find_home_team_badge(match_url)
-!!     doc = Nokogiri::HTML(open("#{LANCENET_URL}#{match_url}"))
-!!     "#{LANCENET_URL}#{doc.css('.escudo img.png')[0].attributes['src'].value}"
+       doc = Nokogiri::HTML(open("#{LANCENET_URL}#{match_url}"))
+       "#{LANCENET_URL}#{doc.css('.escudo img.png')[0].attributes['src'].value}"
      end
    
      def find_or_create_away_team(datas, match_url)
-!!     away_team_name = datas[4].text
-!!     team = Team.find_or_create_by_name(away_team_name.downcase)
-!!     unless team.badge?
-!!       team.remote_badge_url = find_away_team_badge(match_url)
-!!       team.save!
+       away_team_name = datas[4].text
+       team = Team.find_or_create_by_name(away_team_name.downcase)
+       unless team.badge?
+         team.remote_badge_url = find_away_team_badge(match_url)
+         team.save!
        end
-!!     team
+       team
      end
    
      def find_away_team_badge(match_url)
-!!     doc = Nokogiri::HTML(open("#{LANCENET_URL}#{match_url}"))
-!!     "#{LANCENET_URL}#{doc.css('.escudo img.png')[1].attributes['src'].value}"
+       doc = Nokogiri::HTML(open("#{LANCENET_URL}#{match_url}"))
+       "#{LANCENET_URL}#{doc.css('.escudo img.png')[1].attributes['src'].value}"
      end
    
      def find_or_create_championship(datas)
-!!     championship_name = datas[6].text
-!!     Championship.find_or_create_by_name(championship_name.downcase)
+       championship_name = datas[6].text
+       Championship.find_or_create_by_name(championship_name.downcase)
      end
    end
 
@@ -710,11 +710,11 @@ metric_fu shift the first line
      end
    
      def store_dir
-!!     'uploads/badges'
+       'uploads/badges'
      end
    
      def root
-!!     Rails.root.join 'public/'
+       Rails.root.join 'public/'
      end
    end
 
@@ -742,12 +742,13 @@ metric_fu shift the first line
 ================================================================================
  ./app/workers/mood.rb
 ================================================================================
+   # encoding: utf-8
    class Mood
      @queue = :mood
      def self.perform(tweet_id)
-       tweet = Tweet.find(tweet_id)
+!!     tweet = Tweet.find(tweet_id)
    
-       words = {
+!!     words = {
          'gol' => 1,
          'pra cima' => 1,
          'golaço' => 1,
@@ -768,11 +769,23 @@ metric_fu shift the first line
          'pipoqueiro' => -1
        }
    
-       words.each do |word, value|
-         tweet.mood += value if tweet.text.match /word/
+!!     words.each do |word, value|
+!!       tweet.mood += value if tweet.text.match /word/
        end
    
-       tweet.save!
+!!     tweet.save!
+     end
+   end
+
+================================================================================
+ ./app/workers/twitter_stream.rb
+================================================================================
+   class TwitterStream
+     @queue = :twitter
+     DAEMON_FILE = File.join(Rails.root, 'lib', 'daemons', 'team_daemon.rb')
+     def self.perform
+!!     system "bundle exec ruby #{DAEMON_FILE} stop"
+!!     system "bundle exec ruby #{DAEMON_FILE} start"
      end
    end
 
