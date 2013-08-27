@@ -9,7 +9,7 @@
       <div class='total_home_tweets'><%= image_tag 'neutral_mood.png' %></div>
     <% end %>
     <div>% de tweets do time:</div>
-    <div class='total_home_tweets'><%= (@presenter.home_team_tweets_count * 100.0)/(@presenter.away_team_tweets_count + @presenter.home_team_tweets_count) %></div>
+    <div class='total_home_tweets'><%= (@presenter.away_team_tweets_count + @presenter.home_team_tweets_count) > 0 ? "#{number_with_precision((@presenter.home_team_tweets_count * 100.0)/(@presenter.away_team_tweets_count + @presenter.home_team_tweets_count), precision: 2)}%" : "#{50}%" %></div>
 
     <div>Tweets por minuto:</div>
     <div class='tpm_home'><%= @presenter.home_tweets_per_minute %></div>
@@ -28,7 +28,7 @@
       <div class='total_home_tweets'><%= image_tag 'neutral_mood.png' %></div>
     <% end %>
     <div>% de tweets do time:</div>
-    <div class='total_away_tweets'><%= (@presenter.away_team_tweets_count * 100.0)/(@presenter.away_team_tweets_count + @presenter.home_team_tweets_count) %></div>
+    <div class='total_away_tweets'><%= (@presenter.away_team_tweets_count + @presenter.home_team_tweets_count) > 0 ? "#{number_with_precision((@presenter.away_team_tweets_count * 100.0)/(@presenter.away_team_tweets_count + @presenter.home_team_tweets_count), precision: 2)}%" : "#{50}%" %></div>
     <div>Tweets por minuto:</div>
     <div class='tpm_home'><%= @presenter.away_tweets_per_minute %></div>
   </div>
