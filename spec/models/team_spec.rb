@@ -35,9 +35,9 @@ describe Team do
                                       championship: brasileirao)
     end
 
-    its(:matches)       { should eq([flamengo_vs_vasco, botafogo_vs_vasco]) }
-    its(:championships) { should eq([campeonato_carioca, brasileirao]) }
-    its(:championships_ids) { should eq([1, 2]) }
+    its(:matches)       { should eq([botafogo_vs_vasco, flamengo_vs_vasco]) }
+    its(:championships) { should eq([brasileirao, campeonato_carioca]) }
+    its(:championships_ids) { should eq([2, 1]) }
 
     its(:current_match) { should eq(botafogo_vs_vasco) }
 

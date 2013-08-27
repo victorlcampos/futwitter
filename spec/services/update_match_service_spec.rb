@@ -171,7 +171,7 @@ describe UpdateMatchService do
             medium_match.away_team_score.should eq(1)
 
             last_match = Match.last
-            last_match.home_team_score.should eq(2)
+            last_match.home_team_score.should eq(1)
             last_match.away_team_score.should eq(2)
           end
         end

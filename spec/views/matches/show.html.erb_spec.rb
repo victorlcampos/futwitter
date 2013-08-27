@@ -62,12 +62,12 @@ describe 'matches/show.html.erb' do
 
   it 'should show the total home tweets' do
     render
-    assert_select '.total_home_tweets', text: 3
+    assert_select '.total_home_tweets', text: '75,00%'
   end
 
   it 'should show the total home tweets' do
     render
-    assert_select '.total_away_tweets', text: 1
+    assert_select '.total_away_tweets', text: '25,00%'
   end
 
   it 'should show the total home tweets' do
