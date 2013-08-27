@@ -53,6 +53,7 @@
     <% end %>
   </div>
   <div class="main_matches">
+      <h3>Últimos jogos</h3>
     <% @matches.each do |match| %>
       <%= render partial: "matches/match_score", locals: { match: match } %>
     <% end %>
