@@ -14,7 +14,7 @@ class Photo < ActiveRecord::Base
         match: team.current_match,
         url: url
       }
-      Photo.create(attributes)
+      Photo.create!(attributes)
     end
   end
 end
