@@ -11,6 +11,8 @@ class Mood
       ':)' => 1,
       ':D' => 1,
       ':P' => 1,
+      '\o' => 1,
+      '\o/' => 1,
       'perna de pau' => -1,
       'bobo' => -1,
       'imbecil' => -1,
@@ -26,7 +28,7 @@ class Mood
     }
 
     words.each do |word, value|
-      tweet.mood += value if tweet.text.match /word/
+      (tweet.mood += value) if tweet.text.match /word/
     end
 
     tweet.save!

@@ -70,7 +70,7 @@ class Team < ActiveRecord::Base
   end
 
   def tweets_per_minute
-    tweets_count / (matches_count*(Match.total_time))
+    tweets_count / (matches_count * (Match.total_time))
   end
 
   private

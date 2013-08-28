@@ -39,3 +39,15 @@ body {
 .one_columns {
   @include columns(20em 1);
 }
+
+.help {
+  width:1000px;
+  margin: 0 auto;
+  text-align:right;
+  font-size:200%;
+  span {
+    padding: 1px 8px;
+    border: 1px solid;
+    @include border-radius(50%);
+  }
+}

@@ -13,8 +13,8 @@ describe Tweet do
 
   context 'scopes' do
     describe 'geo' do
-      let!(:tweet1) { FactoryGirl.create(:tweet, geo: true ) }
-      let!(:tweet2) { FactoryGirl.create(:tweet, geo: false ) }
+      let!(:tweet1) { FactoryGirl.create(:tweet, geo: true) }
+      let!(:tweet2) { FactoryGirl.create(:tweet, geo: false) }
 
       it 'should return all geo tweets' do
         Tweet.geo.should eq([tweet1])
@@ -34,35 +34,35 @@ describe Tweet do
         params = {
           created_at: match.open_time - 10.minutes
         }
-        FactoryGirl.create(:tweet, params )
+        FactoryGirl.create(:tweet, params)
       end
       let!(:tweet2) do
         params = {
           team: match.home_team,
           created_at: match.open_time
         }
-        FactoryGirl.create(:tweet, params )
+        FactoryGirl.create(:tweet, params)
       end
       let!(:tweet3) do
         params = {
           team: match.home_team,
           created_at: match.open_time + 30.minutes
         }
-        FactoryGirl.create(:tweet, params )
+        FactoryGirl.create(:tweet, params)
       end
       let!(:tweet4) do
         params = {
           team: match.home_team,
           created_at: match.close_time
         }
-        FactoryGirl.create(:tweet, params )
+        FactoryGirl.create(:tweet, params)
       end
       let!(:tweet5) do
         params = {
           team: match.home_team,
           created_at: match.close_time + 30.minutes
         }
-        FactoryGirl.create(:tweet, params )
+        FactoryGirl.create(:tweet, params)
       end
 
       it 'should return tweets in this match' do
