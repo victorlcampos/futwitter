@@ -13,11 +13,11 @@ set :deploy_to, '/var/www/#{application}'
 
 set :workers, { '*' => 2, 'mood' => 2 }
 
-role :resque_worker, 'futwitter.almadegordo.com'
-role :resque_scheduler, 'futwitter.almadegordo.com'
-role :web, 'futwitter.almadegordo.com'
-role :app, 'futwitter.almadegordo.com'
-role :db,  'futwitter.almadegordo.com', primary: true
+role :resque_worker,    'www.futwitter.com.br'
+role :resque_scheduler, 'www.futwitter.com.br'
+role :web, 'www.futwitter.com.br'
+role :app, 'www.futwitter.com.br'
+role :db,  'www.futwitter.com.br', primary: true
 # role :db,  "your slave db-server here"
 
 # if you want to clean up old releases on each deploy uncomment this:
