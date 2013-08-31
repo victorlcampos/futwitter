@@ -13,6 +13,10 @@ class HomeController < ApplicationController
       @matches << team.current_match
     end
     @matches.uniq!.sort_by! { |e| e[:start_time] }
-    @help = "Não achei os textos 1"
+    @help = "Bem-vindo(a) ao portal Futwitter ! Nós temos como objetivo principal reunir informações do Twitter e de outros lugares da internet de maneiras diversas.
+
+Você está em: Página Inicial
+
+Nesta página é possível filtrar os jogos e times que aparecem por campeonatos. Além disso, basta clicar em algum jogo ou time de interesse para ser redirecionado para sua página no Futwitter."
   end
 end
