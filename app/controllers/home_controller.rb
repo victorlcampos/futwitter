@@ -1,3 +1,4 @@
+# encoding: utf-8
 class HomeController < ApplicationController
   skip_before_filter :load_teams, :load_championchip
 
@@ -12,5 +13,6 @@ class HomeController < ApplicationController
       @matches << team.current_match
     end
     @matches.uniq!.sort_by! { |e| e[:start_time] }
+    @help = "Não achei os textos 1"
   end
 end

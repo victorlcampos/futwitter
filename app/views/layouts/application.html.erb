@@ -23,7 +23,19 @@
         <% end %>
       </div>
     </div>
-    <div class='help'><span>?</span></div>
+    <div class='help'><span><a id='help' href="#myModal" role="button" data-toggle="modal" >Sobre</a></span></div>
+    <div id="myModal" class="modal hide fade">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Sobre</h3>
+      </div>
+      <div class="modal-body">
+        <p><%= @help %></p>
+      </div>
+    </div>
+    <div id='wrapperComAMensagem' style='display:none;'>
+      Conteúdo
+    </div>
     <br class='clear' />
     <div id="content" class='<%= controller_name %>'>
       <%= yield %>

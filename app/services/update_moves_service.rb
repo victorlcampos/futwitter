@@ -16,11 +16,11 @@ class UpdateMovesService
   protected
 
   def find_or_create_move(half)
-    doc = Nokogiri::HTML(open(get_url(half)), nil, 'UTF-8')
-    doc.css('tr').each do |move|
-      params = get_param(move, half)
-      Move.create!(params) unless Move.where(params).first
-    end
+    # doc = Nokogiri::HTML(open(get_url(half)), nil, 'UTF-8')
+    # doc.css('tr').each do |move|
+    #   params = get_param(move, half)
+    #   Move.create!(params) unless Move.where(params).first
+    # end
   end
 
   def get_url(half)

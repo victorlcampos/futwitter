@@ -3,14 +3,14 @@ class UpdateMatchService
 
   def update_matches_from_internet
     begin
-      doc = Nokogiri::HTML(open(LANCENET_URL))
-      doc.css('#listaJogos tr').each do |match|
-        datas = match.css('td')
-        match_url = datas.css('a').first.attributes['href'].value
+      # doc = Nokogiri::HTML(open(LANCENET_URL))
+      # doc.css('#listaJogos tr').each do |match|
+      #   datas = match.css('td')
+      #   match_url = datas.css('a').first.attributes['href'].value
 
-        update_or_create_match(match_data(datas, match_url),
-                                 parents(datas, match_url))
-      end
+      #   update_or_create_match(match_data(datas, match_url),
+      #                            parents(datas, match_url))
+      # end
     rescue
     end
   end
