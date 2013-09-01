@@ -18,6 +18,8 @@ class Mood
       ':]' => 1,
       ':3' => 1,
       ':c)' => 1,
+      'bom' => 1,
+      'bem' => 1,
       ':-(' => -1,
       ':(' => -1,
       ':c' => -1,
@@ -28,12 +30,12 @@ class Mood
       'idiota' => -1,
       'cabeça de bagre' => -1,
       'incompetente' => -1,
-      'gol' => -1,
       ':(' => -1,
       ":'(" => -1,
       'pipocou' => -1,
       'amarelou' => -1,
-      'pipoqueiro' => -1
+      'pipoqueiro' => -1,
+      'ruim' => -1
     }
 
     words.each do |word, value|
