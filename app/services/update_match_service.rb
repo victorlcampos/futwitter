@@ -48,7 +48,7 @@ class UpdateMatchService
     day     = split_text('/', date_text)
     month   = split_text(' ', date_text)
     hour    = split_text(':', date_text)
-    minutes = date_text[1].to_i
+    minutes = date_text.to_i
 
     Time.zone.local(Date.today.year, month, day, hour, minutes)
   end
