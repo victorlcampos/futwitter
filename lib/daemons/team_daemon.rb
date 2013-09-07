@@ -76,9 +76,8 @@ end
 daemon.track(*team_names(teams)) do |tweet|
   teams.each do |team|
     if tweet.text.downcase.match /#{team.name.downcase}/
-      create_news(tweet, team)
-
       if on_opened_time?(team)
+        create_news(tweet, team)
         create_tweet(tweet, team)
 
         if tweet.media.length > 0
