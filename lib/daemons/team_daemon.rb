@@ -40,8 +40,8 @@ def new_daemon
 end
 
 def create_tweet(tweet, team)
-  Tweet.create_using_real_tweet(tweet, team)
-  Resque.enqueue(Mood, tweet.id)
+  real_tweet = Tweet.create_using_real_tweet(tweet, team)
+  Resque.enqueue(Mood, real_tweet.id)
 end
 
 def create_news(tweet, team)
