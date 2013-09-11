@@ -35,11 +35,14 @@ class Mood
       'pipocou' => -1,
       'amarelou' => -1,
       'pipoqueiro' => -1,
-      'ruim' => -1
+      'ruim' => -1,
+      'fraco' => -1,
+      'perder' => -1,
+      'perdeu' => -1
     }
 
     words.each do |word, value|
-      (tweet.mood += value) if tweet.text.match /word/
+      (tweet.mood += value) if tweet.text.downcase.include? word
     end
 
     tweet.save!

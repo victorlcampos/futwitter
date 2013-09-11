@@ -11,7 +11,7 @@ set :repository,  'git@github.com:victorlcampos/futwitter.git'
 
 set :deploy_to, "/var/www/#{application}"
 
-set :workers, { '*' => 2, 'mood' => 2 }
+set :workers, { 'news' => 2 }
 
 role :resque_worker,    'www.futwitter.com.br'
 role :resque_scheduler, 'www.futwitter.com.br'
